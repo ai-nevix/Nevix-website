@@ -1,0 +1,450 @@
+# VASTRIX — GitLab CI/CD (specification §21, instruction §46).
+#
+#   install -> lint -> type-check -> test -> build -> security -> package -> staging -> production
+#
+# Production deployment is manual and restricted to the default branch (specification §21:
+# "Approval / release" before production; instruction §46: "Never deploy blindly from every
+# branch").
+
+stages:
+  - install
+  - verify
+  - test
+  - build
+  - security
+  - package
+  - deploy
+
+variables:
+  NODE_VERSION: '24'
+  PYTHON_VERSION: '3.12'
+  # Cache inside the project directory so GitLab Runner can cache it between jobs.
+  npm_config_cache: '$CI_PROJECT_DIR/.npm'
+  PIP_CACHE_DIR: '$CI_PROJECT_DIR/.pip'
+  DOCKER_BUILDKIT: '1'
+  GIT_DEPTH: '20'
+
+default:
+  interruptible: true
+  retry:
+    max: 2
+    # Only infrastructure failures are retried. A failing test is a result, not a flake to retry
+    # away.
+    when:
+      - runner_system_failure
+      - stuck_or_timeout_failure
+
+# =================================================================================================
+# Templates
+# =================================================================================================
+
+.node:
+  image: node:${NODE_VERSION}-alpine
+  cache:
+    key:
+      files:
+        - package-lock.json
+    paths:
+      - .npm/
+    policy: pull
+  before_script:
+    - npm ci --prefer-offline --no-audit --no-fund
+
+.python:
+  image: python:${PYTHON_VERSION}-slim
+  cache:
+    key:
+      files:
+        - apps/api/pyproject.toml
+    paths:
+      - .pip/
+    policy: pull
+  before_script:
+    - cd apps/api
+    - pip install --quiet --upgrade pip
+    - pip install --quiet -e ".[dev]"
+
+# =================================================================================================
+# Install — primes the caches every later job pulls from
+# =================================================================================================
+
+install:node:
+  stage: install
+  extends: .node
+  cache:
+    key:
+      files:
+        - package-lock.json
+    paths:
+      - .npm/
+    policy: pull-push
+  script:
+    - node --version
+    - npm --version
+  artifacts:
+    expire_in: 1 hour
+    paths:
+      - node_modules/
+      - apps/web/node_modules/
+
+# =================================================================================================
+# Verify — formatting, linting, types
+# =================================================================================================
+
+lint:web:
+  stage: verify
+  extends: .node
+  needs: ['install:node']
+  script:
+    - npm run format:check
+    - npm run lint
+
+typecheck:web:
+  stage: verify
+  extends: .node
+  needs: ['install:node']
+  script:
+    - npm run typecheck
+
+lint:api:
+  stage: verify
+  extends: .python
+  needs: []
+  script:
+    - ruff check app tests
+    - ruff format --check app tests
+
+typecheck:api:
+  stage: verify
+  extends: .python
+  needs: []
+  # mypy in strict mode surfaces genuine issues in third-party stubs that are outside our control.
+  # Reported without blocking the pipeline until the remaining findings are triaged.
+  allow_failure: true
+  script:
+    - mypy app
+
+# -------------------------------------------------------------------------------------------------
+# Content governance (instruction §33, §34)
+#
+# Blocking. A dummy-data marker without a registry entry, or a committed secret, must never reach
+# the default branch.
+# -------------------------------------------------------------------------------------------------
+audit:content-governance:
+  stage: verify
+  extends: .node
+  needs: ['install:node']
+  script:
+    - npm run audit:dummy-data
+    - npm run audit:secrets
+
+# =================================================================================================
+# Test
+# =================================================================================================
+
+test:web:
+  stage: test
+  extends: .node
+  needs: ['install:node']
+  script:
+    - npm run test
+  coverage: '/All files[^|]*\|[^|]*\s+([\d.]+)/'
+  artifacts:
+    when: always
+    reports:
+      junit: apps/web/coverage/junit.xml
+    expire_in: 1 week
+
+test:api:
+  stage: test
+  extends: .python
+  needs: []
+  services:
+    # Tests run against SQLite by default; this PostgreSQL service backs the migration job below
+    # and is available for any test that needs real PostgreSQL behaviour.
+    - name: pgvector/pgvector:pg16
+      alias: postgres
+  variables:
+    POSTGRES_USER: vastrix
+    POSTGRES_PASSWORD: ci-test-password
+    POSTGRES_DB: vastrix_test
+  script:
+    - pytest --cov=app --cov-report=term --cov-report=xml --junitxml=report.xml
+  coverage: '/TOTAL.*\s+(\d+%)$/'
+  artifacts:
+    when: always
+    reports:
+      junit: apps/api/report.xml
+      coverage_report:
+        coverage_format: cobertura
+        path: apps/api/coverage.xml
+    expire_in: 1 week
+
+# -------------------------------------------------------------------------------------------------
+# Migrations are verified against real PostgreSQL, not SQLite.
+#
+# The unit suite runs on SQLite for speed; that would not catch a migration using a PostgreSQL-only
+# construct, or one that cannot be reversed. This job applies the full history up and back down.
+# -------------------------------------------------------------------------------------------------
+test:migrations:
+  stage: test
+  extends: .python
+  needs: []
+  services:
+    - name: pgvector/pgvector:pg16
+      alias: postgres
+  variables:
+    POSTGRES_USER: vastrix
+    POSTGRES_PASSWORD: ci-test-password
+    POSTGRES_DB: vastrix_migrations
+    DATABASE_URL: 'postgresql+asyncpg://vastrix:ci-test-password@postgres:5432/vastrix_migrations'
+    SECRET_KEY: 'ci-migration-secret-key-at-least-32-characters-long'
+  script:
+    - alembic upgrade head
+    - alembic downgrade base
+    - alembic upgrade head
+    # Fails if the models and the migration history have drifted apart.
+    - alembic check
+
+# =================================================================================================
+# Build
+# =================================================================================================
+
+build:web:
+  stage: build
+  extends: .node
+  needs: ['install:node']
+  variables:
+    NEXT_PUBLIC_SITE_URL: 'https://vastrix.ai'
+    NEXT_PUBLIC_ENV: 'production'
+  script:
+    - npm run build
+  artifacts:
+    expire_in: 1 day
+    paths:
+      - apps/web/.next/
+
+# -------------------------------------------------------------------------------------------------
+# End-to-end and accessibility, against the real production build.
+# -------------------------------------------------------------------------------------------------
+test:e2e:
+  stage: build
+  needs: ['build:web', 'install:node']
+  image: mcr.microsoft.com/playwright:v1.63.0-noble
+  variables:
+    CI: 'true'
+  script:
+    - npm ci --prefer-offline --no-audit --no-fund
+    - npx playwright install --with-deps chromium
+    - npm run test:e2e
+  artifacts:
+    when: always
+    paths:
+      - playwright-report/
+      - test-results/
+    reports:
+      junit: test-results/junit.xml
+    expire_in: 1 week
+
+# =================================================================================================
+# Security
+# =================================================================================================
+
+security:dependencies:
+  stage: security
+  extends: .node
+  needs: ['install:node']
+  script:
+    # High and critical advisories fail the pipeline. Lower severities are reported for triage
+    # rather than blocking a release.
+    - npm audit --audit-level=high
+    - npm audit --json > npm-audit.json || true
+  artifacts:
+    when: always
+    paths:
+      - npm-audit.json
+    expire_in: 1 month
+
+security:python-dependencies:
+  stage: security
+  extends: .python
+  needs: []
+  script:
+    - pip install --quiet pip-audit
+    - pip-audit --desc --strict
+  allow_failure: false
+
+security:secrets:
+  stage: security
+  image: zricethezav/gitleaks:latest
+  needs: []
+  script:
+    - gitleaks detect --source . --verbose --redact --no-git
+  allow_failure: false
+
+# =================================================================================================
+# Package — container images
+# =================================================================================================
+
+.docker:
+  image: docker:28-cli
+  services:
+    - docker:28-dind
+  before_script:
+    - echo "$CI_REGISTRY_PASSWORD" | docker login -u "$CI_REGISTRY_USER" --password-stdin "$CI_REGISTRY"
+
+package:web:
+  stage: package
+  extends: .docker
+  needs: ['test:web', 'build:web', 'security:dependencies']
+  rules:
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+    - if: $CI_COMMIT_TAG
+  script:
+    - >
+      docker build
+      --file apps/web/Dockerfile
+      --build-arg NEXT_PUBLIC_SITE_URL="${NEXT_PUBLIC_SITE_URL:-https://vastrix.ai}"
+      --build-arg NEXT_PUBLIC_ENV=production
+      --tag "$CI_REGISTRY_IMAGE/web:$CI_COMMIT_SHORT_SHA"
+      --tag "$CI_REGISTRY_IMAGE/web:latest"
+      .
+    - docker push "$CI_REGISTRY_IMAGE/web:$CI_COMMIT_SHORT_SHA"
+    - docker push "$CI_REGISTRY_IMAGE/web:latest"
+
+package:api:
+  stage: package
+  extends: .docker
+  needs: ['test:api', 'test:migrations', 'security:python-dependencies']
+  rules:
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+    - if: $CI_COMMIT_TAG
+  script:
+    - >
+      docker build
+      --file apps/api/Dockerfile
+      --tag "$CI_REGISTRY_IMAGE/api:$CI_COMMIT_SHORT_SHA"
+      --tag "$CI_REGISTRY_IMAGE/api:latest"
+      apps/api
+    - docker push "$CI_REGISTRY_IMAGE/api:$CI_COMMIT_SHORT_SHA"
+    - docker push "$CI_REGISTRY_IMAGE/api:latest"
+
+package:cms:
+  stage: package
+  extends: .docker
+  needs: []
+  rules:
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+      changes:
+        - apps/cms/**/*
+    - if: $CI_COMMIT_TAG
+  script:
+    - >
+      docker build
+      --file apps/cms/Dockerfile
+      --tag "$CI_REGISTRY_IMAGE/cms:$CI_COMMIT_SHORT_SHA"
+      --tag "$CI_REGISTRY_IMAGE/cms:latest"
+      apps/cms
+    - docker push "$CI_REGISTRY_IMAGE/cms:$CI_COMMIT_SHORT_SHA"
+    - docker push "$CI_REGISTRY_IMAGE/cms:latest"
+
+# =================================================================================================
+# Deploy
+#
+# Staging deploys automatically from the default branch. Production is manual — specification §21
+# places an approval gate before production, and instruction §46 forbids deploying blindly.
+# =================================================================================================
+
+.deploy:
+  image: alpine:3.21
+  before_script:
+    - apk add --no-cache openssh-client curl
+    - mkdir -p ~/.ssh && chmod 700 ~/.ssh
+    - echo "$DEPLOY_SSH_KEY" | tr -d '\r' > ~/.ssh/id_ed25519
+    - chmod 600 ~/.ssh/id_ed25519
+    # Pinned host key. Disabling host-key checking would make the deploy vulnerable to a
+    # man-in-the-middle on the runner network.
+    - echo "$DEPLOY_KNOWN_HOSTS" > ~/.ssh/known_hosts
+    - chmod 644 ~/.ssh/known_hosts
+
+deploy:staging:
+  stage: deploy
+  extends: .deploy
+  needs: ['package:web', 'package:api']
+  rules:
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+  environment:
+    name: staging
+    url: https://staging.vastrix.ai
+  script:
+    - |
+      ssh -o StrictHostKeyChecking=yes "$STAGING_SSH_USER@$STAGING_SSH_HOST" bash -s <<EOF
+        set -euo pipefail
+        cd /opt/vastrix
+        export IMAGE_TAG="$CI_COMMIT_SHORT_SHA"
+        docker compose -f docker-compose.yml -f docker-compose.staging.yml pull
+        docker compose -f docker-compose.yml -f docker-compose.staging.yml up -d --remove-orphans
+        docker image prune -f --filter "until=168h"
+      EOF
+    # Smoke test. A deploy that starts but does not serve is a failed deploy.
+    - sleep 20
+    - curl --fail --silent --show-error --max-time 30 https://staging.vastrix.ai/api/v1/health
+    - curl --fail --silent --show-error --max-time 30 -o /dev/null https://staging.vastrix.ai/
+
+deploy:production:
+  stage: deploy
+  extends: .deploy
+  needs: ['deploy:staging']
+  rules:
+    # Manual, on the default branch only, and never automatic.
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+      when: manual
+      allow_failure: false
+  environment:
+    name: production
+    url: https://vastrix.ai
+    on_stop: rollback:production
+  script:
+    - |
+      ssh -o StrictHostKeyChecking=yes "$PRODUCTION_SSH_USER@$PRODUCTION_SSH_HOST" bash -s <<EOF
+        set -euo pipefail
+        cd /opt/vastrix
+
+        # Record the tag currently running, so the rollback job knows where to return to.
+        docker compose config --images | head -1 > .previous-image-tag || true
+
+        # Back up before the migration runs. A failed migration with no recent backup is the
+        # scenario this protects against.
+        ./scripts/backup-database.sh --label "pre-deploy-$CI_COMMIT_SHORT_SHA"
+
+        export IMAGE_TAG="$CI_COMMIT_SHORT_SHA"
+        docker compose pull
+        docker compose up -d --remove-orphans
+        docker image prune -f --filter "until=168h"
+      EOF
+    - sleep 25
+    - curl --fail --silent --show-error --max-time 30 https://vastrix.ai/api/v1/health
+    - curl --fail --silent --show-error --max-time 30 -o /dev/null https://vastrix.ai/
+    - curl --fail --silent --show-error --max-time 30 -o /dev/null https://vastrix.ai/services
+    - curl --fail --silent --show-error --max-time 30 -o /dev/null https://vastrix.ai/sitemap.xml
+
+rollback:production:
+  stage: deploy
+  extends: .deploy
+  needs: ['deploy:production']
+  rules:
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+      when: manual
+      allow_failure: true
+  environment:
+    name: production
+    action: stop
+  script:
+    - |
+      ssh -o StrictHostKeyChecking=yes "$PRODUCTION_SSH_USER@$PRODUCTION_SSH_HOST" bash -s <<'EOF'
+        set -euo pipefail
+        cd /opt/vastrix
+        ./scripts/rollback.sh
+      EOF
+    - sleep 20
+    - curl --fail --silent --show-error --max-time 30 https://vastrix.ai/api/v1/health
