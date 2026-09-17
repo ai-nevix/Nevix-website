@@ -1,0 +1,50 @@
+# Normalise line endings.
+#
+# Without this, a Windows checkout commits CRLF and the same file looks modified on Linux — and
+# shell scripts with CRLF endings fail inside containers with "bad interpreter".
+
+* text=auto eol=lf
+
+# Files that MUST keep LF regardless of platform: these run inside Linux containers.
+*.sh            text eol=lf
+Dockerfile      text eol=lf
+*.Dockerfile    text eol=lf
+docker-entrypoint.sh text eol=lf
+*.yml           text eol=lf
+*.yaml          text eol=lf
+*.conf          text eol=lf
+
+# Source
+*.ts    text eol=lf
+*.tsx   text eol=lf
+*.js    text eol=lf
+*.mjs   text eol=lf
+*.cjs   text eol=lf
+*.py    text eol=lf
+*.json  text eol=lf
+*.css   text eol=lf
+*.md    text eol=lf
+*.toml  text eol=lf
+*.ini   text eol=lf
+
+# Binary — never touched, never diffed as text
+*.png   binary
+*.jpg   binary
+*.jpeg  binary
+*.gif   binary
+*.webp  binary
+*.avif  binary
+*.ico   binary
+*.woff  binary
+*.woff2 binary
+*.ttf   binary
+*.otf   binary
+*.pdf   binary
+*.docx  binary
+*.zip   binary
+
+# Generated — collapse in diffs and exclude from language statistics
+package-lock.json            linguist-generated=true -diff
+docs/licenses/npm-dependencies.md     linguist-generated=true
+docs/licenses/python-dependencies.md  linguist-generated=true
+docs/source-material/*.extracted.md   linguist-generated=true
