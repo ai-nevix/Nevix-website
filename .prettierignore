@@ -1,0 +1,9 @@
+node_modules
+.next
+dist
+build
+coverage
+.tooling
+apps/cms/.tmp
+apps/cms/build
+*.md

@@ -1,0 +1,45 @@
+{
+  "name": "vastrix-website",
+  "version": "0.1.0",
+  "private": true,
+  "description": "VASTRIX — intelligent technology and engineering company website and platform foundation",
+  "license": "UNLICENSED",
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "workspaces": [
+    "apps/web",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "npm run dev --workspace=@vastrix/web",
+    "build": "npm run build --workspace=@vastrix/web",
+    "start": "npm run start --workspace=@vastrix/web",
+    "lint": "npm run lint --workspace=@vastrix/web",
+    "lint:fix": "npm run lint:fix --workspace=@vastrix/web",
+    "typecheck": "npm run typecheck --workspace=@vastrix/web",
+    "test": "npm run test --workspace=@vastrix/web",
+    "test:watch": "npm run test:watch --workspace=@vastrix/web",
+    "test:e2e": "playwright test --config=tests/e2e/playwright.config.ts",
+    "test:e2e:install": "playwright install --with-deps chromium",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "audit:dummy-data": "node scripts/audit-dummy-data.mjs",
+    "audit:secrets": "node scripts/audit-secrets.mjs",
+    "licenses:inventory": "node scripts/generate-license-inventory.mjs",
+    "verify": "npm run format:check && npm run lint && npm run typecheck && npm run test && npm run audit:dummy-data && npm run audit:secrets && npm run build",
+    "serve:standalone": "node scripts/serve-standalone.mjs",
+    "screenshot": "node scripts/screenshot.mjs",
+    "audit:pages": "node scripts/audit-pages.mjs"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "^4.11.0",
+    "@playwright/test": "^1.63.0",
+    "prettier": "3.9.7",
+    "prettier-plugin-tailwindcss": "0.8.1"
+  },
+  "overrides": {
+    "postcss": "8.5.28",
+    "sharp": "0.35.4"
+  }
+}

@@ -1,0 +1,68 @@
+# Dependencies
+node_modules/
+.pnp
+.pnp.js
+
+# Local toolchain (portable Node used for this workstation)
+.tooling/
+
+# Next.js
+.next/
+out/
+next-env.d.ts
+
+# Production builds
+build/
+dist/
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+htmlcov/
+.coverage
+
+# Strapi
+apps/cms/.tmp/
+apps/cms/.cache/
+apps/cms/build/
+apps/cms/.strapi/
+apps/cms/public/uploads/*
+!apps/cms/public/uploads/.gitkeep
+
+# Environment — NEVER commit real secrets
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+!infra/nginx/certs/.gitkeep
+
+# Testing / reports
+coverage/
+playwright-report/
+test-results/
+.lighthouseci/
+
+# Editor / OS
+.DS_Store
+Thumbs.db
+.idea/
+*.swp
+
+# Logs
+*.log
+npm-debug.log*
+yarn-error.log*
+
+# Turbo / caches
+.turbo/
+.eslintcache
+
+# Staged standalone build used by scripts/serve-standalone.mjs
+.serve/
