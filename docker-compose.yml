@@ -1,0 +1,319 @@
+# VASTRIX — production topology (specification §20, §20.1).
+#
+# One Linux host, Docker Compose, Nginx terminating TLS. The specification is explicit that
+# Kubernetes should not be introduced for appearance; see ADR-005.
+#
+# Profiles gate the services that are architecturally provisioned but not used by the MVP
+# (instruction §6, ADR-008):
+#
+#   docker compose up -d                              # web + api + cms + postgres + nginx
+#   docker compose --profile cache up -d              # adds Redis
+#   docker compose --profile storage up -d            # adds MinIO
+#   docker compose --profile workers up -d            # adds Celery worker and beat
+#   docker compose -f docker-compose.yml \
+#                  -f docker-compose.monitoring.yml up -d   # adds observability
+#
+# Every secret comes from .env, which is never committed. See .env.example.
+
+name: vastrix
+
+x-logging: &default-logging
+  driver: json-file
+  options:
+    max-size: '10m'
+    max-file: '3'
+
+x-restart: &default-restart
+  restart: unless-stopped
+
+services:
+  # -------------------------------------------------------------------------------------------
+  # Reverse proxy — the only service published to the host.
+  # -------------------------------------------------------------------------------------------
+  nginx:
+    image: nginx:1.29-alpine
+    container_name: vastrix-nginx
+    <<: [*default-restart]
+    logging: *default-logging
+    ports:
+      - '80:80'
+      - '443:443'
+    volumes:
+      - ./infra/nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./infra/nginx/conf.d:/etc/nginx/conf.d:ro
+      - ./infra/nginx/snippets:/etc/nginx/snippets:ro
+      - ./infra/nginx/certs:/etc/nginx/certs:ro
+      - certbot-webroot:/var/www/certbot:ro
+      - nginx-cache:/var/cache/nginx
+    depends_on:
+      web:
+        condition: service_healthy
+      api:
+        condition: service_healthy
+    networks:
+      - edge
+    healthcheck:
+      test: ['CMD', 'wget', '--no-verbose', '--tries=1', '--spider', 'http://127.0.0.1/healthz']
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 15s
+
+  # -------------------------------------------------------------------------------------------
+  # Next.js website
+  # -------------------------------------------------------------------------------------------
+  web:
+    build:
+      context: .
+      dockerfile: apps/web/Dockerfile
+      args:
+        NEXT_PUBLIC_SITE_URL: ${NEXT_PUBLIC_SITE_URL:-https://vastrix.ai}
+        NEXT_PUBLIC_API_URL: ${NEXT_PUBLIC_API_URL:-/api/backend}
+        NEXT_PUBLIC_ENV: ${NEXT_PUBLIC_ENV:-production}
+    image: vastrix/web:${IMAGE_TAG:-latest}
+    container_name: vastrix-web
+    <<: [*default-restart]
+    logging: *default-logging
+    environment:
+      NODE_ENV: production
+      # Server-side only. The content provider defaults to the bundled local content so the site
+      # serves correctly before Strapi is populated — see ADR-006.
+      CONTENT_PROVIDER: ${CONTENT_PROVIDER:-local}
+      CMS_URL: ${CMS_URL:-}
+      CMS_API_TOKEN: ${CMS_API_TOKEN:-}
+      CONTENT_REVALIDATE_SECONDS: ${CONTENT_REVALIDATE_SECONDS:-3600}
+      API_INTERNAL_URL: http://api:8000
+    expose:
+      - '3000'
+    networks:
+      - edge
+      - internal
+    healthcheck:
+      test: ['CMD', 'wget', '--no-verbose', '--tries=1', '--spider', 'http://127.0.0.1:3000/']
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 25s
+
+  # -------------------------------------------------------------------------------------------
+  # FastAPI backend
+  # -------------------------------------------------------------------------------------------
+  api:
+    build:
+      context: ./apps/api
+      dockerfile: Dockerfile
+    image: vastrix/api:${IMAGE_TAG:-latest}
+    container_name: vastrix-api
+    <<: [*default-restart]
+    logging: *default-logging
+    environment:
+      APP_ENV: ${APP_ENV:-production}
+      DEBUG: 'false'
+      LOG_LEVEL: ${LOG_LEVEL:-INFO}
+      LOG_FORMAT: json
+      SECRET_KEY: ${SECRET_KEY:?SECRET_KEY is required}
+      ADMIN_API_KEY: ${ADMIN_API_KEY:-}
+      DATABASE_URL: postgresql+asyncpg://${POSTGRES_USER:?set POSTGRES_USER}:${POSTGRES_PASSWORD:?set POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB:-vastrix}
+      # Empty by default: the website calls through a same-origin proxy, so no cross-origin
+      # access is needed. Never "*" — the application refuses to start with a wildcard.
+      CORS_ORIGINS: ${CORS_ORIGINS:-}
+      RATE_LIMIT_ENABLED: ${RATE_LIMIT_ENABLED:-true}
+      RATE_LIMIT_STORAGE_URI: ${RATE_LIMIT_STORAGE_URI:-}
+      SMTP_HOST: ${SMTP_HOST:-}
+      SMTP_PORT: ${SMTP_PORT:-587}
+      SMTP_USER: ${SMTP_USER:-}
+      SMTP_PASSWORD: ${SMTP_PASSWORD:-}
+      SMTP_USE_TLS: ${SMTP_USE_TLS:-true}
+      EMAIL_FROM: ${EMAIL_FROM:-no-reply@vastrix.ai}
+      EMAIL_NOTIFY_TO: ${EMAIL_NOTIFY_TO:-}
+      SITE_URL: ${NEXT_PUBLIC_SITE_URL:-https://vastrix.ai}
+      SITE_CONTACT_EMAIL: ${SITE_CONTACT_EMAIL:-hello@vastrix.ai}
+      UPLOAD_DIR: /var/lib/vastrix/uploads
+      RUN_MIGRATIONS: ${RUN_MIGRATIONS:-true}
+    volumes:
+      - api-uploads:/var/lib/vastrix/uploads
+    expose:
+      - '8000'
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - edge
+      - internal
+    healthcheck:
+      test: ['CMD', 'curl', '--fail', '--silent', 'http://127.0.0.1:8000/api/v1/health/live']
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 30s
+
+  # -------------------------------------------------------------------------------------------
+  # PostgreSQL — never published to the host (specification §76).
+  # -------------------------------------------------------------------------------------------
+  postgres:
+    # pgvector image: the extension is available for the future AI layer without a rebuild, but
+    # is not created until a migration enables it (ADR-008).
+    image: pgvector/pgvector:pg16
+    container_name: vastrix-postgres
+    <<: [*default-restart]
+    logging: *default-logging
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:?set POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?set POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB:-vastrix}
+      # scram-sha-256 rather than the default trust for host connections.
+      POSTGRES_INITDB_ARGS: '--auth-host=scram-sha-256 --auth-local=scram-sha-256'
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+      - ./infra/docker/postgres/init:/docker-entrypoint-initdb.d:ro
+    networks:
+      # internal only — no `ports`, so the database is unreachable from outside the host.
+      - internal
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB:-vastrix}']
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 20s
+
+  # -------------------------------------------------------------------------------------------
+  # Strapi CMS (specification §15)
+  # -------------------------------------------------------------------------------------------
+  cms:
+    build:
+      context: ./apps/cms
+      dockerfile: Dockerfile
+    image: vastrix/cms:${IMAGE_TAG:-latest}
+    container_name: vastrix-cms
+    <<: [*default-restart]
+    logging: *default-logging
+    environment:
+      NODE_ENV: production
+      HOST: 0.0.0.0
+      PORT: 1337
+      DATABASE_CLIENT: postgres
+      DATABASE_HOST: postgres
+      DATABASE_PORT: 5432
+      DATABASE_NAME: ${CMS_DATABASE_NAME:-vastrix_cms}
+      DATABASE_USERNAME: ${POSTGRES_USER:?set POSTGRES_USER}
+      DATABASE_PASSWORD: ${POSTGRES_PASSWORD:?set POSTGRES_PASSWORD}
+      DATABASE_SSL: 'false'
+      APP_KEYS: ${CMS_APP_KEYS:?set CMS_APP_KEYS}
+      API_TOKEN_SALT: ${CMS_API_TOKEN_SALT:?set CMS_API_TOKEN_SALT}
+      ADMIN_JWT_SECRET: ${CMS_ADMIN_JWT_SECRET:?set CMS_ADMIN_JWT_SECRET}
+      TRANSFER_TOKEN_SALT: ${CMS_TRANSFER_TOKEN_SALT:?set CMS_TRANSFER_TOKEN_SALT}
+      JWT_SECRET: ${CMS_JWT_SECRET:?set CMS_JWT_SECRET}
+      STRAPI_TELEMETRY_DISABLED: 'true'
+    volumes:
+      - cms-uploads:/srv/cms/public/uploads
+    expose:
+      - '1337'
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - edge
+      - internal
+    healthcheck:
+      test:
+        ['CMD', 'wget', '--no-verbose', '--tries=1', '--spider', 'http://127.0.0.1:1337/_health']
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 90s
+
+  # -------------------------------------------------------------------------------------------
+  # Profile-gated services. Provisioned so the architecture can grow, not active in the MVP.
+  # -------------------------------------------------------------------------------------------
+  redis:
+    image: redis:7.4-alpine
+    container_name: vastrix-redis
+    profiles: ['cache', 'workers']
+    <<: [*default-restart]
+    logging: *default-logging
+    command:
+      - redis-server
+      - --appendonly
+      - 'yes'
+      - --requirepass
+      - ${REDIS_PASSWORD:?set REDIS_PASSWORD when enabling the cache profile}
+      - --maxmemory
+      - ${REDIS_MAXMEMORY:-256mb}
+      - --maxmemory-policy
+      - allkeys-lru
+    volumes:
+      - redis-data:/data
+    networks:
+      - internal
+    healthcheck:
+      test: ['CMD', 'redis-cli', '--no-auth-warning', '-a', '${REDIS_PASSWORD}', 'ping']
+      interval: 15s
+      timeout: 5s
+      retries: 5
+
+  minio:
+    image: minio/minio:RELEASE.2025-04-22T22-12-26Z
+    container_name: vastrix-minio
+    profiles: ['storage']
+    <<: [*default-restart]
+    logging: *default-logging
+    command: server /data --console-address ":9001"
+    environment:
+      MINIO_ROOT_USER: ${MINIO_ROOT_USER:?set MINIO_ROOT_USER when enabling the storage profile}
+      MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD:?set MINIO_ROOT_PASSWORD}
+      MINIO_BROWSER_REDIRECT_URL: ${MINIO_CONSOLE_URL:-http://localhost:9001}
+    volumes:
+      - minio-data:/data
+    networks:
+      - internal
+    healthcheck:
+      test: ['CMD', 'mc', 'ready', 'local']
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 20s
+
+  worker:
+    build:
+      context: ./apps/api
+      dockerfile: Dockerfile
+    image: vastrix/api:${IMAGE_TAG:-latest}
+    container_name: vastrix-worker
+    profiles: ['workers']
+    <<: [*default-restart]
+    logging: *default-logging
+    environment:
+      APP_ENV: ${APP_ENV:-production}
+      SECRET_KEY: ${SECRET_KEY:?SECRET_KEY is required}
+      DATABASE_URL: postgresql+asyncpg://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB:-vastrix}
+      REDIS_URL: redis://:${REDIS_PASSWORD}@redis:6379/0
+      # Only the API container owns migrations; a worker running them would race with it.
+      RUN_MIGRATIONS: 'false'
+    command:
+      ['celery', '-A', 'app.workers.celery_app', 'worker', '--loglevel=info', '--concurrency=2']
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    networks:
+      - internal
+
+networks:
+  # Published services and the reverse proxy.
+  edge:
+    driver: bridge
+  # Data services. `internal: true` means containers here have no route to the internet, which
+  # limits what an exploited dependency can reach (specification §76).
+  internal:
+    driver: bridge
+    internal: true
+
+volumes:
+  postgres-data:
+  redis-data:
+  minio-data:
+  cms-uploads:
+  api-uploads:
+  nginx-cache:
+  certbot-webroot:
