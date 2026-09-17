@@ -1,0 +1,89 @@
+[project]
+name = "vastrix-api"
+version = "0.1.0"
+description = "VASTRIX backend — contact, lead management, newsletter and public site configuration"
+requires-python = ">=3.12"
+license = { text = "UNLICENSED" }
+
+dependencies = [
+  "fastapi==0.120.3",
+  "uvicorn[standard]==0.38.0",
+  "pydantic==2.12.3",
+  "pydantic-settings==2.12.0",
+  "email-validator==2.3.0",
+  "sqlalchemy==2.0.44",
+  "alembic==1.17.1",
+  "asyncpg==0.30.0",
+  "psycopg[binary]==3.2.12",
+  "slowapi==0.1.9",
+  "structlog==25.4.0",
+  "python-multipart==0.0.20",
+  "httpx==0.28.1",
+  "prometheus-fastapi-instrumentator==7.1.0",
+  "aiosmtplib==4.0.2",
+  "python-magic-bin==0.4.14; sys_platform == 'win32'",
+  "python-magic==0.4.27; sys_platform != 'win32'",
+]
+
+[project.optional-dependencies]
+dev = [
+  "pytest==8.4.2",
+  "pytest-asyncio==1.2.0",
+  "pytest-cov==7.0.0",
+  "ruff==0.14.1",
+  "mypy==1.18.2",
+  "aiosqlite==0.21.0",
+  "types-python-dateutil==2.9.0.20250822",
+]
+
+[build-system]
+requires = ["setuptools>=69"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+include = ["app*"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+
+[tool.ruff.lint]
+select = [
+  "E",    # pycodestyle errors
+  "W",    # pycodestyle warnings
+  "F",    # pyflakes
+  "I",    # isort
+  "B",    # flake8-bugbear
+  "C4",   # flake8-comprehensions
+  "UP",   # pyupgrade
+  "S",    # flake8-bandit (security)
+  "T20",  # flake8-print — no stray print() in a service
+  "RUF",
+]
+ignore = [
+  "S101",  # assert is fine in tests
+  "B008",  # FastAPI Depends() in defaults is the documented pattern
+]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/*" = ["S105", "S106"]
+"app/db/migrations/*" = ["I001"]
+# Email clients strip external and embedded stylesheets, so inline style attributes are required
+# rather than preferred. Wrapping them would reduce readability without any benefit.
+"app/services/email_templates.py" = ["E501"]
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+testpaths = ["tests"]
+addopts = "-q --strict-markers"
+
+[tool.mypy]
+python_version = "3.12"
+strict = true
+plugins = ["pydantic.mypy"]
+warn_unused_ignores = true
+disallow_untyped_defs = true
+
+[[tool.mypy.overrides]]
+module = ["slowapi.*", "prometheus_fastapi_instrumentator.*", "magic.*"]
+ignore_missing_imports = true

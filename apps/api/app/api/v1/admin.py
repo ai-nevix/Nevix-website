@@ -1,0 +1,163 @@
+"""Administrative lead management (specification §17, §18).
+
+Separate router, separate URL prefix, separate authentication. Instruction §31: administrative
+endpoints are never exposed publicly without authentication and authorization.
+
+These endpoints are additionally not reachable through the website's API proxy — its allow-list
+covers public paths only — so the only route to them is a direct, authenticated call.
+"""
+
+# NOTE: this module deliberately does NOT use `from __future__ import annotations`.
+# FastAPI resolves string annotations against the decorated function's module globals. Where a
+# route is wrapped by slowapi's rate-limit decorator, that resolution fails and dependencies such
+# as `DbSession` are misclassified as request-body fields, producing a confusing 422 on every
+# call. Real annotations avoid the problem entirely. See docs/architecture/backend.md.
+
+
+import math
+import uuid
+from typing import Annotated
+
+from fastapi import APIRouter, HTTPException, Query, Request, status
+
+from app.core.logging import get_logger
+from app.core.security import AdminPrincipal, client_ip, hash_ip
+from app.db.session import DbSession
+from app.models.lead import ContactEventType, LeadStatus
+from app.repositories import LeadRepository
+from app.schemas.contact import ErrorResponse, LeadRead, LeadUpdate, PaginatedLeads
+
+logger = get_logger(__name__)
+
+router = APIRouter(
+    prefix="/admin",
+    tags=["admin"],
+    responses={
+        401: {"model": ErrorResponse, "description": "Authentication required"},
+        404: {"model": ErrorResponse, "description": "Admin API disabled or record not found"},
+    },
+)
+
+
+@router.get(
+    "/leads",
+    response_model=PaginatedLeads,
+    summary="List enquiries",
+)
+async def list_leads(
+    request: Request,
+    principal: AdminPrincipal,
+    session: DbSession,
+    page: Annotated[int, Query(ge=1)] = 1,
+    page_size: Annotated[int, Query(ge=1, le=100)] = 25,
+    lead_status: Annotated[LeadStatus | None, Query(alias="status")] = None,
+    search: Annotated[str | None, Query(max_length=120)] = None,
+) -> PaginatedLeads:
+    """Return a page of enquiries, newest first.
+
+    `page_size` is capped at 100 so an authenticated caller cannot request the whole table in one
+    query and exhaust memory.
+    """
+    repository = LeadRepository(session)
+    leads, total = await repository.list_leads(
+        page=page, page_size=page_size, status=lead_status, search=search
+    )
+
+    logger.info(
+        "admin_leads_listed",
+        principal=principal,
+        ip_hash=hash_ip(client_ip(request)),
+        count=len(leads),
+        filter_status=lead_status.value if lead_status else None,
+    )
+
+    return PaginatedLeads(
+        items=[LeadRead.model_validate(lead) for lead in leads],
+        total=total,
+        page=page,
+        page_size=page_size,
+        pages=max(1, math.ceil(total / page_size)) if total else 0,
+    )
+
+
+@router.get(
+    "/leads/{lead_id}",
+    response_model=LeadRead,
+    summary="Retrieve one enquiry",
+)
+async def get_lead(
+    request: Request,
+    lead_id: uuid.UUID,
+    principal: AdminPrincipal,
+    session: DbSession,
+) -> LeadRead:
+    """Retrieve a single enquiry and record the access as an audit event."""
+    repository = LeadRepository(session)
+    lead = await repository.get_by_id(lead_id)
+
+    if lead is None:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Lead not found.")
+
+    # Access to personal data is itself auditable (specification §18).
+    await repository.add_event(lead, ContactEventType.VIEWED, {"principal": principal})
+    await session.commit()
+
+    logger.info(
+        "admin_lead_viewed",
+        principal=principal,
+        reference=lead.reference,
+        ip_hash=hash_ip(client_ip(request)),
+    )
+
+    return LeadRead.model_validate(lead)
+
+
+@router.patch(
+    "/leads/{lead_id}",
+    response_model=LeadRead,
+    summary="Update an enquiry",
+    responses={422: {"model": ErrorResponse, "description": "Validation failed"}},
+)
+async def update_lead(
+    request: Request,
+    lead_id: uuid.UUID,
+    payload: LeadUpdate,
+    principal: AdminPrincipal,
+    session: DbSession,
+) -> LeadRead:
+    """Update status or internal notes.
+
+    Only these two fields are mutable. The submitted content of an enquiry is a record of what the
+    enquirer actually wrote and is deliberately immutable.
+    """
+    repository = LeadRepository(session)
+    lead = await repository.get_by_id(lead_id)
+
+    if lead is None:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Lead not found.")
+
+    if payload.status is None and payload.internal_notes is None:
+        raise HTTPException(
+            status_code=status.HTTP_422_UNPROCESSABLE_CONTENT,
+            detail="Provide at least one field to update.",
+        )
+
+    updated = await repository.update(
+        lead, status=payload.status, internal_notes=payload.internal_notes
+    )
+    await session.commit()
+
+    # `updated_at` is generated by the database (onupdate=now()), so the in-memory value is stale
+    # after the commit. Refreshing explicitly avoids a lazy load during response serialisation,
+    # which would fail outside the async context with MissingGreenlet.
+    await session.refresh(updated)
+
+    logger.info(
+        "admin_lead_updated",
+        principal=principal,
+        reference=updated.reference,
+        new_status=updated.status.value,
+        ip_hash=hash_ip(client_ip(request)),
+    )
+
+    return LeadRead.model_validate(updated)
