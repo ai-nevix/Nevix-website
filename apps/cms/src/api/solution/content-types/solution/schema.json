@@ -1,0 +1,79 @@
+{
+  "kind": "collectionType",
+  "collectionName": "solutions",
+  "info": {
+    "singularName": "solution",
+    "pluralName": "solutions",
+    "displayName": "Solution",
+    "description": "An outcome-oriented solution pattern (specification §8)."
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true,
+      "maxLength": 160
+    },
+    "slug": {
+      "type": "uid",
+      "targetField": "name",
+      "required": true
+    },
+    "problem": {
+      "type": "text",
+      "required": true
+    },
+    "summary": {
+      "type": "text",
+      "required": true
+    },
+    "heroTitle": {
+      "type": "string",
+      "required": true,
+      "maxLength": 200
+    },
+    "heroDescription": {
+      "type": "text",
+      "required": true
+    },
+    "workflow": {
+      "type": "component",
+      "repeatable": true,
+      "component": "shared.step"
+    },
+    "technicalApproach": {
+      "type": "json"
+    },
+    "illustrativeOutcomes": {
+      "type": "json"
+    },
+    "services": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::service.service",
+      "mappedBy": "solutions"
+    },
+    "industries": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::industry.industry",
+      "inversedBy": "solutions"
+    },
+    "icon": {
+      "type": "string",
+      "maxLength": 40
+    },
+    "order": {
+      "type": "integer",
+      "default": 0
+    },
+    "seo": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.seo"
+    }
+  }
+}

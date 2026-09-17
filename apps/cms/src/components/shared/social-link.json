@@ -1,0 +1,21 @@
+{
+  "collectionName": "components_shared_social_links",
+  "info": {
+    "displayName": "Social Link",
+    "icon": "link",
+    "description": "A social profile. Only add a URL that has been confirmed to exist."
+  },
+  "options": {},
+  "attributes": {
+    "label": {
+      "type": "string",
+      "required": true,
+      "maxLength": 40
+    },
+    "href": {
+      "type": "string",
+      "required": true,
+      "maxLength": 300
+    }
+  }
+}

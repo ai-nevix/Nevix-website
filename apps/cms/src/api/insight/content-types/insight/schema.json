@@ -1,0 +1,67 @@
+{
+  "kind": "collectionType",
+  "collectionName": "insights",
+  "info": {
+    "singularName": "insight",
+    "pluralName": "insights",
+    "displayName": "Insight",
+    "description": "Editorial article (specification §9.3, instruction §24)."
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true,
+      "maxLength": 200
+    },
+    "slug": {
+      "type": "uid",
+      "targetField": "title",
+      "required": true
+    },
+    "excerpt": {
+      "type": "text",
+      "required": true,
+      "maxLength": 400
+    },
+    "content": {
+      "type": "richtext",
+      "required": true
+    },
+    "author": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::author.author",
+      "inversedBy": "insights"
+    },
+    "category": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::insight-category.insight-category",
+      "inversedBy": "insights"
+    },
+    "tags": {
+      "type": "json"
+    },
+    "featuredImage": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": ["images"]
+    },
+    "readingMinutes": {
+      "type": "integer"
+    },
+    "featured": {
+      "type": "boolean",
+      "default": false
+    },
+    "seo": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.seo"
+    }
+  }
+}

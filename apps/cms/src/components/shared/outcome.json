@@ -1,0 +1,25 @@
+{
+  "collectionName": "components_shared_outcomes",
+  "info": {
+    "displayName": "Outcome",
+    "icon": "chartBubble",
+    "description": "A case-study outcome. `evidence` is required before a case study may be marked 'approved' — specification §31 requires evidence for any published metric."
+  },
+  "options": {},
+  "attributes": {
+    "label": {
+      "type": "string",
+      "required": true,
+      "maxLength": 120
+    },
+    "value": {
+      "type": "string",
+      "required": true,
+      "maxLength": 200
+    },
+    "evidence": {
+      "type": "text",
+      "description": "How the figure was established. Required for approved case studies."
+    }
+  }
+}

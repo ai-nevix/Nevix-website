@@ -1,0 +1,79 @@
+{
+  "kind": "collectionType",
+  "collectionName": "service_categories",
+  "info": {
+    "singularName": "service-category",
+    "pluralName": "service-categories",
+    "displayName": "Service Category",
+    "description": "One of the six VASTRIX service categories (specification §5.1)."
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true,
+      "unique": true,
+      "maxLength": 120
+    },
+    "slug": {
+      "type": "uid",
+      "targetField": "name",
+      "required": true
+    },
+    "navLabel": {
+      "type": "string",
+      "maxLength": 60
+    },
+    "positioning": {
+      "type": "text",
+      "required": true
+    },
+    "oneLineValue": {
+      "type": "string",
+      "maxLength": 200
+    },
+    "cardCta": {
+      "type": "string",
+      "maxLength": 40
+    },
+    "description": {
+      "type": "text",
+      "required": true
+    },
+    "heroTitle": {
+      "type": "string",
+      "required": true,
+      "maxLength": 200
+    },
+    "heroDescription": {
+      "type": "text",
+      "required": true
+    },
+    "icon": {
+      "type": "string",
+      "maxLength": 40
+    },
+    "isCorePillar": {
+      "type": "boolean",
+      "default": false
+    },
+    "order": {
+      "type": "integer",
+      "default": 0
+    },
+    "services": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::service.service",
+      "mappedBy": "category"
+    },
+    "seo": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.seo"
+    }
+  }
+}

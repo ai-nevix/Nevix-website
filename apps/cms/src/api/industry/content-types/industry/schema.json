@@ -1,0 +1,74 @@
+{
+  "kind": "collectionType",
+  "collectionName": "industries",
+  "info": {
+    "singularName": "industry",
+    "pluralName": "industries",
+    "displayName": "Industry",
+    "description": "Sector context. Never a claim of sector credentials (catalogue §8)."
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true,
+      "maxLength": 120
+    },
+    "slug": {
+      "type": "uid",
+      "targetField": "name",
+      "required": true
+    },
+    "summary": {
+      "type": "text",
+      "required": true
+    },
+    "heroTitle": {
+      "type": "string",
+      "required": true,
+      "maxLength": 200
+    },
+    "heroDescription": {
+      "type": "text",
+      "required": true
+    },
+    "context": {
+      "type": "richtext",
+      "required": true
+    },
+    "capabilityAreas": {
+      "type": "component",
+      "repeatable": true,
+      "component": "shared.list-item"
+    },
+    "considerations": {
+      "type": "json"
+    },
+    "solutions": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::solution.solution",
+      "mappedBy": "industries"
+    },
+    "icon": {
+      "type": "string",
+      "maxLength": 40
+    },
+    "order": {
+      "type": "integer",
+      "default": 0
+    },
+    "requiresComplianceNotice": {
+      "type": "boolean",
+      "default": false
+    },
+    "seo": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.seo"
+    }
+  }
+}

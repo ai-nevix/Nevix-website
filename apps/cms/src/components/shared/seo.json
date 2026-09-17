@@ -1,0 +1,34 @@
+{
+  "collectionName": "components_shared_seos",
+  "info": {
+    "displayName": "SEO",
+    "icon": "search",
+    "description": "Per-entry SEO metadata (specification §23.2)."
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "maxLength": 70,
+      "description": "Overrides the page title. Falls back to the entry name."
+    },
+    "description": {
+      "type": "text",
+      "maxLength": 200,
+      "description": "Meta description. Aim for 120-160 characters."
+    },
+    "ogImage": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": ["images"]
+    },
+    "noIndex": {
+      "type": "boolean",
+      "default": false,
+      "description": "Excludes the page from search indexing and from the sitemap. Set on demo and placeholder content so unverified material cannot be presented as fact."
+    },
+    "keywords": {
+      "type": "json"
+    }
+  }
+}

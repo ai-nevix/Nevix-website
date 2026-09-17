@@ -1,0 +1,44 @@
+{
+  "kind": "collectionType",
+  "collectionName": "authors",
+  "info": {
+    "singularName": "author",
+    "pluralName": "authors",
+    "displayName": "Author",
+    "description": "Insight author. Do not create a profile for a person who has not approved it (instruction §25)."
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true,
+      "maxLength": 120
+    },
+    "slug": {
+      "type": "uid",
+      "targetField": "name",
+      "required": true
+    },
+    "role": {
+      "type": "string",
+      "maxLength": 120
+    },
+    "bio": {
+      "type": "text"
+    },
+    "avatar": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": ["images"]
+    },
+    "insights": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::insight.insight",
+      "mappedBy": "author"
+    }
+  }
+}

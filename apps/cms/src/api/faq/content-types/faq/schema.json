@@ -1,0 +1,33 @@
+{
+  "kind": "collectionType",
+  "collectionName": "faqs",
+  "info": {
+    "singularName": "faq",
+    "pluralName": "faqs",
+    "displayName": "FAQ",
+    "description": "Reusable question and answer."
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "question": {
+      "type": "string",
+      "required": true,
+      "maxLength": 300
+    },
+    "answer": {
+      "type": "text",
+      "required": true
+    },
+    "category": {
+      "type": "string",
+      "maxLength": 80
+    },
+    "order": {
+      "type": "integer",
+      "default": 0
+    }
+  }
+}

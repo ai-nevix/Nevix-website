@@ -1,0 +1,53 @@
+{
+  "kind": "singleType",
+  "collectionName": "site_settings",
+  "info": {
+    "singularName": "site-setting",
+    "pluralName": "site-settings",
+    "displayName": "Site Settings",
+    "description": "Global site configuration (specification §16)."
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "companyName": {
+      "type": "string",
+      "required": true,
+      "default": "VASTRIX"
+    },
+    "tagline": {
+      "type": "string",
+      "default": "Explore. Automate. Evolve."
+    },
+    "positioning": {
+      "type": "string",
+      "default": "Intelligent Technology for a Smarter Tomorrow."
+    },
+    "contactEmail": {
+      "type": "email",
+      "required": true
+    },
+    "phone": {
+      "type": "string",
+      "maxLength": 40
+    },
+    "address": {
+      "type": "text"
+    },
+    "legalEntity": {
+      "type": "text"
+    },
+    "social": {
+      "type": "component",
+      "repeatable": true,
+      "component": "shared.social-link"
+    },
+    "defaultSeo": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.seo"
+    }
+  }
+}

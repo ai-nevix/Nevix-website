@@ -1,0 +1,19 @@
+{
+  "collectionName": "components_shared_list_items",
+  "info": {
+    "displayName": "List Item",
+    "icon": "bulletList",
+    "description": "A titled list entry with optional supporting text."
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true,
+      "maxLength": 160
+    },
+    "description": {
+      "type": "text"
+    }
+  }
+}

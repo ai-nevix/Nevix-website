@@ -1,0 +1,36 @@
+{
+  "kind": "collectionType",
+  "collectionName": "insight_categories",
+  "info": {
+    "singularName": "insight-category",
+    "pluralName": "insight-categories",
+    "displayName": "Insight Category",
+    "description": "Topic grouping for insights."
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true,
+      "unique": true,
+      "maxLength": 80
+    },
+    "slug": {
+      "type": "uid",
+      "targetField": "name",
+      "required": true
+    },
+    "description": {
+      "type": "text"
+    },
+    "insights": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::insight.insight",
+      "mappedBy": "category"
+    }
+  }
+}

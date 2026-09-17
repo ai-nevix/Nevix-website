@@ -1,0 +1,93 @@
+{
+  "kind": "collectionType",
+  "collectionName": "case_studies",
+  "info": {
+    "singularName": "case-study",
+    "pluralName": "case-studies",
+    "displayName": "Case Study",
+    "description": "Requires permission for client identity and evidence for every metric (catalogue §16, specification §31)."
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true,
+      "maxLength": 200
+    },
+    "slug": {
+      "type": "uid",
+      "targetField": "title",
+      "required": true
+    },
+    "kind": {
+      "type": "enumeration",
+      "enum": ["demo", "approved"],
+      "default": "demo",
+      "required": true
+    },
+    "client": {
+      "type": "string",
+      "maxLength": 160
+    },
+    "industry": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::industry.industry"
+    },
+    "summary": {
+      "type": "text",
+      "required": true
+    },
+    "problem": {
+      "type": "richtext",
+      "required": true
+    },
+    "constraints": {
+      "type": "json"
+    },
+    "approach": {
+      "type": "richtext",
+      "required": true
+    },
+    "architecture": {
+      "type": "json"
+    },
+    "implementation": {
+      "type": "json"
+    },
+    "outcomes": {
+      "type": "component",
+      "repeatable": true,
+      "component": "shared.outcome"
+    },
+    "lessonsLearned": {
+      "type": "json"
+    },
+    "technologies": {
+      "type": "json"
+    },
+    "services": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::service.service",
+      "mappedBy": "caseStudies"
+    },
+    "coverImage": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": ["images"]
+    },
+    "order": {
+      "type": "integer",
+      "default": 0
+    },
+    "seo": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.seo"
+    }
+  }
+}

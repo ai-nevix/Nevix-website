@@ -1,0 +1,94 @@
+{
+  "kind": "collectionType",
+  "collectionName": "services",
+  "info": {
+    "singularName": "service",
+    "pluralName": "services",
+    "displayName": "Service",
+    "description": "A VASTRIX service (specification §7.1)."
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true,
+      "maxLength": 160
+    },
+    "slug": {
+      "type": "uid",
+      "targetField": "name",
+      "required": true
+    },
+    "category": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::service-category.service-category",
+      "inversedBy": "services"
+    },
+    "shortDescription": {
+      "type": "text",
+      "required": true
+    },
+    "heroTitle": {
+      "type": "string",
+      "required": true,
+      "maxLength": 200
+    },
+    "heroDescription": {
+      "type": "text",
+      "required": true
+    },
+    "problemStatement": {
+      "type": "richtext",
+      "required": true
+    },
+    "whatWeDo": {
+      "type": "richtext",
+      "required": true
+    },
+    "capabilities": {
+      "type": "json"
+    },
+    "useCases": {
+      "type": "json"
+    },
+    "technologyApproach": {
+      "type": "richtext"
+    },
+    "technologies": {
+      "type": "json"
+    },
+    "outcomes": {
+      "type": "json"
+    },
+    "faq": {
+      "type": "component",
+      "repeatable": true,
+      "component": "shared.faq-item"
+    },
+    "caseStudies": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::case-study.case-study",
+      "inversedBy": "services"
+    },
+    "solutions": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::solution.solution",
+      "inversedBy": "services"
+    },
+    "order": {
+      "type": "integer",
+      "default": 0
+    },
+    "seo": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.seo"
+    }
+  }
+}
