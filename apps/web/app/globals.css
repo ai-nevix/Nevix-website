@@ -1,0 +1,556 @@
+@import 'tailwindcss';
+
+/* ==============================================================================================
+   VASTRIX Design System
+   ----------------------------------------------------------------------------------------------
+   Tokens are derived from the supplied brand material (specification §4). The palette, the
+   Manrope typeface and the logo are fixed brand assets — do not substitute them.
+
+   The visual language deliberately alternates between deep "midnight" sections (hero, pillars,
+   final CTA, footer) and clean light sections, mirroring the supplied brand board. Blue/cyan is
+   an accent, never full-page decoration.
+   ============================================================================================== */
+
+@theme {
+  /* --- Brand palette (specification §4) ------------------------------------------------------ */
+  --color-vastrix-blue: #2563eb;
+  --color-neon-cyan: #06b6d4;
+  --color-midnight: #0a0f1c;
+  --color-slate-brand: #64748b;
+  --color-light: #f8fafc;
+
+  /* Brand blue ramp, generated around #2563EB so hover/active states stay on-brand. */
+  --color-brand-50: #eff5ff;
+  --color-brand-100: #dbe8fe;
+  --color-brand-200: #bfd7fe;
+  --color-brand-300: #93bbfd;
+  --color-brand-400: #6096fa;
+  --color-brand-500: #3b7ef6;
+  --color-brand-600: #2563eb;
+  --color-brand-700: #1d4fd8;
+  --color-brand-800: #1e41af;
+  --color-brand-900: #1e3a8a;
+  --color-brand-950: #172554;
+
+  /* Cyan ramp around #06B6D4 — reserved for AI / future-facing accents. */
+  --color-cyan-brand-300: #67e8f9;
+  --color-cyan-brand-400: #22d3ee;
+  --color-cyan-brand-500: #06b6d4;
+  --color-cyan-brand-600: #0891b2;
+  --color-cyan-brand-700: #0e7490;
+
+  /* Midnight ramp for dark sections and elevated surfaces within them. */
+  --color-ink-950: #05070f;
+  --color-ink-900: #0a0f1c;
+  --color-ink-850: #0d1424;
+  --color-ink-800: #121a2e;
+  --color-ink-700: #1a2440;
+  --color-ink-600: #263252;
+  --color-ink-500: #3a4867;
+
+  /* Neutral ramp anchored on Slate #64748B / Light #F8FAFC. */
+  --color-neutral-25: #fcfdfe;
+  --color-neutral-50: #f8fafc;
+  --color-neutral-100: #f1f5f9;
+  --color-neutral-200: #e2e8f0;
+  --color-neutral-300: #cbd5e1;
+  --color-neutral-400: #94a3b8;
+  --color-neutral-500: #64748b;
+  --color-neutral-600: #475569;
+  --color-neutral-700: #334155;
+  --color-neutral-800: #1e293b;
+  --color-neutral-900: #0f172a;
+
+  /* Semantic status colors — chosen for AA contrast on white at 14px. */
+  --color-success: #047857;
+  --color-success-bg: #ecfdf5;
+  --color-warning: #b45309;
+  --color-warning-bg: #fffbeb;
+  --color-danger: #b91c1c;
+  --color-danger-bg: #fef2f2;
+  --color-info: #1d4fd8;
+  --color-info-bg: #eff5ff;
+
+  /* --- Typography ---------------------------------------------------------------------------- */
+  --font-sans:
+    var(--font-manrope), ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --font-mono:
+    ui-monospace, 'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, 'Liberation Mono', monospace;
+
+  /* Display scale. Clamped so headings adapt without a JS resize observer. */
+  --text-display-xl: clamp(2.75rem, 1.6rem + 5.1vw, 5.25rem);
+  --text-display-xl--line-height: 1.02;
+  --text-display-xl--letter-spacing: -0.035em;
+  --text-display-xl--font-weight: 800;
+
+  --text-display-lg: clamp(2.25rem, 1.5rem + 3.4vw, 3.75rem);
+  --text-display-lg--line-height: 1.06;
+  --text-display-lg--letter-spacing: -0.03em;
+  --text-display-lg--font-weight: 800;
+
+  --text-display-md: clamp(1.875rem, 1.35rem + 2.3vw, 2.875rem);
+  --text-display-md--line-height: 1.12;
+  --text-display-md--letter-spacing: -0.025em;
+  --text-display-md--font-weight: 700;
+
+  --text-display-sm: clamp(1.5rem, 1.2rem + 1.3vw, 2rem);
+  --text-display-sm--line-height: 1.2;
+  --text-display-sm--letter-spacing: -0.02em;
+  --text-display-sm--font-weight: 700;
+
+  /* Eyebrow / kicker label used above section headings. */
+  --text-eyebrow: 0.75rem;
+  --text-eyebrow--line-height: 1.2;
+  --text-eyebrow--letter-spacing: 0.16em;
+  --text-eyebrow--font-weight: 700;
+
+  /* --- Layout -------------------------------------------------------------------------------- */
+  --container-content: 80rem; /* 1280px — the primary content grid */
+  --container-prose: 46rem; /* 736px — long-form reading measure */
+
+  /* --- Radii --------------------------------------------------------------------------------- */
+  --radius-card: 1rem;
+  --radius-panel: 1.5rem;
+
+  /* --- Elevation ----------------------------------------------------------------------------- */
+  --shadow-card: 0 1px 2px 0 rgb(15 23 42 / 0.04), 0 4px 16px -4px rgb(15 23 42 / 0.08);
+  --shadow-card-hover: 0 2px 4px 0 rgb(15 23 42 / 0.05), 0 16px 40px -12px rgb(30 64 175 / 0.22);
+  --shadow-panel: 0 24px 64px -24px rgb(10 15 28 / 0.45);
+
+  /* --- Motion -------------------------------------------------------------------------------- */
+  --ease-out-brand: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in-out-brand: cubic-bezier(0.65, 0, 0.35, 1);
+  --duration-fast: 150ms;
+  --duration-base: 250ms;
+  --duration-slow: 450ms;
+}
+
+/* ==============================================================================================
+   Base layer
+   ============================================================================================== */
+
+@layer base {
+  :root {
+    color-scheme: light;
+    /* Height of the sticky header, used by scroll-margin and sticky offsets. */
+    --header-height: 4.5rem;
+  }
+
+  @media (min-width: 1024px) {
+    :root {
+      --header-height: 5rem;
+    }
+  }
+
+  * {
+    border-color: var(--color-neutral-200);
+  }
+
+  html {
+    -webkit-text-size-adjust: 100%;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: var(--color-light);
+    color: var(--color-neutral-800);
+    font-family: var(--font-sans);
+    font-feature-settings: 'cv11', 'ss01';
+    font-variant-ligatures: contextual;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  /* Anchored sections must clear the sticky header. */
+  :target,
+  [id] {
+    scroll-margin-top: calc(var(--header-height) + 1.5rem);
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    color: var(--color-neutral-900);
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  /* A single, consistent, high-contrast focus ring everywhere (specification §23.3). */
+  :focus-visible {
+    outline: 2px solid var(--color-brand-600);
+    outline-offset: 2px;
+    border-radius: 0.25rem;
+  }
+
+  /* Dark surfaces need a light ring to stay visible. */
+  .on-dark :focus-visible,
+  .dark-section :focus-visible {
+    outline-color: var(--color-cyan-brand-400);
+  }
+
+  ::selection {
+    background-color: color-mix(in srgb, var(--color-brand-600) 22%, transparent);
+    color: var(--color-neutral-900);
+  }
+
+  /* Consistent, non-jarring scrollbars on the dark sections. */
+  @supports (scrollbar-width: thin) {
+    .scrollbar-slim {
+      scrollbar-width: thin;
+      scrollbar-color: var(--color-neutral-300) transparent;
+    }
+  }
+
+  /* Specification §23.3 / instruction §37: honour the OS reduced-motion preference. */
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+/* ==============================================================================================
+   Component utilities
+   ----------------------------------------------------------------------------------------------
+   Only patterns that repeat across many pages live here. Anything used once stays inline.
+   ============================================================================================== */
+
+@layer components {
+  /* --- Dark section treatment ---------------------------------------------------------------- */
+
+  .dark-section {
+    background-color: var(--color-ink-900);
+    color: var(--color-neutral-300);
+  }
+
+  .dark-section h1,
+  .dark-section h2,
+  .dark-section h3,
+  .dark-section h4 {
+    color: #ffffff;
+  }
+
+  /*
+   * The signature VASTRIX backdrop: a deep midnight field with two soft brand-coloured light
+   * sources and a faint engineering grid. Referenced from the supplied brand board rather than
+   * copying the banner image into every section.
+   */
+  .brand-field {
+    position: relative;
+    isolation: isolate;
+    background-color: var(--color-ink-900);
+  }
+
+  .brand-field::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -2;
+    background:
+      radial-gradient(
+        60rem 34rem at 12% -10%,
+        color-mix(in srgb, var(--color-brand-600) 30%, transparent),
+        transparent 62%
+      ),
+      radial-gradient(
+        46rem 30rem at 92% 8%,
+        color-mix(in srgb, var(--color-cyan-brand-500) 22%, transparent),
+        transparent 60%
+      ),
+      linear-gradient(180deg, var(--color-ink-950) 0%, var(--color-ink-900) 55%, #0b1120 100%);
+  }
+
+  .brand-field::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background-image:
+      linear-gradient(to right, rgb(148 163 184 / 0.07) 1px, transparent 1px),
+      linear-gradient(to bottom, rgb(148 163 184 / 0.07) 1px, transparent 1px);
+    background-size: 4.5rem 4.5rem;
+    /* Fades the grid out towards the edges so it reads as texture, not a table. */
+    mask-image: radial-gradient(70% 60% at 50% 35%, #000 20%, transparent 100%);
+  }
+
+  /* --- Cards --------------------------------------------------------------------------------- */
+
+  .card-surface {
+    background-color: #ffffff;
+    border: 1px solid var(--color-neutral-200);
+    border-radius: var(--radius-card);
+    box-shadow: var(--shadow-card);
+    transition:
+      box-shadow var(--duration-base) var(--ease-out-brand),
+      border-color var(--duration-base) var(--ease-out-brand),
+      transform var(--duration-base) var(--ease-out-brand);
+  }
+
+  .card-interactive:hover {
+    box-shadow: var(--shadow-card-hover);
+    border-color: var(--color-brand-300);
+    transform: translateY(-2px);
+  }
+
+  /* Keyboard users get the same affordance as mouse users. */
+  .card-interactive:focus-within {
+    box-shadow: var(--shadow-card-hover);
+    border-color: var(--color-brand-400);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .card-interactive:hover {
+      transform: none;
+    }
+  }
+
+  /* Restrained glass, used only on dark sections (instruction §67). */
+  .card-glass {
+    background-color: rgb(255 255 255 / 0.04);
+    border: 1px solid rgb(255 255 255 / 0.1);
+    border-radius: var(--radius-card);
+    backdrop-filter: blur(12px);
+    transition:
+      background-color var(--duration-base) var(--ease-out-brand),
+      border-color var(--duration-base) var(--ease-out-brand);
+  }
+
+  .card-glass:hover,
+  .card-glass:focus-within {
+    background-color: rgb(255 255 255 / 0.07);
+    border-color: color-mix(in srgb, var(--color-cyan-brand-400) 45%, transparent);
+  }
+
+  /* --- Typographic helpers -------------------------------------------------------------------- */
+
+  .text-gradient-brand {
+    background-image: linear-gradient(
+      100deg,
+      var(--color-cyan-brand-400) 0%,
+      var(--color-brand-400) 45%,
+      var(--color-brand-600) 100%
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    /* Descenders get clipped without a little breathing room. */
+    padding-bottom: 0.06em;
+  }
+
+  .rule-accent {
+    display: block;
+    width: 3.5rem;
+    height: 3px;
+    border-radius: 999px;
+    background-image: linear-gradient(90deg, var(--color-cyan-brand-400), var(--color-brand-600));
+  }
+
+  /* --- Long-form content --------------------------------------------------------------------- */
+
+  .prose-vastrix {
+    color: var(--color-neutral-700);
+    font-size: 1.0625rem;
+    line-height: 1.75;
+  }
+
+  .prose-vastrix > * + * {
+    margin-top: 1.25rem;
+  }
+
+  .prose-vastrix h2 {
+    margin-top: 2.75rem;
+    font-size: 1.5rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+  }
+
+  .prose-vastrix h3 {
+    margin-top: 2rem;
+    font-size: 1.1875rem;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+  }
+
+  .prose-vastrix ul,
+  .prose-vastrix ol {
+    padding-left: 1.5rem;
+    display: grid;
+    gap: 0.5rem;
+  }
+
+  .prose-vastrix ul {
+    list-style-type: disc;
+  }
+
+  .prose-vastrix ol {
+    list-style-type: decimal;
+  }
+
+  .prose-vastrix a {
+    color: var(--color-brand-700);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    text-decoration-thickness: 1px;
+  }
+
+  .prose-vastrix a:hover {
+    color: var(--color-brand-800);
+  }
+
+  .prose-vastrix code {
+    font-family: var(--font-mono);
+    font-size: 0.875em;
+    background-color: var(--color-neutral-100);
+    border: 1px solid var(--color-neutral-200);
+    border-radius: 0.375rem;
+    padding: 0.1em 0.35em;
+  }
+
+  .prose-vastrix pre {
+    background-color: var(--color-ink-900);
+    color: var(--color-neutral-200);
+    border-radius: var(--radius-card);
+    padding: 1.25rem;
+    overflow-x: auto;
+    font-size: 0.875rem;
+    line-height: 1.6;
+  }
+
+  .prose-vastrix pre code {
+    background: none;
+    border: none;
+    padding: 0;
+    color: inherit;
+  }
+
+  .prose-vastrix blockquote {
+    border-left: 3px solid var(--color-brand-500);
+    padding-left: 1.25rem;
+    color: var(--color-neutral-600);
+    font-style: italic;
+  }
+}
+
+/* ==============================================================================================
+   Utilities
+   ============================================================================================== */
+
+@layer utilities {
+  /* Visible to assistive technology, invisible on screen. Used for skip links and live regions. */
+  .sr-only-focusable:not(:focus):not(:focus-within) {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+    border-width: 0;
+  }
+
+  /* Horizontal scrollers on mobile should not show a scrollbar but must stay swipeable. */
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/* ==============================================================================================
+   Scroll reveal
+   ----------------------------------------------------------------------------------------------
+   Progressive enhancement only. The default state of every `.reveal` / `.stagger-item` is fully
+   visible; the animation is layered on top where the browser supports scroll-driven animations
+   AND the visitor has not asked for reduced motion.
+
+   This ordering matters: an implementation that hides content first and reveals it with script
+   leaves the content invisible whenever the script does not run. See components/ui/motion.tsx.
+   ============================================================================================== */
+
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view()) {
+    .reveal {
+      animation: vastrix-reveal linear both;
+      animation-timeline: view();
+      /* Resolves shortly after the element enters the viewport, so it is settled when read. */
+      animation-range: entry 0% cover calc(16% + (var(--reveal-step, 0) * 3%));
+    }
+
+    .stagger > .stagger-item {
+      animation: vastrix-reveal linear both;
+      animation-timeline: view();
+      animation-range: entry 0% cover calc(16% + (sibling-index() * 1.5%));
+    }
+
+    /* `sibling-index()` is not universally available yet; this keeps the sequence sane without it. */
+    @supports not (width: calc(sibling-index() * 1px)) {
+      .stagger > .stagger-item {
+        animation-range: entry 0% cover 20%;
+      }
+    }
+  }
+}
+
+@keyframes vastrix-reveal {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* ==============================================================================================
+   Motion keyframes
+   ============================================================================================== */
+
+@keyframes vastrix-sheen {
+  0% {
+    transform: translateX(-120%);
+  }
+  100% {
+    transform: translateX(220%);
+  }
+}
+
+@keyframes vastrix-pulse-ring {
+  0%,
+  100% {
+    opacity: 0.35;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.6;
+    transform: scale(1.06);
+  }
+}
+
+@keyframes vastrix-drift {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+  50% {
+    transform: translate3d(0, -10px, 0);
+  }
+}
