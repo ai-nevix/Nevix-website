@@ -6,22 +6,22 @@ import { useCallback, useEffect, useSyncExternalStore } from 'react';
 
 import { AmbientBackground } from '@/components/branding/ambient-background';
 import { SkipIntro } from '@/components/branding/skip-intro';
-import { VastrixLogoReveal } from '@/components/branding/vastrix-logo-reveal';
+import { NevixLogoReveal } from '@/components/branding/nevix-logo-reveal';
 import { brandAssets, siteConfig } from '@/content/site';
 import { EXIT_DURATION_S, INTRO_TOTAL_MS, phase } from '@/lib/brand/intro-config';
 import { LOCKUP } from '@/lib/brand/mark-geometry';
 
 /**
- * The VASTRIX welcome — phases 5 to 7, and the orchestration of the whole sequence.
+ * The NEVIX welcome — phases 5 to 7, and the orchestration of the whole sequence.
  *
  * This module holds everything heavy: Framer Motion, the ambient field, the reveal. It is loaded
- * on demand by `vastrix-intro.tsx`, which is why it is a separate file — see the note there.
+ * on demand by `nevix-intro.tsx`, which is why it is a separate file — see the note there.
  *
  * ## Why the curtain is not this component's job
  *
  * A client component cannot render before hydration, so an overlay that lived only in React would
  * show the homepage first and then cover it — a flash on every first visit. Instead the inline
- * script in `app/layout.tsx` sets `vastrix-intro-armed` on `<html>` before the first paint, and
+ * script in `app/layout.tsx` sets `nevix-intro-armed` on `<html>` before the first paint, and
  * CSS paints the midnight curtain from that class alone. This component then mounts on top of the
  * same colour, so there is nothing to see in between.
  *
@@ -45,7 +45,7 @@ import { LOCKUP } from '@/lib/brand/mark-geometry';
  * the two disagreeing.
  */
 
-const ARMED_CLASS = 'vastrix-intro-armed';
+const ARMED_CLASS = 'nevix-intro-armed';
 
 /** Re-reads the class whenever anything changes it — including this component itself. */
 function subscribeToArmed(onChange: () => void) {
@@ -58,7 +58,7 @@ const isArmed = () => document.documentElement.classList.contains(ARMED_CLASS);
 /** Never armed on the server: there is no `<html>` class to read, and no animation to run. */
 const notArmedOnServer = () => false;
 
-export function VastrixIntroStage() {
+export function NevixIntroStage() {
   const playing = useSyncExternalStore(subscribeToArmed, isArmed, notArmedOnServer);
 
   const finish = useCallback(() => {
@@ -89,9 +89,9 @@ export function VastrixIntroStage() {
     <AnimatePresence>
       {playing ? (
         <motion.div
-          key="vastrix-intro"
+          key="nevix-intro"
           // A stable hook for the end-to-end tests, which should not depend on utility classes.
-          data-vastrix-intro=""
+          data-nevix-intro=""
           className="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-ink-900"
           initial={{ opacity: 1 }}
           exit={{ opacity: 0, scale: 1.04 }}
@@ -108,33 +108,34 @@ export function VastrixIntroStage() {
               {
                 // One width drives the whole lockup. The wordmark is the wider of the two, so it
                 // is what the viewport has to accommodate; the mark and the gap follow from the
-                // ratios measured off the supplied artwork.
-                '--vastrix-lockup': 'min(86vw, 39rem)',
-                '--vastrix-mark': `calc(var(--vastrix-lockup) / ${LOCKUP.wordmarkToMark})`,
+                // ratios measured off the supplied artwork. The N is taller than it is wide, so
+                // the height of the viewport caps the lockup as well as its width.
+                '--nevix-lockup': 'min(80vw, 30rem, 64vh)',
+                '--nevix-mark': `calc(var(--nevix-lockup) / ${LOCKUP.wordmarkToMark})`,
               } as React.CSSProperties
             }
           >
-            <VastrixLogoReveal />
+            <NevixLogoReveal />
 
             <motion.div
-              style={{ marginTop: `calc(var(--vastrix-mark) * ${LOCKUP.gapToMark})` }}
+              style={{ marginTop: `calc(var(--nevix-mark) * ${LOCKUP.gapToMark})` }}
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ ...wordmark, ease: [0.22, 1, 0.36, 1] }}
             >
               <Image
-                src={brandAssets.wordmarkLight}
+                src={brandAssets.wordmarkLight.src}
                 alt=""
-                width={633}
-                height={69}
+                width={brandAssets.wordmarkLight.width}
+                height={brandAssets.wordmarkLight.height}
                 priority
                 className="h-auto"
-                style={{ width: 'var(--vastrix-lockup)' }}
+                style={{ width: 'var(--nevix-lockup)' }}
               />
             </motion.div>
 
             <motion.p
-              className="mt-[clamp(1rem,2.4vw,1.75rem)] text-center text-[clamp(0.75rem,2.2vw,0.95rem)] font-medium tracking-[0.22em] text-neutral-300 uppercase"
+              className="mt-[clamp(1rem,2.4vw,1.6rem)] text-center text-[clamp(0.7rem,2vw,0.9rem)] font-medium tracking-[0.32em] text-neutral-300 uppercase"
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ ...tagline, ease: [0.22, 1, 0.36, 1] }}

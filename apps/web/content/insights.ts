@@ -1,11 +1,11 @@
-import type { Author, Insight, InsightCategory } from '@vastrix/types';
+import type { Author, Insight, InsightCategory } from '@nevix/types';
 
 /**
  * Insights — CMS-backed editorial content (specification §9.3, instruction §24).
  *
  * DUMMY-DATA: DD-007
  * These seed articles exercise the Insights system before Strapi is populated. They are written
- * from the documented VASTRIX positioning and contain no client references, statistics,
+ * from the documented NEVIX positioning and contain no client references, statistics,
  * benchmarks or performance claims. Replace with real editorial content published through the
  * CMS.
  *
@@ -50,16 +50,16 @@ export const insightCategories: InsightCategory[] = [
 
 export const authors: Author[] = [
   {
-    slug: 'vastrix-engineering',
-    name: 'VASTRIX Engineering',
+    slug: 'nevix-engineering',
+    name: 'NEVIX Engineering',
     role: 'Engineering team',
-    bio: 'Written by the VASTRIX engineering team. Individual author profiles will be published once approved.',
+    bio: 'Written by the NEVIX engineering team. Individual author profiles will be published once approved.',
   },
   {
-    slug: 'vastrix-editorial',
-    name: 'VASTRIX Editorial',
+    slug: 'nevix-editorial',
+    name: 'NEVIX Editorial',
     role: 'Editorial team',
-    bio: 'Written by the VASTRIX editorial team. Individual author profiles will be published once approved.',
+    bio: 'Written by the NEVIX editorial team. Individual author profiles will be published once approved.',
   },
 ];
 
@@ -69,7 +69,7 @@ export const insights: Insight[] = [
     title: 'Build the evaluation set before you write the prompt',
     excerpt:
       'The most common reason a generative AI project stalls is that nobody agreed what a correct answer looks like. Building the evaluation set first changes which approach you pick.',
-    authorSlug: 'vastrix-engineering',
+    authorSlug: 'nevix-engineering',
     categorySlug: 'ai',
     tags: ['generative-ai', 'evaluation', 'llm', 'quality'],
     publishedAt: '2026-06-12',
@@ -115,7 +115,7 @@ That is a considerably stronger position than a convincing demonstration.`,
     title: 'Automate the process you have, not the one in the documentation',
     excerpt:
       'Documented processes and performed processes diverge over years of workarounds. Automating the documented version produces a system that fails on the first real case.',
-    authorSlug: 'vastrix-engineering',
+    authorSlug: 'nevix-engineering',
     categorySlug: 'automation',
     tags: ['process-automation', 'discovery', 'workflow'],
     publishedAt: '2026-05-28',
@@ -172,7 +172,7 @@ It also tends to be the most useful document the organisation has about how the 
     title: 'A pipeline that half-succeeds is worse than one that fails',
     excerpt:
       'A broken pipeline is an inconvenience. A partially successful one renders reports that look correct and are not, and nobody finds out until a decision has been made on them.',
-    authorSlug: 'vastrix-engineering',
+    authorSlug: 'nevix-engineering',
     categorySlug: 'data',
     tags: ['data-engineering', 'etl', 'validation', 'reliability'],
     publishedAt: '2026-05-14',
@@ -236,7 +236,7 @@ Finally, put data freshness on the dashboard itself. A figure that is three days
     title: 'Keep the decision out of the model',
     excerpt:
       'AI is good at reading unstructured input. It is a poor place to put a decision that must be explainable, reproducible and changeable by someone who is not an engineer.',
-    authorSlug: 'vastrix-engineering',
+    authorSlug: 'nevix-engineering',
     categorySlug: 'ai',
     tags: ['intelligent-automation', 'governance', 'architecture', 'llm'],
     publishedAt: '2026-04-22',
@@ -286,7 +286,7 @@ Models should read. Rules should decide. People should own the rules.`,
     title: 'You probably do not need Kubernetes yet',
     excerpt:
       'A single Linux host running Docker Compose handles far more traffic than most teams assume. Orchestration introduced early is a cost paid every day afterwards.',
-    authorSlug: 'vastrix-engineering',
+    authorSlug: 'nevix-engineering',
     categorySlug: 'cloud',
     tags: ['docker', 'deployment', 'infrastructure', 'architecture'],
     publishedAt: '2026-03-19',
@@ -338,7 +338,7 @@ Having the trigger written down gives you a defensible reason to move later, and
     title: 'Choosing an open-source stack is a reversibility decision',
     excerpt:
       'The argument for open source in enterprise and public-sector systems is rarely cost. It is the ability to change your mind later without rewriting the application.',
-    authorSlug: 'vastrix-editorial',
+    authorSlug: 'nevix-editorial',
     categorySlug: 'technology',
     tags: ['open-source', 'architecture', 'procurement', 'self-hosting'],
     publishedAt: '2026-02-26',

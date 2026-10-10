@@ -1,1 +1,1 @@
-"""VASTRIX backend application."""
+"""NEVIX backend application."""

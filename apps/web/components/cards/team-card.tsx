@@ -5,15 +5,18 @@ import { teamCardAlt, type TeamMember } from '@/content/about';
 /**
  * A team member, shown as the supplied card, whole.
  *
- * The card is a finished composition — logo, photograph, name, role and quote — so it is published
+ * The card is a finished composition — logo, photograph, name, role and words — so it is published
  * uncropped and nothing is repeated beside it. An earlier version cropped to the face and set the
  * text in HTML; that lost the design the cards were made for.
  *
- * The consequence is that the name and role are pixels. Everything that cannot see a picture is
- * served separately and deliberately:
+ * The cards are not all the same shape, so the frame takes each card's own ratio from the content
+ * rather than forcing one on both — a square frame would crop the founder's 3:2 card.
  *
- *   - `alt` carries the name, the role and the quote, so a screen reader hears the card's content
- *     rather than "image"
+ * The name and role are pixels. Everything that cannot see a picture is served separately and
+ * deliberately:
+ *
+ *   - `alt` carries the name, the role and the words on the card, so a screen reader hears the
+ *     card's content rather than "image"
  *   - the visually hidden heading gives the page a real heading structure and an anchor target,
  *     which an `alt` attribute cannot do
  *   - `Person` structured data on the page carries the same facts for search engines
@@ -24,19 +27,31 @@ export function TeamCard({ member, priority = false }: { member: TeamMember; pri
   return (
     <figure
       id={member.slug}
-      className="scroll-mt-28 overflow-hidden rounded-(--radius-panel) border border-neutral-200 bg-white shadow-card"
+      className="group relative scroll-mt-28 overflow-hidden rounded-(--radius-panel) bg-ink-950 shadow-[var(--shadow-panel)] transition-shadow duration-500 hover:shadow-[0_30px_80px_-28px_rgb(11_85_240/0.55)]"
     >
-      {/* The cards are square, so a square frame shows all of one without cropping any of it. */}
-      <div className="relative aspect-square">
+      <div
+        className="relative"
+        style={{ aspectRatio: `${member.cardWidth} / ${member.cardHeight}` }}
+      >
         <Image
           src={member.card}
           alt={teamCardAlt(member)}
           fill
           priority={priority}
-          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 560px"
+          sizes="(max-width: 768px) 100vw, 60vw"
           className="object-cover"
         />
       </div>
+
+      {/* Hairline ring and a gradient edge that lights on hover — decoration only. */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 rounded-(--radius-panel) ring-1 ring-white/10 ring-inset"
+      />
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-x-0 bottom-0 h-0.5 origin-left scale-x-0 bg-linear-to-r from-cyan-brand-400 via-brand-500 to-horizon transition-transform duration-700 group-hover:scale-x-100"
+      />
 
       <figcaption className="sr-only">
         <h3>{member.name}</h3>

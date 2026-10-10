@@ -5,7 +5,7 @@
     "singularName": "service-category",
     "pluralName": "service-categories",
     "displayName": "Service Category",
-    "description": "One of the six VASTRIX service categories (specification §5.1)."
+    "description": "One of the six NEVIX service categories (specification §5.1)."
   },
   "options": {
     "draftAndPublish": true

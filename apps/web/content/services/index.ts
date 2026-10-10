@@ -1,4 +1,4 @@
-import type { Service, ServiceCategorySlug } from '@vastrix/types';
+import type { Service, ServiceCategorySlug } from '@nevix/types';
 
 import { aiIntelligenceServices } from './ai-intelligence';
 import { automationServices } from './automation';

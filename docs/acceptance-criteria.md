@@ -19,7 +19,7 @@ Specification §30, tracked verbatim with current status and the evidence behind
 | 10 | Critical APIs have automated tests | ✅ | 55 pytest tests covering contact, admin, newsletter, uploads, health, security headers |
 | 11 | Keyboard and accessibility blockers resolved | ✅ | axe-core over 35 routes × 3 viewports: 31 violations found, all fixed; Radix primitives for focus management |
 | 12 | SEO metadata exists on indexable pages | ✅ | Unique title and description per page, canonicals, sitemap, robots, JSON-LD; asserted by content tests |
-| 13 | Images optimised and meaningful images have alt text | ✅ | AVIF/WebP via `next/image`; brand assets recompressed; axe reports no missing alt text |
+| 13 | Images optimised and meaningful images have alt text | ✅ | AVIF/WebP via `next/image`; brand artwork derived as WebP and transparent PNG by `scripts/derive-brand-assets.mjs`, kept current by `npm run brand:check`; axe reports no missing alt text |
 | 14 | Public claims comply with approved company information | ✅ | 42 content tests enforce specification §31 and catalogue §16 — **verified by injecting violations and confirming they fail** |
 | 15 | Health checks and logging available | ✅ | Three health endpoints; structured JSON logs with global credential redaction |
 | 16 | Dependency versions and licences recorded | ✅ | 485 npm + 60 Python packages inventoried at resolved versions; CI gate on unrecognised licences |
@@ -60,10 +60,10 @@ until someone runs it for real.
 12 registered placeholders remain, tracked in
 [`dummy-data/registry.md`](./dummy-data/registry.md). Blocking for public launch:
 
-- **DD-004** verified contact details
+- **DD-004** verified phone number and registered office address (email confirmed)
 - **DD-005** registered legal entity
 - **DD-006** counsel-reviewed legal pages
-- **DD-010** confirmed social profile URLs
+- **DD-010** NEVIX social profile URLs (the current links still point to the former-name profiles)
 
 Full gate: [`dummy-data/replacement-checklist.md`](./dummy-data/replacement-checklist.md).
 

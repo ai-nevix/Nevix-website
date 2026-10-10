@@ -5,12 +5,14 @@ Each line maps to an entry in [`registry.md`](./registry.md).
 
 ## Blocking — must be replaced or removed before public launch
 
-- [ ] **DD-004** Real contact email, phone and registered office address
+- [ ] **DD-004** Verified phone number and registered office address (the email,
+      `nevix.ai@gmail.com`, was confirmed at the rebrand on 2026-10-10)
 - [ ] **DD-005** Registered legal entity name, jurisdiction and registration identifiers
 - [ ] **DD-006** Privacy Policy, Terms of Use and Cookie Notice reviewed by counsel; remove the
       `DRAFT` banner only after review
-- [ ] **DD-010** Confirm or delete each social profile URL (a dead link in `Organization` schema
-      is worse than no link)
+- [ ] **DD-010** Replace each social profile URL — they still point to the former-name profiles —
+      with the NEVIX profile as it is created, or delete the entry (a dead link in `Organization`
+      schema is worse than no link)
 
 ## Blocking unless the section is removed
 
@@ -33,7 +35,7 @@ Each line maps to an entry in [`registry.md`](./registry.md).
 - [ ] `SMTP_*` configured so contact notifications actually send
 - [ ] `CMS_API_TOKEN` issued as a **read-only** Strapi token
 - [ ] `SECRET_KEY` and `ADMIN_API_KEY` generated with `scripts/generate-secrets.sh`
-- [ ] TLS certificates issued for `vastrix.ai`, `www.vastrix.ai`, `api.vastrix.ai`, `cms.vastrix.ai`
+- [ ] TLS certificates issued for `nevix.ai`, `www.nevix.ai`, `api.nevix.ai`, `cms.nevix.ai`
 - [ ] A PostgreSQL restore has actually been performed from backup and verified
       (see `docs/deployment/backup-and-restore.md` — do not tick this from documentation alone)
 - [ ] Monitoring hosts confirmed unreachable from the public internet

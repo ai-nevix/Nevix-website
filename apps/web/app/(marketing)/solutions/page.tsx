@@ -22,7 +22,7 @@ export const revalidate = 3600;
 export const metadata = buildMetadata({
   title: 'Solutions',
   description:
-    'Outcome-oriented solution patterns from VASTRIX: document processing, intelligent ticket triage, workflow automation, knowledge assistants, operational dashboards, digital portals and more.',
+    'Outcome-oriented solution patterns from NEVIX: document processing, intelligent ticket triage, workflow automation, knowledge assistants, operational dashboards, digital portals and more.',
   path: '/solutions',
 });
 
@@ -35,7 +35,7 @@ export default async function SolutionsPage() {
         breadcrumbs={[{ name: 'Solutions', href: '/solutions' }]}
         eyebrow="Solutions"
         title="Start from the problem, not the technology"
-        description="A service answers what VASTRIX can build. A solution answers how a specific business problem gets solved — the workflow, the technical approach and the kind of outcome it is designed to produce."
+        description="A service answers what NEVIX can build. A solution answers how a specific business problem gets solved — the workflow, the technical approach and the kind of outcome it is designed to produce."
         actions={
           <>
             <Button asChild size="lg" variant="onDark">
@@ -52,7 +52,7 @@ export default async function SolutionsPage() {
             <dl className="mt-5 flex flex-col gap-4 text-sm">
               <div>
                 <dt className="font-bold text-white">Services</dt>
-                <dd className="mt-1 text-neutral-400">What can VASTRIX build?</dd>
+                <dd className="mt-1 text-neutral-400">What can NEVIX build?</dd>
               </div>
               <div>
                 <dt className="font-bold text-white">Solutions</dt>
@@ -88,7 +88,7 @@ export default async function SolutionsPage() {
           {/* DUMMY-DATA: DD-012 — replace illustrative outcomes with measured ones when available. */}
           <Notice variant="illustrative" title="About the outcomes described on these pages">
             Solution pages describe the kind of result each pattern is designed to produce. They are
-            illustrative, not guarantees. VASTRIX does not publish guaranteed ROI, accuracy or
+            illustrative, not guarantees. NEVIX does not publish guaranteed ROI, accuracy or
             automation figures — measurable objectives are agreed and evidenced per engagement.
           </Notice>
         </Reveal>

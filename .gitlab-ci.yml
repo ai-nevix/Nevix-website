@@ -1,4 +1,4 @@
-# VASTRIX — GitLab CI/CD (specification §21, instruction §46).
+# NEVIX — GitLab CI/CD (specification §21, instruction §46).
 #
 #   install -> lint -> type-check -> test -> build -> security -> package -> staging -> production
 #
@@ -165,9 +165,9 @@ test:api:
     - name: pgvector/pgvector:pg16
       alias: postgres
   variables:
-    POSTGRES_USER: vastrix
+    POSTGRES_USER: nevix
     POSTGRES_PASSWORD: ci-test-password
-    POSTGRES_DB: vastrix_test
+    POSTGRES_DB: nevix_test
   script:
     - pytest --cov=app --cov-report=term --cov-report=xml --junitxml=report.xml
   coverage: '/TOTAL.*\s+(\d+%)$/'
@@ -194,10 +194,10 @@ test:migrations:
     - name: pgvector/pgvector:pg16
       alias: postgres
   variables:
-    POSTGRES_USER: vastrix
+    POSTGRES_USER: nevix
     POSTGRES_PASSWORD: ci-test-password
-    POSTGRES_DB: vastrix_migrations
-    DATABASE_URL: 'postgresql+asyncpg://vastrix:ci-test-password@postgres:5432/vastrix_migrations'
+    POSTGRES_DB: nevix_migrations
+    DATABASE_URL: 'postgresql+asyncpg://nevix:ci-test-password@postgres:5432/nevix_migrations'
     SECRET_KEY: 'ci-migration-secret-key-at-least-32-characters-long'
   script:
     - alembic upgrade head
@@ -215,7 +215,7 @@ build:web:
   extends: .node
   needs: ['install:node']
   variables:
-    NEXT_PUBLIC_SITE_URL: 'https://vastrix.ai'
+    NEXT_PUBLIC_SITE_URL: 'https://nevix.ai'
     NEXT_PUBLIC_ENV: 'production'
   script:
     - npm run build
@@ -304,7 +304,7 @@ package:web:
     - >
       docker build
       --file apps/web/Dockerfile
-      --build-arg NEXT_PUBLIC_SITE_URL="${NEXT_PUBLIC_SITE_URL:-https://vastrix.ai}"
+      --build-arg NEXT_PUBLIC_SITE_URL="${NEXT_PUBLIC_SITE_URL:-https://nevix.ai}"
       --build-arg NEXT_PUBLIC_ENV=production
       --tag "$CI_REGISTRY_IMAGE/web:$CI_COMMIT_SHORT_SHA"
       --tag "$CI_REGISTRY_IMAGE/web:latest"
@@ -375,12 +375,12 @@ deploy:staging:
     - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
   environment:
     name: staging
-    url: https://staging.vastrix.ai
+    url: https://staging.nevix.ai
   script:
     - |
       ssh -o StrictHostKeyChecking=yes "$STAGING_SSH_USER@$STAGING_SSH_HOST" bash -s <<EOF
         set -euo pipefail
-        cd /opt/vastrix
+        cd /opt/nevix
         export IMAGE_TAG="$CI_COMMIT_SHORT_SHA"
         docker compose -f docker-compose.yml -f docker-compose.staging.yml pull
         docker compose -f docker-compose.yml -f docker-compose.staging.yml up -d --remove-orphans
@@ -388,8 +388,8 @@ deploy:staging:
       EOF
     # Smoke test. A deploy that starts but does not serve is a failed deploy.
     - sleep 20
-    - curl --fail --silent --show-error --max-time 30 https://staging.vastrix.ai/api/v1/health
-    - curl --fail --silent --show-error --max-time 30 -o /dev/null https://staging.vastrix.ai/
+    - curl --fail --silent --show-error --max-time 30 https://staging.nevix.ai/api/v1/health
+    - curl --fail --silent --show-error --max-time 30 -o /dev/null https://staging.nevix.ai/
 
 deploy:production:
   stage: deploy
@@ -402,13 +402,13 @@ deploy:production:
       allow_failure: false
   environment:
     name: production
-    url: https://vastrix.ai
+    url: https://nevix.ai
     on_stop: rollback:production
   script:
     - |
       ssh -o StrictHostKeyChecking=yes "$PRODUCTION_SSH_USER@$PRODUCTION_SSH_HOST" bash -s <<EOF
         set -euo pipefail
-        cd /opt/vastrix
+        cd /opt/nevix
 
         # Record the tag currently running, so the rollback job knows where to return to.
         docker compose config --images | head -1 > .previous-image-tag || true
@@ -423,10 +423,10 @@ deploy:production:
         docker image prune -f --filter "until=168h"
       EOF
     - sleep 25
-    - curl --fail --silent --show-error --max-time 30 https://vastrix.ai/api/v1/health
-    - curl --fail --silent --show-error --max-time 30 -o /dev/null https://vastrix.ai/
-    - curl --fail --silent --show-error --max-time 30 -o /dev/null https://vastrix.ai/services
-    - curl --fail --silent --show-error --max-time 30 -o /dev/null https://vastrix.ai/sitemap.xml
+    - curl --fail --silent --show-error --max-time 30 https://nevix.ai/api/v1/health
+    - curl --fail --silent --show-error --max-time 30 -o /dev/null https://nevix.ai/
+    - curl --fail --silent --show-error --max-time 30 -o /dev/null https://nevix.ai/services
+    - curl --fail --silent --show-error --max-time 30 -o /dev/null https://nevix.ai/sitemap.xml
 
 rollback:production:
   stage: deploy
@@ -443,8 +443,8 @@ rollback:production:
     - |
       ssh -o StrictHostKeyChecking=yes "$PRODUCTION_SSH_USER@$PRODUCTION_SSH_HOST" bash -s <<'EOF'
         set -euo pipefail
-        cd /opt/vastrix
+        cd /opt/nevix
         ./scripts/rollback.sh
       EOF
     - sleep 20
-    - curl --fail --silent --show-error --max-time 30 https://vastrix.ai/api/v1/health
+    - curl --fail --silent --show-error --max-time 30 https://nevix.ai/api/v1/health

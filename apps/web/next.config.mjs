@@ -4,7 +4,7 @@ import { fileURLToPath } from 'node:url';
 import { securityHeaders } from './lib/security-headers.mjs';
 
 /**
- * Next.js configuration for the VASTRIX website.
+ * Next.js configuration for the NEVIX website.
  *
  * Security headers are set here as a defence-in-depth layer. Nginx sets the same headers at the
  * edge (infra/nginx/snippets/security-headers.conf), so a misconfigured proxy cannot silently
@@ -25,7 +25,7 @@ const nextConfig = {
   outputFileTracingRoot: repoRoot,
 
   // The shared types package ships raw TypeScript.
-  transpilePackages: ['@vastrix/types'],
+  transpilePackages: ['@nevix/types'],
 
   typedRoutes: false,
 

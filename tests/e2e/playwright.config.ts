@@ -1,7 +1,7 @@
 import { defineConfig, devices } from '@playwright/test';
 
 /**
- * Playwright configuration for the VASTRIX end-to-end suite.
+ * Playwright configuration for the NEVIX end-to-end suite.
  *
  * Tests run against the production build served by the standalone server — the same artifact the
  * container runs. Running them against `next dev` would exercise different code paths (no static

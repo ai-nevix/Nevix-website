@@ -1,8 +1,8 @@
 {
-  "name": "vastrix-website",
+  "name": "nevix-website",
   "version": "0.1.0",
   "private": true,
-  "description": "VASTRIX — intelligent technology and engineering company website and platform foundation",
+  "description": "NEVIX — intelligent technology and engineering company website and platform foundation",
   "license": "UNLICENSED",
   "engines": {
     "node": ">=22.12.0"
@@ -12,14 +12,14 @@
     "packages/*"
   ],
   "scripts": {
-    "dev": "npm run dev --workspace=@vastrix/web",
-    "build": "npm run build --workspace=@vastrix/web",
-    "start": "npm run start --workspace=@vastrix/web",
-    "lint": "npm run lint --workspace=@vastrix/web",
-    "lint:fix": "npm run lint:fix --workspace=@vastrix/web",
-    "typecheck": "npm run typecheck --workspace=@vastrix/web",
-    "test": "npm run test --workspace=@vastrix/web",
-    "test:watch": "npm run test:watch --workspace=@vastrix/web",
+    "dev": "npm run dev --workspace=@nevix/web",
+    "build": "npm run build --workspace=@nevix/web",
+    "start": "npm run start --workspace=@nevix/web",
+    "lint": "npm run lint --workspace=@nevix/web",
+    "lint:fix": "npm run lint:fix --workspace=@nevix/web",
+    "typecheck": "npm run typecheck --workspace=@nevix/web",
+    "test": "npm run test --workspace=@nevix/web",
+    "test:watch": "npm run test:watch --workspace=@nevix/web",
     "test:e2e": "playwright test --config=tests/e2e/playwright.config.ts",
     "test:e2e:install": "playwright install --with-deps chromium",
     "format": "prettier --write .",

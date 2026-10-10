@@ -23,12 +23,12 @@ import { useSyncExternalStore } from 'react';
  * has already decided to play it.
  */
 
-const VastrixIntroStage = dynamic(
-  () => import('@/components/branding/vastrix-intro-stage').then((m) => m.VastrixIntroStage),
+const NevixIntroStage = dynamic(
+  () => import('@/components/branding/nevix-intro-stage').then((m) => m.NevixIntroStage),
   { ssr: false },
 );
 
-const ARMED_CLASS = 'vastrix-intro-armed';
+const ARMED_CLASS = 'nevix-intro-armed';
 
 /**
  * Latches on the first read.
@@ -52,8 +52,8 @@ const noSubscription = () => () => {};
 /** Never on the server: there is no `<html>` class to read, and no animation to run. */
 const notOnServer = () => false;
 
-export function VastrixIntro() {
+export function NevixIntro() {
   const playing = useSyncExternalStore(noSubscription, hasStarted, notOnServer);
 
-  return playing ? <VastrixIntroStage /> : null;
+  return playing ? <NevixIntroStage /> : null;
 }

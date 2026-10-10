@@ -1,9 +1,9 @@
 apiVersion: 1
 
 providers:
-  - name: VASTRIX
+  - name: NEVIX
     orgId: 1
-    folder: VASTRIX
+    folder: NEVIX
     type: file
     disableDeletion: false
     updateIntervalSeconds: 30

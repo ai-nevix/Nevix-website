@@ -1,9 +1,9 @@
-import type { Solution } from '@vastrix/types';
+import type { Solution } from '@nevix/types';
 
 /**
  * Solutions — outcome-oriented patterns (specification §8, instruction §20).
  *
- * A service answers "what can VASTRIX build?". A solution answers "how can VASTRIX solve a
+ * A service answers "what can NEVIX build?". A solution answers "how can NEVIX solve a
  * business problem?". Every solution here is composed only of services that appear in the
  * catalogue — nothing is presented that the documented capabilities do not support.
  *

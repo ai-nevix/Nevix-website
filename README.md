@@ -1,9 +1,11 @@
 <div align="center">
 
-<img src="apps/web/public/brand/vastrix-logo.png" alt="VASTRIX" width="360">
+<img src="apps/web/public/brand/nevix-lockup-light.webp" alt="NEVIX" width="360">
 
 **Explore. Automate. Evolve.**
 
+Intelligence in Motion
+·
 Intelligent Technology for a Smarter Tomorrow
 ·
 AI • Automation • Digital Engineering • Data & Analytics
@@ -12,13 +14,18 @@ AI • Automation • Digital Engineering • Data & Analytics
 
 ---
 
-The VASTRIX website and platform foundation: a Next.js marketing site, a FastAPI lead-capture
+The NEVIX website and platform foundation: a Next.js marketing site, a FastAPI lead-capture
 backend, and a self-hosted Strapi CMS — all open source, all self-hostable, deployed with Docker
 Compose behind Nginx.
 
 **Source of truth:** [`docs/source-material/`](docs/source-material/) holds the supplied
 specification and service catalogue. Plain-text extractions are committed alongside them so
-changes are diffable.
+changes are diffable. Both predate the rename to NEVIX on 2026-10-10 and are kept exactly as
+supplied ([ADR-014](docs/architecture/adr/ADR-014-nevix-rebrand.md)).
+
+**Brand:** the identity — mark, wordmark, palette, typefaces and every supplied picture — is on the
+site's [`/brand`](apps/web/app/(marketing)/brand/page.tsx) page. The original artwork is in
+[`brand-assets/nevix/`](brand-assets/nevix/); see [Brand assets](#brand-assets).
 
 ---
 
@@ -42,7 +49,7 @@ changes are diffable.
 ### With Docker (recommended)
 
 ```bash
-git clone <repository> vastrix-website && cd vastrix-website
+git clone <repository> nevix-website && cd nevix-website
 
 cp .env.example .env
 ./scripts/generate-secrets.sh --write      # generates every secret, chmod 600
@@ -82,9 +89,9 @@ The site serves its committed content by default, so **no CMS is required to run
 ## What is here
 
 ```
-vastrix-website/
+nevix-website/
 ├── apps/
-│   ├── web/          Next.js 16 — 116 prerendered routes
+│   ├── web/          Next.js 16 — 118 prerendered routes
 │   ├── api/          FastAPI — leads, newsletter, uploads, admin
 │   └── cms/          Strapi CE — 11 content types, 6 components
 ├── packages/
@@ -94,8 +101,9 @@ vastrix-website/
 │   ├── nginx/        Reverse proxy, TLS, security headers, rate limits
 │   ├── docker/       Container init scripts
 │   └── monitoring/   Prometheus, Grafana, Loki, alert rules
+├── brand-assets/     Supplied NEVIX artwork — the originals, never edited
 ├── docs/             Architecture, ADRs, deployment, security, licences
-├── scripts/          Backup, restore, rollback, secrets, audits
+├── scripts/          Backup, restore, rollback, secrets, audits, brand-asset derivation
 └── tests/e2e/        Playwright — critical flows from specification §27.1
 ```
 
@@ -103,7 +111,7 @@ vastrix-website/
 
 | Section | Routes |
 | --- | --- |
-| Home, About, Team | 3 |
+| Home, About, Team, Brand | 4 |
 | Services | 1 index + 6 categories + 35 services |
 | Solutions | 1 index + 10 details |
 | Industries | 1 index + 6 details |
@@ -118,9 +126,9 @@ vastrix-website/
 
 ```
 Internet → Nginx (TLS, headers, rate limits)
-             ├── vastrix.ai      → Next.js ──proxy──┐
-             ├── api.vastrix.ai  → FastAPI ◄────────┘
-             └── cms.vastrix.ai  → Strapi
+             ├── nevix.ai      → Next.js ──proxy──┐
+             ├── api.nevix.ai  → FastAPI ◄────────┘
+             └── cms.nevix.ai  → Strapi
                                      │
                           internal network (no egress)
                                      └── PostgreSQL
@@ -156,7 +164,7 @@ system, and there is no analytics vendor, CDN dependency or font CDN. Licence in
 
 ```bash
 npm run dev              # Next.js dev server
-npm run build            # production build (116 routes)
+npm run build            # production build (118 routes)
 npm run serve:standalone # run the exact artifact the container runs
 
 npm run lint             # ESLint
@@ -248,7 +256,7 @@ Production deployment takes a backup before running migrations, then smoke-tests
 ./scripts/rollback.sh                  # code rollback, ~1 minute
 ./scripts/backup-database.sh           # manual backup
 ./scripts/restore-database.sh --verify # prove a backup actually restores
-./scripts/issue-certificates.sh vastrix.ai
+./scripts/issue-certificates.sh nevix.ai
 ```
 
 - [Deployment](docs/architecture/deployment.md)
@@ -258,8 +266,10 @@ Production deployment takes a backup before running migrations, then smoke-tests
 
 ### The welcome intro
 
-A logo reveal plays on a first homepage visit: the emblem draws itself in light, the artwork fills
-in behind it, a sweep crosses it, then the wordmark and tagline settle. About 3.5s.
+A logo reveal plays on a first homepage visit: the N writes itself in light — up the left stroke,
+down the diagonal, up the right stroke — uncovering the supplied artwork behind a point of light,
+then a sweep crosses it and the wordmark and tagline settle. About 3.6s. The stroke centre lines
+and lockup ratios are measured data in [`lib/brand/mark-geometry.ts`](apps/web/lib/brand/mark-geometry.ts).
 
 | To change | Where |
 | --- | --- |
@@ -267,8 +277,8 @@ in behind it, a sweep crosses it, then the wordmark and tagline settle. About 3.
 | **Speed** | `durationScale` in [`lib/brand/intro-config.ts`](apps/web/lib/brand/intro-config.ts) |
 | **Choreography** | the `timeline` in the same file — absolute milliseconds per phase |
 | **Intensity** | `MOTE_COUNT` there, and the gradients in [`ambient-background.tsx`](apps/web/components/branding/ambient-background.tsx) |
-| **Replay frequency** | clear the `vastrix_intro_seen` session key, or drop the check in [`app/layout.tsx`](apps/web/app/layout.tsx) |
-| **Skip** | the button in [`skip-intro.tsx`](apps/web/components/branding/skip-intro.tsx); Escape is wired in `vastrix-intro-stage.tsx` |
+| **Replay frequency** | clear the `nevix_intro_seen` session key, or drop the check in [`app/layout.tsx`](apps/web/app/layout.tsx) |
+| **Skip** | the button in [`skip-intro.tsx`](apps/web/components/branding/skip-intro.tsx); Escape is wired in `nevix-intro-stage.tsx` |
 
 Never plays under `prefers-reduced-motion: reduce`, on any page but `/`, or without JavaScript.
 Page content is prerendered either way, so the intro costs nothing in SEO terms. See
@@ -276,8 +286,9 @@ Page content is prerendered either way, so the intro costs nothing in SEO terms.
 
 ### Team page
 
-`/team` publishes the supplied team cards whole and uncropped, so each arrives as it was designed.
-Content is in [`content/about.ts`](apps/web/content/about.ts) → `team`.
+`/team` publishes the supplied team cards whole and uncropped, so each arrives as it was designed —
+each framed at its own ratio (the CEO's card is 3:2, the co-founder's square). The founders' cards
+appear only here. Content is in [`content/about.ts`](apps/web/content/about.ts) → `team`.
 
 Each entry states **only** a name, a role and the quote credited to that person. No biography,
 career history or qualification appears, because none was supplied — and a content test fails if
@@ -285,23 +296,34 @@ any is added later.
 
 Because the cards carry their text as artwork, the same facts are served separately to anything
 that cannot see a picture: derived alternative text, a visually hidden caption, and `Person`
-structured data. To add someone: drop their card in `brand-assets/`, add it to `TEAM_CARDS` in
+structured data. To add someone: drop their card in `brand-assets/nevix/`, add a `picture()` call
+for it beside the existing team cards in
 [`scripts/derive-brand-assets.mjs`](scripts/derive-brand-assets.mjs), run `npm run brand:assets`,
 then add the entry to `team`.
 
 ### Brand assets
 
-The supplied files in `apps/web/public/brand/` and `brand-assets/` are the source of truth and are
-never edited. Everything else is *derived* and reproducible:
+The supplied NEVIX artwork in [`brand-assets/nevix/`](brand-assets/nevix/) (plus
+`brand-assets/logo-summary.png`) is the source of truth and is never edited. Everything the site
+serves from it — `apps/web/public/brand/`, `apps/web/public/team/`, and the favicon and app icons
+in `apps/web/app/` — is *derived* and reproducible:
 
 ```bash
 npm run brand:assets     # regenerate
-npm run brand:check      # verify they match the originals (runs in `npm run verify`)
+npm run brand:check      # verify they are current (runs in `npm run verify`)
 ```
 
-The derivation repairs a white matte baked into the logo artwork by flattening — invisible on
-white, a pale outline around every stroke on the brand midnight. Shape, proportion and gradient
-are untouched. See [`scripts/derive-brand-assets.mjs`](scripts/derive-brand-assets.mjs).
+The supplied logos are flattened onto white or midnight. The script separates the mark and the
+wordmark from that background by un-compositing each edge pixel rather than keying out a colour,
+so there is no halo on light or dark; it also crops the homepage hero from the logo-free part of
+the workspace photograph and re-encodes every board whole as WebP for the
+[`/brand`](apps/web/app/(marketing)/brand/page.tsx) page. Shape, proportion and gradient are
+untouched. See [`scripts/derive-brand-assets.mjs`](scripts/derive-brand-assets.mjs) and
+[ADR-014](docs/architecture/adr/ADR-014-nevix-rebrand.md).
+
+**Design system:** electric blue `#0B5CFF`, cyan `#00C8FF`, indigo `#1F2FD6`, midnight `#050B1A`,
+cloud `#F6F8FC`, and a sunset horizon `#FF9A4D` used only for hairlines and glows. Headings in Sora,
+body in Manrope. Tokens in [`app/globals.css`](apps/web/app/globals.css).
 
 ### Sharing a preview over ngrok
 
@@ -330,7 +352,7 @@ monitoring and no backups. Production is Docker Compose behind Nginx, as above.
 
 ## Content governance
 
-VASTRIX is a new company. The supplied material contains no verified client work, products, team
+NEVIX is a new company. The supplied material contains no verified client work, products, team
 biographies, testimonials or legal entity details — and the specification forbids inventing them.
 
 **Every placeholder is registered, labelled in the UI and marked in the code.**
@@ -358,7 +380,7 @@ Before launch: [`docs/dummy-data/replacement-checklist.md`](docs/dummy-data/repl
 | --- | --- |
 | Implementation plan | [`docs/implementation-plan.md`](docs/implementation-plan.md) |
 | Architecture | [overview](docs/architecture/architecture-overview.md) · [frontend](docs/architecture/frontend.md) · [backend](docs/architecture/backend.md) · [database](docs/architecture/database.md) · [cms](docs/architecture/cms.md) · [deployment](docs/architecture/deployment.md) |
-| Decisions | [12 ADRs](docs/architecture/adr/) |
+| Decisions | [14 ADRs](docs/architecture/adr/) |
 | Security | [threat model](docs/security/threat-model.md) |
 | Operations | [runbook](docs/deployment/runbook.md) · [rollback](docs/deployment/rollback.md) · [backup](docs/deployment/backup-and-restore.md) |
 | Licences | [`docs/licenses/`](docs/licenses/) |
@@ -397,7 +419,7 @@ a separate job owns migrations.
 
 <div align="center">
 
-**VASTRIX** — Explore. Automate. Evolve.
+**NEVIX** — Explore. Automate. Evolve.
 
 </div>
 

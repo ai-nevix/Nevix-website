@@ -62,7 +62,7 @@ rather than left to the reader.
 ## Caveats worth knowing before they matter
 
 **Grafana and Loki are AGPL-3.0.** Not a problem as internal observability tooling. It *would*
-become one if VASTRIX embedded Grafana in a client-facing product — AGPL's network clause extends
+become one if NEVIX embedded Grafana in a client-facing product — AGPL's network clause extends
 the copyleft to users who interact with the software over a network. Recorded here so it is a known
 boundary rather than a late discovery.
 
@@ -70,7 +70,7 @@ boundary rather than a late discovery.
 workflows and content-type-level permissions are Enterprise-only. Nothing this site depends on is
 behind that line. A future requirement for editorial approval workflows would hit it.
 
-**`UNLICENSED` entries are ours.** The VASTRIX workspace packages are marked `UNLICENSED` because
+**`UNLICENSED` entries are ours.** The NEVIX workspace packages are marked `UNLICENSED` because
 they are proprietary and not published.
 
 ## Review cadence

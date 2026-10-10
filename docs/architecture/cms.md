@@ -74,13 +74,13 @@ Switching to Strapi:
 # 1. Start the CMS
 docker compose up -d cms
 
-# 2. Create the first admin user at https://cms.vastrix.ai/admin
+# 2. Create the first admin user at https://cms.nevix.ai/admin
 
 # 3. Create a FULL-ACCESS token, used once for seeding
 
 # 4. Seed from the committed content — idempotent, matches on slug
 cd apps/cms
-STRAPI_URL=https://cms.vastrix.ai STRAPI_ADMIN_TOKEN=<write-token> npm run seed
+STRAPI_URL=https://cms.nevix.ai STRAPI_ADMIN_TOKEN=<write-token> npm run seed
 
 # 5. Review and publish the entries (they are created as drafts)
 
@@ -88,7 +88,7 @@ STRAPI_URL=https://cms.vastrix.ai STRAPI_ADMIN_TOKEN=<write-token> npm run seed
 
 # 7. Point the website at the CMS
 #    CONTENT_PROVIDER=strapi
-#    CMS_URL=https://cms.vastrix.ai
+#    CMS_URL=https://cms.nevix.ai
 #    CMS_API_TOKEN=<read-only-token>
 docker compose up -d --build web
 
@@ -120,7 +120,7 @@ Requests carry an 8-second timeout and ISR caching tagged `cms`.
 - Admin panel is a privileged interface. The Nginx configuration carries a commented IP allow-list
   for `/admin`; apply it, or restrict at the firewall, before exposing the CMS publicly.
 - Secrets from the environment; Strapi refuses to start without `APP_KEYS`.
-- Its own database (`vastrix_cms`) on the shared PostgreSQL instance.
+- Its own database (`nevix_cms`) on the shared PostgreSQL instance.
 - CORS defaults to empty — the website reads server-side, so no browser origin needs access.
 - CSP, HSTS and frameguard set by Strapi's security middleware as well as by Nginx.
 - Media uploads capped at 64 MB.

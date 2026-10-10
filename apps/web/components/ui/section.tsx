@@ -7,7 +7,7 @@ import { Container } from './container';
 /**
  * Page section with a consistent vertical rhythm and one of four surface treatments.
  *
- * Alternating `light` and `midnight` sections is the core of the VASTRIX visual language
+ * Alternating cool light sections with midnight ones is the core of the NEVIX visual language
  * (specification §4.1: "use dark sections selectively; not every page should be dark").
  */
 export type SectionTone = 'light' | 'subtle' | 'midnight' | 'brand-field';
@@ -54,6 +54,36 @@ export function Section({
   );
 }
 
+/**
+ * The eyebrow: a wide-tracked kicker led by the short gradient rule that sits under the tagline in
+ * every NEVIX lockup.
+ */
+export function Eyebrow({
+  children,
+  onDark = false,
+  align = 'left',
+  className,
+}: {
+  children: React.ReactNode;
+  onDark?: boolean;
+  align?: 'left' | 'center';
+  className?: string;
+}) {
+  return (
+    <p
+      className={cn(
+        'flex items-center gap-3 text-eyebrow uppercase',
+        align === 'center' && 'justify-center',
+        onDark ? 'text-cyan-brand-300' : 'text-brand-700',
+        className,
+      )}
+    >
+      <span className="rule-accent w-7 shrink-0" aria-hidden="true" />
+      {children}
+    </p>
+  );
+}
+
 export interface SectionHeadingProps {
   /** Small uppercase kicker above the title. */
   eyebrow?: string;
@@ -89,14 +119,9 @@ export function SectionHeading({
     >
       <div className={cn('max-w-3xl', align === 'center' && 'mx-auto text-center')}>
         {eyebrow ? (
-          <p
-            className={cn(
-              'mb-4 text-eyebrow uppercase',
-              onDark ? 'text-cyan-brand-400' : 'text-brand-700',
-            )}
-          >
+          <Eyebrow onDark={onDark} align={align} className="mb-5">
             {eyebrow}
-          </p>
+          </Eyebrow>
         ) : null}
 
         <Heading

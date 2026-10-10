@@ -135,7 +135,7 @@ export default async function SolutionDetailPage({
         {/* DUMMY-DATA: DD-012 — illustrative, not measured. Required by specification §31. */}
         <Reveal className="mt-10">
           <Notice variant="illustrative" title="Illustrative — not a guarantee">
-            These describe what the pattern is designed to achieve, not a promised result. VASTRIX
+            These describe what the pattern is designed to achieve, not a promised result. NEVIX
             does not publish guaranteed ROI, accuracy or automation figures. Measurable objectives
             are agreed at the start of an engagement and reported against afterwards.
           </Notice>

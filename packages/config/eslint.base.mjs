@@ -1,5 +1,5 @@
 /**
- * Shared ESLint rules for the VASTRIX monorepo.
+ * Shared ESLint rules for the NEVIX monorepo.
  *
  * Kept deliberately small: the rules here are the ones that catch real defects or enforce a
  * decision recorded elsewhere in the repo. Stylistic concerns are Prettier's job.

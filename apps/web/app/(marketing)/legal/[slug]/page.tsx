@@ -71,7 +71,7 @@ export default async function LegalPage({ params }: { params: Promise<{ slug: st
       </section>
 
       <Section tone="light" size="lg" containerSize="prose">
-        <p className="prose-vastrix text-lg">{document.intro}</p>
+        <p className="prose-nevix text-lg">{document.intro}</p>
 
         <div className="mt-12 flex flex-col gap-10">
           {document.sections.map((section) => (
@@ -81,7 +81,7 @@ export default async function LegalPage({ params }: { params: Promise<{ slug: st
               </h2>
 
               {section.paragraphs?.length ? (
-                <div className="prose-vastrix mt-4">
+                <div className="prose-nevix mt-4">
                   {section.paragraphs.map((paragraph) => (
                     <p key={paragraph.slice(0, 40)}>{paragraph}</p>
                   ))}
@@ -89,7 +89,7 @@ export default async function LegalPage({ params }: { params: Promise<{ slug: st
               ) : null}
 
               {section.list?.length ? (
-                <ul className="prose-vastrix mt-4 list-disc">
+                <ul className="prose-nevix mt-4 list-disc">
                   {section.list.map((item) => (
                     <li key={item.slice(0, 40)}>{item}</li>
                   ))}

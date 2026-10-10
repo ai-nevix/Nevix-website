@@ -3,7 +3,7 @@
 import { CheckCircle2, Loader2 } from 'lucide-react';
 import { useState } from 'react';
 
-import type { NewsletterResponse } from '@vastrix/types';
+import type { NewsletterResponse } from '@nevix/types';
 
 import { Button } from '@/components/ui/button';
 import { ApiError, apiRequest } from '@/lib/api/client';
@@ -126,7 +126,7 @@ export function NewsletterForm({
           className="mt-0.5 size-4 shrink-0 cursor-pointer rounded border-white/30 bg-white/10 text-brand-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-brand-400"
         />
         <label htmlFor="newsletter-consent" className="text-xs leading-relaxed text-neutral-400">
-          I agree to receive occasional emails from VASTRIX and understand I can unsubscribe at any
+          I agree to receive occasional emails from NEVIX and understand I can unsubscribe at any
           time.
         </label>
       </div>

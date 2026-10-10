@@ -14,7 +14,7 @@ import {
   type ContactRequest,
   type ContactResponse,
   type ServiceInterest,
-} from '@vastrix/types';
+} from '@nevix/types';
 
 import { Button } from '@/components/ui/button';
 import { ApiError, apiRequest } from '@/lib/api/client';
@@ -453,7 +453,7 @@ export function ContactForm() {
             {...register('consent')}
           />
           <label htmlFor="consent" className="text-sm leading-relaxed text-neutral-700">
-            I am happy for VASTRIX to contact me about this enquiry, and I have read the{' '}
+            I am happy for NEVIX to contact me about this enquiry, and I have read the{' '}
             <Link href="/legal/privacy" className="font-semibold text-brand-700 underline">
               privacy policy
             </Link>

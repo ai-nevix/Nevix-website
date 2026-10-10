@@ -113,7 +113,7 @@ const KNOWN_PLACEHOLDERS = [
   /^(change[_-]?me|placeholder|example|redacted|your[_-].*|xxx+|\.\.\.)$/i,
   /^(local|dev|development|test|ci)[_-]/i,
   /not[_-]for[_-]production/i,
-  /^vastrix$/i,
+  /^nevix$/i,
   /^build$/,
 ];
 

@@ -5,7 +5,7 @@ import {
   INDUSTRY_OPTIONS,
   SERVICE_INTERESTS,
   TIMELINE_OPTIONS,
-} from '@vastrix/types';
+} from '@nevix/types';
 
 /**
  * Contact and newsletter validation schemas.

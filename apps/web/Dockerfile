@@ -1,4 +1,4 @@
-# VASTRIX web (Next.js) production image.
+# NEVIX web (Next.js) production image.
 #
 # Multi-stage so the runtime image contains the standalone server output and nothing else — no
 # source, no dev dependencies, no package manager.
@@ -19,7 +19,7 @@ COPY apps/web/package.json ./apps/web/
 COPY packages/types/package.json ./packages/types/
 COPY packages/config/package.json ./packages/config/
 
-RUN npm ci --workspace=@vastrix/web --include-workspace-root
+RUN npm ci --workspace=@nevix/web --include-workspace-root
 
 # ---------------------------------------------------------------------------------------------
 # Stage 2 — build
@@ -36,7 +36,7 @@ COPY apps/web ./apps/web
 
 # NEXT_PUBLIC_* values are inlined into the client bundle at build time, so the canonical site URL
 # must be supplied here rather than at runtime.
-ARG NEXT_PUBLIC_SITE_URL=https://vastrix.ai
+ARG NEXT_PUBLIC_SITE_URL=https://nevix.ai
 ARG NEXT_PUBLIC_API_URL=/api/backend
 ARG NEXT_PUBLIC_ENV=production
 ENV NEXT_PUBLIC_SITE_URL=$NEXT_PUBLIC_SITE_URL \
@@ -45,7 +45,7 @@ ENV NEXT_PUBLIC_SITE_URL=$NEXT_PUBLIC_SITE_URL \
     NEXT_TELEMETRY_DISABLED=1 \
     NODE_ENV=production
 
-RUN npm run build --workspace=@vastrix/web
+RUN npm run build --workspace=@nevix/web
 
 # ---------------------------------------------------------------------------------------------
 # Stage 3 — runtime

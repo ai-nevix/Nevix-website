@@ -2,7 +2,7 @@
 
 The frontend performs its own in-process search over CMS content, which is faster and always in
 sync with what is published. This endpoint exists so that non-browser clients — and, later, a
-VASTRIX AI assistant retrieving approved public knowledge — have the same view through a stable
+NEVIX AI assistant retrieving approved public knowledge — have the same view through a stable
 contract.
 
 Scope is public content only. Nothing administrative is reachable here (instruction §73).
@@ -47,7 +47,7 @@ async def search_content(
     result set rather than a partial one until a backend-side index is introduced. Returning
     nothing is honest; returning half the corpus and calling it a search result is not.
 
-    When the VASTRIX AI layer is added (specification §19), this is where pgvector-backed semantic
+    When the NEVIX AI layer is added (specification §19), this is where pgvector-backed semantic
     retrieval attaches — the response contract does not need to change.
     """
     if not settings.search_enabled:

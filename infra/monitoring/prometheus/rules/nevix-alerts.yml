@@ -1,19 +1,19 @@
-# VASTRIX alerting rules (specification §24).
+# NEVIX alerting rules (specification §24).
 #
 # Each rule targets a condition an operator would actually act on. Alerts that fire without a
 # clear action are noise, and noisy alerting is how real alerts get ignored.
 
 groups:
-  - name: vastrix-availability
+  - name: nevix-availability
     interval: 30s
     rules:
       - alert: ApiDown
-        expr: up{job="vastrix-api"} == 0
+        expr: up{job="nevix-api"} == 0
         for: 2m
         labels:
           severity: critical
         annotations:
-          summary: 'The VASTRIX API is not responding to scrapes'
+          summary: 'The NEVIX API is not responding to scrapes'
           description: >-
             Prometheus has failed to scrape the API for 2 minutes. The contact form and all
             enquiry capture are likely down.
@@ -21,9 +21,9 @@ groups:
 
       - alert: HighErrorRate
         expr: |
-          sum(rate(http_requests_total{job="vastrix-api",status=~"5.."}[5m]))
+          sum(rate(http_requests_total{job="nevix-api",status=~"5.."}[5m]))
           /
-          sum(rate(http_requests_total{job="vastrix-api"}[5m])) > 0.05
+          sum(rate(http_requests_total{job="nevix-api"}[5m])) > 0.05
         for: 5m
         labels:
           severity: critical
@@ -36,7 +36,7 @@ groups:
         expr: |
           histogram_quantile(
             0.95,
-            sum(rate(http_request_duration_seconds_bucket{job="vastrix-api"}[5m])) by (le)
+            sum(rate(http_request_duration_seconds_bucket{job="nevix-api"}[5m])) by (le)
           ) > 2
         for: 10m
         labels:
@@ -45,7 +45,7 @@ groups:
           summary: 'API 95th percentile latency above 2 seconds'
           description: 'Sustained for 10 minutes. Check database load and pool saturation.'
 
-  - name: vastrix-resources
+  - name: nevix-resources
     interval: 60s
     rules:
       - alert: DiskSpaceLow
@@ -81,7 +81,7 @@ groups:
           summary: 'Host memory usage above 90%'
 
       - alert: ContainerRestartLoop
-        expr: increase(container_start_time_seconds{name=~"vastrix-.*"}[15m]) > 3
+        expr: increase(container_start_time_seconds{name=~"nevix-.*"}[15m]) > 3
         for: 5m
         labels:
           severity: critical
@@ -89,7 +89,7 @@ groups:
           summary: 'Container {{ $labels.name }} is restarting repeatedly'
           description: 'More than three restarts in 15 minutes indicates a crash loop.'
 
-  - name: vastrix-database
+  - name: nevix-database
     interval: 60s
     rules:
       - alert: PostgresDown
@@ -111,7 +111,7 @@ groups:
           summary: 'PostgreSQL connection usage above 80%'
           description: 'Check for connection leaks or an undersized pool.'
 
-  - name: vastrix-certificates
+  - name: nevix-certificates
     interval: 3600s
     rules:
       # Certificate expiry is a predictable, preventable outage. Thirty days is enough notice to

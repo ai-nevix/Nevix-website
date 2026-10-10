@@ -6,9 +6,11 @@
  */
 
 export const siteConfig = {
-  name: 'VASTRIX',
-  /** Catalogue §17. */
+  name: 'NEVIX',
+  /** Catalogue §17 — set beneath the wordmark in every NEVIX lockup. */
   tagline: 'Explore. Automate. Evolve.',
+  /** The NEVIX brand line, from the supplied brand photography. Leads the homepage. */
+  headline: 'Intelligence in Motion.',
   /** Specification §4 / brand board. */
   positioning: 'Intelligent Technology for a Smarter Tomorrow.',
   /** Catalogue §1 / §17. */
@@ -16,19 +18,18 @@ export const siteConfig = {
 
   /** Catalogue §14 — the website-ready master description, used verbatim for meta descriptions. */
   masterDescription:
-    'VASTRIX builds intelligent technology solutions across AI, automation, digital engineering and data. We help organizations simplify complex processes, connect systems, turn data into insight and build scalable digital products.',
+    'NEVIX builds intelligent technology solutions across AI, automation, digital engineering and data. We help organizations simplify complex processes, connect systems, turn data into insight and build scalable digital products.',
 
   masterDescriptionExtended:
-    'From AI-powered applications and intelligent automation to custom software, modern web platforms and data-driven decision systems, VASTRIX works across the technology lifecycle. We combine problem discovery, engineering and automation to create practical solutions that improve efficiency, enable better decisions and support long-term digital evolution.',
+    'From AI-powered applications and intelligent automation to custom software, modern web platforms and data-driven decision systems, NEVIX works across the technology lifecycle. We combine problem discovery, engineering and automation to create practical solutions that improve efficiency, enable better decisions and support long-term digital evolution.',
 
   /**
    * DUMMY-DATA: DD-004
-   * Official contact details were not supplied. `vastrix.ai@gmail.com` is a conventional placeholder
-   * and no phone number or street address is published rather than inventing one.
-   * Replace with verified details before launch.
+   * `nevix.ai@gmail.com` was confirmed as the contact address at the rebrand. No phone number or
+   * street address has been supplied, so none is published rather than inventing one.
    */
   contact: {
-    email: 'vastrix.ai@gmail.com',
+    email: 'nevix.ai@gmail.com',
     /** Intentionally null until a verified number is supplied. */
     phone: null as string | null,
     /** Intentionally null until a registered address is supplied. */
@@ -44,12 +45,12 @@ export const siteConfig = {
 
   /**
    * DUMMY-DATA: DD-010
-   * Social handles follow the brand name but have not been confirmed as registered profiles.
-   * Confirm each URL or remove the entry — a dead link inside Organization schema is worse
-   * than no link at all.
+   * These are the profiles registered under the company's former name. They are kept deliberately
+   * until NEVIX profiles exist — replace each URL as its NEVIX profile is created. A dead link
+   * inside Organization schema is worse than no link at all.
    */
   social: [
-    { label: 'LinkedIn', href: 'www.linkedin.com/in/vastrix-ai-3a88ba437' },
+    { label: 'LinkedIn', href: 'https://www.linkedin.com/in/vastrix-ai-3a88ba437' },
     { label: 'GitHub', href: 'https://github.com/vastrix' },
     { label: 'X', href: 'https://x.com/vastrix' },
   ],
@@ -74,7 +75,7 @@ export const ctas = {
     label: 'Build a Digital Product',
     href: '/contact?interest=product-saas-engineering',
   },
-  talk: { label: 'Talk to VASTRIX', href: '/contact' },
+  talk: { label: 'Talk to NEVIX', href: '/contact' },
   consultation: { label: 'Request a Consultation', href: '/contact?interest=consulting' },
 } as const;
 
@@ -146,7 +147,7 @@ export const primaryNav: NavItem[] = [
     label: 'Solutions',
     href: '/solutions',
     panelHeading: 'Outcome-oriented solution patterns',
-    panelDescription: 'How VASTRIX capabilities combine to solve a specific business problem.',
+    panelDescription: 'How NEVIX capabilities combine to solve a specific business problem.',
     children: [
       {
         label: 'AI-Powered Document Processing',
@@ -190,7 +191,7 @@ export const primaryNav: NavItem[] = [
     label: 'Industries',
     href: '/industries',
     panelHeading: 'Where we work',
-    panelDescription: 'Sector context, without claiming credentials VASTRIX does not hold.',
+    panelDescription: 'Sector context, without claiming credentials NEVIX does not hold.',
     children: [
       {
         label: 'Government & Public Sector',
@@ -266,11 +267,12 @@ export const footerNav: FooterColumn[] = [
   {
     title: 'Company',
     links: [
-      { label: 'About VASTRIX', href: '/about' },
+      { label: 'About NEVIX', href: '/about' },
       { label: 'Team', href: '/team' },
       { label: 'How We Work', href: '/about#how-we-work' },
       { label: 'Engineering Principles', href: '/about#principles' },
       { label: 'Engagement Models', href: '/about#engagement' },
+      { label: 'Brand', href: '/brand' },
       { label: 'Contact', href: '/contact' },
     ],
   },
@@ -284,25 +286,34 @@ export const footerNav: FooterColumn[] = [
   },
 ];
 
-/** Brand assets. The supplied logo is authoritative — do not substitute or redraw (instruction §9). */
+/**
+ * Brand assets, all derived from the supplied originals in `brand-assets/nevix/` by
+ * `scripts/derive-brand-assets.mjs`. The supplied artwork is authoritative — it is separated from
+ * its background and cropped, never redrawn (instruction §9).
+ */
+export interface BrandImage {
+  src: string;
+  width: number;
+  height: number;
+}
+
 export const brandAssets = {
-  /** Full lockup on a light background. */
-  logoLight: '/brand/vastrix-logo.png',
-  /** Circular dark mark, used for the favicon, app icon and social avatar. */
-  markDark: '/brand/vastrix-mark.png',
-  /** Brand board banner, used sparingly as an About-page visual. */
-  brandBoard: '/brand/vastrix-brand-board.jpg',
-  /** Hero-scale brand visual from the supplied wallpaper. */
-  wallpaper: '/brand/vastrix-wallpaper.jpg',
-  /** The isolated mark, used by the brand intro animation. */
-  symbol: '/brand/vastrix-symbol.png',
-  /**
-   * The wordmark alone, cropped losslessly from the lower band of the supplied lockups. The
-   * artwork is the supplied one, trimmed — not redrawn.
-   *
-   * `wordmarkDark` is the navy wordmark from `vastrix-logo.png`, for light backgrounds;
-   * `wordmarkLight` is the white one from `vastrix-logo-dark.png`, for dark backgrounds.
-   */
-  wordmarkDark: '/brand/vastrix-wordmark-dark.png',
-  wordmarkLight: '/brand/vastrix-wordmark-light.png',
-} as const;
+  /** The N, on transparency. Works on both midnight and white. */
+  mark: { src: '/brand/nevix-mark.png', width: 450, height: 551 },
+  /** The silver monochrome N, on transparency — a quiet watermark on light sections. */
+  markSilver: { src: '/brand/nevix-mark-silver.png', width: 420, height: 509 },
+  /** Navy wordmark (from the primary lockup), for light backgrounds. */
+  wordmarkDark: { src: '/brand/nevix-wordmark-dark.png', width: 1302, height: 268 },
+  /** White wordmark (from the light-on-dark wordmark), for midnight backgrounds. */
+  wordmarkLight: { src: '/brand/nevix-wordmark-light.png', width: 1457, height: 255 },
+  /** Landscape region of the workspace photograph — the homepage hero. No logo or copy in it. */
+  heroHorizon: { src: '/brand/nevix-hero-horizon.webp', width: 912, height: 776 },
+  /** The illuminated wall sign. */
+  wallSign: { src: '/brand/nevix-wall-sign.webp', width: 1928, height: 815 },
+  /** The brand wallpaper — workspace at sunset with the lockup and the six brand themes. */
+  wallpaper: { src: '/brand/nevix-wallpaper.webp', width: 1672, height: 941 },
+  /** The full logo summary board. */
+  brandBoard: { src: '/brand/nevix-brand-board.webp', width: 1536, height: 1024 },
+  /** Square app icon, for structured data and social profiles. */
+  appIcon: { src: '/brand/icon-512.png', width: 512, height: 512 },
+} as const satisfies Record<string, BrandImage>;

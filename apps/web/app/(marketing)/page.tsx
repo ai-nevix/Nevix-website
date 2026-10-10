@@ -1,4 +1,5 @@
 import { ArrowRight, CheckCircle2 } from 'lucide-react';
+import Image from 'next/image';
 import Link from 'next/link';
 
 import {
@@ -9,15 +10,15 @@ import {
   ProductCard,
   SolutionCard,
 } from '@/components/cards';
-import { VastrixIntro } from '@/components/branding/vastrix-intro';
+import { NevixIntro } from '@/components/branding/nevix-intro';
 import { HomeHero } from '@/components/hero/home-hero';
 import { CtaSection } from '@/components/sections/cta-section';
 import { ProcessTimeline } from '@/components/sections/process-timeline';
 import { Button } from '@/components/ui/button';
-import { Section, SectionHeading } from '@/components/ui/section';
+import { Eyebrow, Section, SectionHeading } from '@/components/ui/section';
 import { Reveal, Stagger, StaggerItem } from '@/components/ui/motion';
 import { about } from '@/content/about';
-import { ctas, siteConfig } from '@/content/site';
+import { brandAssets, ctas, siteConfig } from '@/content/site';
 import { buildMetadata } from '@/lib/seo/metadata';
 import {
   getCaseStudies,
@@ -32,7 +33,7 @@ import {
 /**
  * Homepage — specification §6 and instruction §12.
  *
- * Section order follows the specified structure: hero, four-pillar strip, what we do, the VASTRIX
+ * Section order follows the specified structure: hero, four-pillar strip, what we do, the NEVIX
  * difference, solutions, industries, how we work, selected work, products, insights, about, CTA.
  *
  * Every section is server-rendered. The only client JavaScript on this page comes from the header
@@ -41,7 +42,7 @@ import {
 export const revalidate = 3600;
 
 export const metadata = buildMetadata({
-  title: `${siteConfig.name} — ${siteConfig.positioning}`,
+  title: `${siteConfig.name} — ${siteConfig.headline.replace(/\.$/, '')}`,
   description: siteConfig.masterDescription,
   path: '/',
 });
@@ -66,7 +67,7 @@ export default async function HomePage() {
 
   return (
     <>
-      <VastrixIntro />
+      <NevixIntro />
 
       <HomeHero />
 
@@ -121,12 +122,27 @@ export default async function HomePage() {
         </Reveal>
       </Section>
 
-      {/* --- The VASTRIX difference ------------------------------------------------------------ */}
-      <Section tone="light" size="lg">
-        <div className="grid gap-14 lg:grid-cols-[minmax(0,26rem)_1fr] lg:gap-20">
+      {/* --- The NEVIX difference ------------------------------------------------------------ */}
+      <Section tone="light" size="lg" className="overflow-hidden">
+        {/* The silver N, large and faint behind the section — decorative only. */}
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute -top-16 -left-40 hidden w-[34rem] opacity-[0.07] lg:block"
+        >
+          <Image
+            src={brandAssets.markSilver.src}
+            width={brandAssets.markSilver.width}
+            height={brandAssets.markSilver.height}
+            alt=""
+            sizes="544px"
+            className="h-auto w-full"
+          />
+        </div>
+
+        <div className="relative grid gap-14 lg:grid-cols-[minmax(0,26rem)_1fr] lg:gap-20">
           <div>
             <SectionHeading
-              eyebrow="The VASTRIX difference"
+              eyebrow="The NEVIX difference"
               title="Engineering-led, not demo-led"
               description="Our positions on how this work should be done. They are also the reasons a project either survives production or quietly stops being used."
             />
@@ -138,15 +154,19 @@ export default async function HomePage() {
           </div>
 
           <Stagger>
-            <ul className="grid gap-x-8 gap-y-7 sm:grid-cols-2">
+            <ul className="grid gap-4 sm:grid-cols-2">
               {about.values.map((value) => (
-                <StaggerItem as="li" key={value.title} className="flex gap-3.5">
+                <StaggerItem
+                  as="li"
+                  key={value.title}
+                  className="flex gap-3.5 rounded-(--radius-card) border border-neutral-200/80 bg-neutral-25 p-5"
+                >
                   <CheckCircle2
                     className="mt-0.5 size-5 shrink-0 text-brand-600"
                     aria-hidden="true"
                   />
                   <div>
-                    <h3 className="text-base font-bold tracking-tight text-neutral-900">
+                    <h3 className="text-base font-semibold tracking-tight text-neutral-900">
                       {value.title}
                     </h3>
                     <p className="mt-1.5 text-sm leading-relaxed text-neutral-600">
@@ -225,7 +245,7 @@ export default async function HomePage() {
         <SectionHeading
           eyebrow="Selected work"
           title="How we approach a problem"
-          description="VASTRIX has not yet published client engagements. These are labelled demonstration case studies that show the approach, the architecture and the trade-offs — not accounts of delivered client work."
+          description="NEVIX has not yet published client engagements. These are labelled demonstration case studies that show the approach, the architecture and the trade-offs — not accounts of delivered client work."
           action={
             <Button asChild variant="secondary">
               <Link href="/case-studies">All case studies</Link>
@@ -294,10 +314,28 @@ export default async function HomePage() {
 
       {/* --- About ----------------------------------------------------------------------------- */}
       <Section tone="subtle" size="lg">
+        {/* The illuminated wall sign — the brand in a physical space. */}
+        <Reveal className="mb-16 lg:mb-20">
+          <figure className="relative overflow-hidden rounded-(--radius-panel) bg-ink-950 shadow-[var(--shadow-panel)]">
+            <Image
+              src={brandAssets.wallSign.src}
+              width={brandAssets.wallSign.width}
+              height={brandAssets.wallSign.height}
+              alt="The NEVIX logo as an illuminated sign on a dark studio wall, the N glowing blue beside the wordmark and the tagline Explore. Automate. Evolve."
+              sizes="(max-width: 1280px) 100vw, 1280px"
+              className="h-auto w-full"
+            />
+            <div
+              aria-hidden="true"
+              className="absolute inset-0 rounded-(--radius-panel) ring-1 ring-white/10 ring-inset"
+            />
+          </figure>
+        </Reveal>
+
         <div className="grid items-start gap-12 lg:grid-cols-2 lg:gap-20">
           <Reveal>
-            <p className="text-eyebrow text-brand-700 uppercase">About VASTRIX</p>
-            <h2 className="mt-4 text-display-md text-neutral-900">
+            <Eyebrow>About NEVIX</Eyebrow>
+            <h2 className="mt-5 text-display-md text-neutral-900">
               An intelligent technology and engineering company
             </h2>
             <div className="mt-6 flex flex-col gap-4 text-base leading-relaxed text-neutral-600">
@@ -306,13 +344,15 @@ export default async function HomePage() {
               ))}
             </div>
             <Button asChild variant="secondary" className="mt-8">
-              <Link href="/about">More about VASTRIX</Link>
+              <Link href="/about">More about NEVIX</Link>
             </Button>
           </Reveal>
 
           <Reveal delay={0.1}>
-            <div className="rounded-(--radius-panel) border border-neutral-200 bg-white p-7 sm:p-8">
-              <h3 className="text-eyebrow text-neutral-500 uppercase">Engagement models</h3>
+            <div className="card-surface rounded-(--radius-panel) p-7 sm:p-8">
+              <h3 className="font-sans text-eyebrow text-neutral-500 uppercase">
+                Engagement models
+              </h3>
               <ul className="mt-5 flex flex-col divide-y divide-neutral-200">
                 {about.engagementModels.map((model) => (
                   <li key={model.title} className="py-4 first:pt-0 last:pb-0">

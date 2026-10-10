@@ -39,7 +39,7 @@ export default function GlobalError({
               fontWeight: 700,
             }}
           >
-            VASTRIX
+            NEVIX
           </p>
           <h1 style={{ fontSize: '2rem', marginTop: '1rem', lineHeight: 1.2 }}>
             The site is temporarily unavailable

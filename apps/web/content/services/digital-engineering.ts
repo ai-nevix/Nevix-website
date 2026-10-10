@@ -1,4 +1,4 @@
-import type { Service } from '@vastrix/types';
+import type { Service } from '@nevix/types';
 
 /**
  * Digital Engineering services — catalogue §4.
@@ -52,7 +52,7 @@ export const digitalEngineeringServices: Service[] = [
     order: 1,
     seo: {
       description:
-        'VASTRIX builds modern responsive corporate, product, portal and campaign websites with frontend development, CMS integration, an SEO-ready foundation and deployment.',
+        'NEVIX builds modern responsive corporate, product, portal and campaign websites with frontend development, CMS integration, an SEO-ready foundation and deployment.',
     },
   },
   {
@@ -89,7 +89,7 @@ export const digitalEngineeringServices: Service[] = [
     order: 2,
     seo: {
       description:
-        'VASTRIX builds browser-based applications around specific workflows — frontend, backend, authentication, databases, RBAC, testing and deployment.',
+        'NEVIX builds browser-based applications around specific workflows — frontend, backend, authentication, databases, RBAC, testing and deployment.',
     },
   },
   {
@@ -118,7 +118,7 @@ export const digitalEngineeringServices: Service[] = [
     order: 3,
     seo: {
       description:
-        'VASTRIX builds custom software applications tailored to organizational requirements — architecture, frontend and backend, integrations, testing and deployment.',
+        'NEVIX builds custom software applications tailored to organizational requirements — architecture, frontend and backend, integrations, testing and deployment.',
     },
   },
   {
@@ -155,7 +155,7 @@ export const digitalEngineeringServices: Service[] = [
     order: 4,
     seo: {
       description:
-        'VASTRIX builds reliable backend services and APIs for web, mobile and AI applications — API design, Python services, database integration, authentication and documentation.',
+        'NEVIX builds reliable backend services and APIs for web, mobile and AI applications — API design, Python services, database integration, authentication and documentation.',
     },
   },
   {
@@ -202,7 +202,7 @@ export const digitalEngineeringServices: Service[] = [
     order: 5,
     seo: {
       description:
-        'VASTRIX designs user experiences that make complex software easier to use — user journeys, wireframes, high-fidelity UI, design systems and developer handoff.',
+        'NEVIX designs user experiences that make complex software easier to use — user journeys, wireframes, high-fidelity UI, design systems and developer handoff.',
     },
   },
   {
@@ -232,7 +232,7 @@ export const digitalEngineeringServices: Service[] = [
     order: 6,
     seo: {
       description:
-        'VASTRIX delivers end-to-end custom software engineering — requirements, architecture, build, testing, deployment and verified handover.',
+        'NEVIX delivers end-to-end custom software engineering — requirements, architecture, build, testing, deployment and verified handover.',
     },
   },
   {
@@ -289,7 +289,7 @@ export const digitalEngineeringServices: Service[] = [
     order: 7,
     seo: {
       description:
-        'VASTRIX supports deployment, environment automation and reliable software delivery with containerization, CI/CD, cloud deployment and infrastructure automation.',
+        'NEVIX supports deployment, environment automation and reliable software delivery with containerization, CI/CD, cloud deployment and infrastructure automation.',
     },
   },
 ];

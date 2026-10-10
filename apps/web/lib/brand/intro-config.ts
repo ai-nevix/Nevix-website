@@ -16,13 +16,13 @@ import { clientEnv } from '@/lib/env';
 export const INTRO_ENABLED = clientEnv.NEXT_PUBLIC_SHOW_INTRO;
 
 /**
- * Scales every duration and delay. 1 is the designed pace (~3.4s end to end).
+ * Scales every duration and delay. 1 is the designed pace (~3.6s end to end).
  * 0.7 is noticeably brisk; 1.3 is stately. Below ~0.5 the phases stop reading as separate.
  */
 export const durationScale = 1;
 
 /** Shown once per browsing session. Clear this key in devtools to see it again. */
-export const INTRO_STORAGE_KEY = 'vastrix_intro_seen';
+export const INTRO_STORAGE_KEY = 'nevix_intro_seen';
 
 /** Absolute milliseconds from the start of the intro, before `durationScale` is applied. */
 const timeline = {
@@ -30,19 +30,23 @@ const timeline = {
   ambient: { at: 0, duration: 420 },
   /** Phase 2 — light lines converge on the centre, suggesting the mark being assembled. */
   lines: { at: 240, duration: 760 },
-  /** Phase 3a — each stroke's outline draws itself, V then A then I. */
-  outline: { at: 520, duration: 820, stagger: 130 },
-  /** Phase 3b — the artwork fills in behind the outline, which then fades. */
-  fill: { at: 1280, duration: 520 },
+  /**
+   * Phase 3a — the N writes itself: a point of light travels up the left stroke, down the diagonal
+   * and up the right stroke, uncovering the artwork behind it. Strokes overlap by a little, so the
+   * letter reads as one gesture rather than three.
+   */
+  outline: { at: 520, duration: 540, stagger: 380 },
+  /** Phase 3b — the written N settles and its glow comes up. */
+  fill: { at: 1640, duration: 420 },
   /** Phase 4 — a single light sweep crosses the emblem. */
-  sweep: { at: 1720, duration: 560 },
+  sweep: { at: 1860, duration: 560 },
   /** Phase 5 — the wordmark rises into place. */
-  wordmark: { at: 1960, duration: 520 },
+  wordmark: { at: 2080, duration: 520 },
   /** Phase 6 — the tagline follows. */
-  tagline: { at: 2340, duration: 480 },
+  tagline: { at: 2440, duration: 480 },
   /** Phase 7 — the lockup holds, then the curtain lifts into the homepage. */
-  hold: { at: 2860, duration: 260 },
-  exit: { at: 3060, duration: 460 },
+  hold: { at: 2940, duration: 260 },
+  exit: { at: 3140, duration: 460 },
 } as const;
 
 export type IntroPhase = keyof typeof timeline;
@@ -55,7 +59,7 @@ export function phase(name: IntroPhase) {
   return { delay: scale(at) / 1000, duration: scale(duration) / 1000 };
 }
 
-/** Stagger step for the per-stroke outline draw, in seconds. */
+/** When each stroke of the N starts to be written, in seconds. */
 export function outlineStagger(index: number) {
   return scale(timeline.outline.at + timeline.outline.stagger * index) / 1000;
 }

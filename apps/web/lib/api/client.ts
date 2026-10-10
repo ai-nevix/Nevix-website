@@ -1,4 +1,4 @@
-import type { ApiErrorBody } from '@vastrix/types';
+import type { ApiErrorBody } from '@nevix/types';
 
 import { clientEnv } from '@/lib/env';
 

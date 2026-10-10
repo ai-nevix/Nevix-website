@@ -129,11 +129,11 @@ export default async function CaseStudyDetailPage({
       <Section tone="light" size="lg" containerSize="prose">
         <div className="flex flex-col gap-10">
           <NarrativeBlock eyebrow="01" title="The problem">
-            <p className="prose-vastrix">{caseStudy.problem}</p>
+            <p className="prose-nevix">{caseStudy.problem}</p>
           </NarrativeBlock>
 
           <NarrativeBlock eyebrow="02" title="Constraints">
-            <ul className="prose-vastrix list-disc">
+            <ul className="prose-nevix list-disc">
               {caseStudy.constraints.map((constraint) => (
                 <li key={constraint}>{constraint}</li>
               ))}
@@ -141,11 +141,11 @@ export default async function CaseStudyDetailPage({
           </NarrativeBlock>
 
           <NarrativeBlock eyebrow="03" title="Approach">
-            <p className="prose-vastrix">{caseStudy.approach}</p>
+            <p className="prose-nevix">{caseStudy.approach}</p>
           </NarrativeBlock>
 
           <NarrativeBlock eyebrow="04" title="Architecture">
-            <ul className="prose-vastrix list-disc">
+            <ul className="prose-nevix list-disc">
               {caseStudy.architecture.map((item) => (
                 <li key={item}>{item}</li>
               ))}
@@ -153,7 +153,7 @@ export default async function CaseStudyDetailPage({
           </NarrativeBlock>
 
           <NarrativeBlock eyebrow="05" title="Implementation">
-            <ol className="prose-vastrix list-decimal">
+            <ol className="prose-nevix list-decimal">
               {caseStudy.implementation.map((item) => (
                 <li key={item}>{item}</li>
               ))}
@@ -201,7 +201,7 @@ export default async function CaseStudyDetailPage({
           <h2 className="mt-3 text-display-sm text-neutral-900">
             What we would tell the next team
           </h2>
-          <ul className="prose-vastrix mt-6 list-disc">
+          <ul className="prose-nevix mt-6 list-disc">
             {caseStudy.lessonsLearned.map((lesson) => (
               <li key={lesson}>{lesson}</li>
             ))}

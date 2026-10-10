@@ -1,6 +1,6 @@
 # API Reference
 
-Base URL: `https://api.vastrix.ai/api/v1`
+Base URL: `https://api.nevix.ai/api/v1`
 Interactive docs: `http://localhost:8000/docs` in development (disabled in production).
 
 > Specification §17. Schemas are generated from the Pydantic models in `apps/api/app/schemas`, so
@@ -187,7 +187,7 @@ Searches approved public content. **Rate limit: 60/min.** `q` is 2–120 charact
 50.
 
 The website performs its own in-process search over CMS content, which is faster and always in
-sync. This endpoint exists so non-browser clients — and, later, the VASTRIX AI assistant retrieving
+sync. This endpoint exists so non-browser clients — and, later, the NEVIX AI assistant retrieving
 approved public knowledge — have the same view through a stable contract. It currently returns an
 empty result set rather than a partial one; returning half the corpus and calling it a search
 result would be worse than returning nothing.

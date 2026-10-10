@@ -1,4 +1,4 @@
-# VASTRIX — production topology (specification §20, §20.1).
+# NEVIX — production topology (specification §20, §20.1).
 #
 # One Linux host, Docker Compose, Nginx terminating TLS. The specification is explicit that
 # Kubernetes should not be introduced for appearance; see ADR-005.
@@ -15,7 +15,7 @@
 #
 # Every secret comes from .env, which is never committed. See .env.example.
 
-name: vastrix
+name: nevix
 
 x-logging: &default-logging
   driver: json-file
@@ -32,7 +32,7 @@ services:
   # -------------------------------------------------------------------------------------------
   nginx:
     image: nginx:1.29-alpine
-    container_name: vastrix-nginx
+    container_name: nevix-nginx
     <<: [*default-restart]
     logging: *default-logging
     ports:
@@ -67,11 +67,11 @@ services:
       context: .
       dockerfile: apps/web/Dockerfile
       args:
-        NEXT_PUBLIC_SITE_URL: ${NEXT_PUBLIC_SITE_URL:-https://vastrix.ai}
+        NEXT_PUBLIC_SITE_URL: ${NEXT_PUBLIC_SITE_URL:-https://nevix.ai}
         NEXT_PUBLIC_API_URL: ${NEXT_PUBLIC_API_URL:-/api/backend}
         NEXT_PUBLIC_ENV: ${NEXT_PUBLIC_ENV:-production}
-    image: vastrix/web:${IMAGE_TAG:-latest}
-    container_name: vastrix-web
+    image: nevix/web:${IMAGE_TAG:-latest}
+    container_name: nevix-web
     <<: [*default-restart]
     logging: *default-logging
     environment:
@@ -102,8 +102,8 @@ services:
     build:
       context: ./apps/api
       dockerfile: Dockerfile
-    image: vastrix/api:${IMAGE_TAG:-latest}
-    container_name: vastrix-api
+    image: nevix/api:${IMAGE_TAG:-latest}
+    container_name: nevix-api
     <<: [*default-restart]
     logging: *default-logging
     environment:
@@ -113,7 +113,7 @@ services:
       LOG_FORMAT: json
       SECRET_KEY: ${SECRET_KEY:?SECRET_KEY is required}
       ADMIN_API_KEY: ${ADMIN_API_KEY:-}
-      DATABASE_URL: postgresql+asyncpg://${POSTGRES_USER:?set POSTGRES_USER}:${POSTGRES_PASSWORD:?set POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB:-vastrix}
+      DATABASE_URL: postgresql+asyncpg://${POSTGRES_USER:?set POSTGRES_USER}:${POSTGRES_PASSWORD:?set POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB:-nevix}
       # Empty by default: the website calls through a same-origin proxy, so no cross-origin
       # access is needed. Never "*" — the application refuses to start with a wildcard.
       CORS_ORIGINS: ${CORS_ORIGINS:-}
@@ -124,16 +124,16 @@ services:
       SMTP_USER: ${SMTP_USER:-}
       SMTP_PASSWORD: ${SMTP_PASSWORD:-}
       SMTP_USE_TLS: ${SMTP_USE_TLS:-true}
-      EMAIL_FROM: ${EMAIL_FROM:-no-reply@vastrix.ai}
+      EMAIL_FROM: ${EMAIL_FROM:-no-reply@nevix.ai}
       EMAIL_NOTIFY_TO: ${EMAIL_NOTIFY_TO:-}
-      SITE_URL: ${NEXT_PUBLIC_SITE_URL:-https://vastrix.ai}
-      SITE_CONTACT_EMAIL: ${SITE_CONTACT_EMAIL:-vastrix.ai@gmail.com}
+      SITE_URL: ${NEXT_PUBLIC_SITE_URL:-https://nevix.ai}
+      SITE_CONTACT_EMAIL: ${SITE_CONTACT_EMAIL:-nevix.ai@gmail.com}
       SITE_PHONE: ${SITE_PHONE:-+91 9552334155}
       SITE_ADDRESS: ${SITE_ADDRESS:-Pune, Maharashtra, India}
-      UPLOAD_DIR: /var/lib/vastrix/uploads
+      UPLOAD_DIR: /var/lib/nevix/uploads
       RUN_MIGRATIONS: ${RUN_MIGRATIONS:-true}
     volumes:
-      - api-uploads:/var/lib/vastrix/uploads
+      - api-uploads:/var/lib/nevix/uploads
     expose:
       - '8000'
     depends_on:
@@ -156,13 +156,13 @@ services:
     # pgvector image: the extension is available for the future AI layer without a rebuild, but
     # is not created until a migration enables it (ADR-008).
     image: pgvector/pgvector:pg16
-    container_name: vastrix-postgres
+    container_name: nevix-postgres
     <<: [*default-restart]
     logging: *default-logging
     environment:
       POSTGRES_USER: ${POSTGRES_USER:?set POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?set POSTGRES_PASSWORD}
-      POSTGRES_DB: ${POSTGRES_DB:-vastrix}
+      POSTGRES_DB: ${POSTGRES_DB:-nevix}
       # scram-sha-256 rather than the default trust for host connections.
       POSTGRES_INITDB_ARGS: '--auth-host=scram-sha-256 --auth-local=scram-sha-256'
     volumes:
@@ -172,7 +172,7 @@ services:
       # internal only — no `ports`, so the database is unreachable from outside the host.
       - internal
     healthcheck:
-      test: ['CMD-SHELL', 'pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB:-vastrix}']
+      test: ['CMD-SHELL', 'pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB:-nevix}']
       interval: 10s
       timeout: 5s
       retries: 5
@@ -185,8 +185,8 @@ services:
     build:
       context: ./apps/cms
       dockerfile: Dockerfile
-    image: vastrix/cms:${IMAGE_TAG:-latest}
-    container_name: vastrix-cms
+    image: nevix/cms:${IMAGE_TAG:-latest}
+    container_name: nevix-cms
     <<: [*default-restart]
     logging: *default-logging
     environment:
@@ -196,7 +196,7 @@ services:
       DATABASE_CLIENT: postgres
       DATABASE_HOST: postgres
       DATABASE_PORT: 5432
-      DATABASE_NAME: ${CMS_DATABASE_NAME:-vastrix_cms}
+      DATABASE_NAME: ${CMS_DATABASE_NAME:-nevix_cms}
       DATABASE_USERNAME: ${POSTGRES_USER:?set POSTGRES_USER}
       DATABASE_PASSWORD: ${POSTGRES_PASSWORD:?set POSTGRES_PASSWORD}
       DATABASE_SSL: 'false'
@@ -229,7 +229,7 @@ services:
   # -------------------------------------------------------------------------------------------
   redis:
     image: redis:7.4-alpine
-    container_name: vastrix-redis
+    container_name: nevix-redis
     profiles: ['cache', 'workers']
     <<: [*default-restart]
     logging: *default-logging
@@ -255,7 +255,7 @@ services:
 
   minio:
     image: minio/minio:RELEASE.2025-04-22T22-12-26Z
-    container_name: vastrix-minio
+    container_name: nevix-minio
     profiles: ['storage']
     <<: [*default-restart]
     logging: *default-logging
@@ -279,15 +279,15 @@ services:
     build:
       context: ./apps/api
       dockerfile: Dockerfile
-    image: vastrix/api:${IMAGE_TAG:-latest}
-    container_name: vastrix-worker
+    image: nevix/api:${IMAGE_TAG:-latest}
+    container_name: nevix-worker
     profiles: ['workers']
     <<: [*default-restart]
     logging: *default-logging
     environment:
       APP_ENV: ${APP_ENV:-production}
       SECRET_KEY: ${SECRET_KEY:?SECRET_KEY is required}
-      DATABASE_URL: postgresql+asyncpg://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB:-vastrix}
+      DATABASE_URL: postgresql+asyncpg://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB:-nevix}
       REDIS_URL: redis://:${REDIS_PASSWORD}@redis:6379/0
       # Only the API container owns migrations; a worker running them would race with it.
       RUN_MIGRATIONS: 'false'

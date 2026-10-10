@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 
-import type { ServiceCategorySlug } from '@vastrix/types';
+import type { ServiceCategorySlug } from '@nevix/types';
 
 import { ServiceCard, SolutionCard } from '@/components/cards';
 import { CtaSection } from '@/components/sections/cta-section';

@@ -27,7 +27,7 @@ export const revalidate = 3600;
 export const metadata = buildMetadata({
   title: 'Case Studies',
   description:
-    'Demonstration case studies showing how VASTRIX approaches a problem — the architecture, the implementation and the trade-offs. These are illustrative examples, not delivered client work.',
+    'Demonstration case studies showing how NEVIX approaches a problem — the architecture, the implementation and the trade-offs. These are illustrative examples, not delivered client work.',
   path: '/case-studies',
   seo: { noIndex: true },
 });
@@ -43,12 +43,12 @@ export default async function CaseStudiesPage() {
         breadcrumbs={[{ name: 'Case Studies', href: '/case-studies' }]}
         eyebrow="Case Studies"
         title="How we approach a problem"
-        description="VASTRIX has not yet published client engagements. Rather than leave this section empty, we have written up the approach we take — the discovery, the architecture, the decisions and the things we got wrong along the way."
+        description="NEVIX has not yet published client engagements. Rather than leave this section empty, we have written up the approach we take — the discovery, the architecture, the decisions and the things we got wrong along the way."
         notice={
           demoCount > 0 ? (
             <Notice variant="demo" title="These are demonstration case studies" onDark>
               All {demoCount} case studies below are illustrative. They are not accounts of work
-              delivered to a client, no organisation described is a VASTRIX client, and the outcomes
+              delivered to a client, no organisation described is a NEVIX client, and the outcomes
               are design intentions rather than measured results. Real case studies will be
               published here once approved and permission-cleared.
             </Notice>

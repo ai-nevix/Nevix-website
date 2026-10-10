@@ -10,8 +10,8 @@ import { expect, test } from '@playwright/test';
  */
 
 const TEAM = [
-  { name: 'Jyoti Rokade', role: 'Founder & CEO' },
-  { name: 'Vaidehi Bhagane', role: 'Co-Founder' },
+  { name: 'Jyoti Rokade', role: 'Founder & CEO', ratio: 1536 / 1024 },
+  { name: 'Vaidehi Bhagane', role: 'Co-Founder', ratio: 1 },
 ];
 
 test.describe('Team page', () => {
@@ -29,9 +29,9 @@ test.describe('Team page', () => {
       expect(alt).toContain(member.name);
       expect(alt).toContain(member.role);
 
-      // Published uncropped: the frame is square, like the supplied card.
+      // Published uncropped: the frame has the supplied card's own shape.
       const box = (await image.boundingBox())!;
-      expect(Math.abs(box.width - box.height)).toBeLessThan(2);
+      expect(Math.abs(box.width / box.height - member.ratio)).toBeLessThan(0.02);
     }
   });
 

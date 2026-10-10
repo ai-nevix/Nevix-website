@@ -7,10 +7,10 @@
 
 export const about = {
   hero: {
-    eyebrow: 'About VASTRIX',
+    eyebrow: 'About NEVIX',
     title: 'An intelligent technology and engineering company',
     description:
-      'VASTRIX builds intelligent technology solutions across AI, automation, digital engineering and data. We help organizations simplify complex processes, connect systems, turn data into insight and build scalable digital products.',
+      'NEVIX builds intelligent technology solutions across AI, automation, digital engineering and data. We help organizations simplify complex processes, connect systems, turn data into insight and build scalable digital products.',
   },
 
   /**
@@ -22,7 +22,7 @@ export const about = {
   story: {
     title: 'How we work, and why',
     paragraphs: [
-      'VASTRIX was formed around a straightforward observation: most organisations do not have a technology problem, they have a problem that technology could solve — and the gap between those two statements is where budgets disappear.',
+      'NEVIX was formed around a straightforward observation: most organisations do not have a technology problem, they have a problem that technology could solve — and the gap between those two statements is where budgets disappear.',
       'So we start with the problem. Before selecting a model, a framework or a platform, we establish what decision is being made, what the cost of getting it wrong actually is, and whether the available data and systems can support a better answer. Sometimes the conclusion is that a well-designed rule-based workflow beats a model. We would rather say that in an assessment than discover it after a build.',
       'The second commitment is that what we deliver should outlive the engagement. Architecture decisions are recorded with their reasoning. Deployment is reproducible. Handover is verified by your team running the system from documentation, not asserted by ours. Software you cannot maintain is a liability with a nice interface.',
     ],
@@ -193,8 +193,8 @@ export const about = {
  * the list. The marker stays until those are supplied — a page that shows two people is accurate,
  * but it is not yet the whole team.
  *
- * Every field is taken verbatim from the supplied cards in `brand-assets/` — the name, the role
- * and the quote each person is credited with. Nothing else was supplied, so nothing else is
+ * Every field is taken verbatim from the supplied cards in `brand-assets/nevix/` — the name, the
+ * role and the words each person is credited with. Nothing else was supplied, so nothing else is
  * stated: no biography, no career history, no qualifications, no tenure, no prior employers.
  * Instruction §25 forbids inventing any of it, and a profile that says less is not a placeholder
  * — it is simply the part that has been approved.
@@ -209,10 +209,16 @@ export interface TeamMember {
   slug: string;
   name: string;
   role: string;
-  /** Attributed to this person on the supplied card. */
+  /** The words attributed to this person on the supplied card. */
   quote: string;
-  /** The supplied card, published whole. Square. */
+  /** The supplied card, published whole. */
   card: string;
+  /**
+   * The card's pixel size. The cards are not all the same shape — the founder's is 3:2, the
+   * co-founder's square — so each is framed at its own ratio and none is cropped.
+   */
+  cardWidth: number;
+  cardHeight: number;
 }
 
 /**
@@ -223,7 +229,7 @@ export interface TeamMember {
  * where the role said "Founder & CEO".
  */
 export function teamCardAlt(member: TeamMember): string {
-  return `${member.name}, ${member.role} of VASTRIX, with the quote “${member.quote}”`;
+  return `${member.name}, ${member.role} of NEVIX, with the quote “${member.quote}”`;
 }
 
 export const team: readonly TeamMember[] = [
@@ -231,8 +237,11 @@ export const team: readonly TeamMember[] = [
     slug: 'jyoti-rokade',
     name: 'Jyoti Rokade',
     role: 'Founder & CEO',
-    quote: 'Technology creates opportunities. People give them meaning.',
+    quote:
+      'Turning Ideas into Impact. At NEVIX, we build intelligent solutions with AI, automation and digital engineering to create a smarter, more connected tomorrow.',
     card: '/team/jyoti-rokade.webp',
+    cardWidth: 1536,
+    cardHeight: 1024,
   },
   {
     slug: 'vaidehi-bhagane',
@@ -240,5 +249,7 @@ export const team: readonly TeamMember[] = [
     role: 'Co-Founder',
     quote: 'Ideas grow brighter when we build them together.',
     card: '/team/vaidehi-bhagane.webp',
+    cardWidth: 1254,
+    cardHeight: 1254,
   },
 ] as const;

@@ -1,4 +1,4 @@
-import type { Service } from '@vastrix/types';
+import type { Service } from '@nevix/types';
 
 /**
  * Data & Analytics services — catalogue §5.
@@ -35,7 +35,7 @@ export const dataAnalyticsServices: Service[] = [
     order: 1,
     seo: {
       description:
-        'VASTRIX analyses data to identify trends, performance drivers, anomalies and opportunities — data cleaning, exploratory analysis, KPI analysis and insight reports.',
+        'NEVIX analyses data to identify trends, performance drivers, anomalies and opportunities — data cleaning, exploratory analysis, KPI analysis and insight reports.',
     },
   },
   {
@@ -67,7 +67,7 @@ export const dataAnalyticsServices: Service[] = [
     order: 2,
     seo: {
       description:
-        'VASTRIX creates interactive dashboards that turn operational data into decision-ready views — KPI design, data modeling, dashboard development and documentation.',
+        'NEVIX creates interactive dashboards that turn operational data into decision-ready views — KPI design, data modeling, dashboard development and documentation.',
     },
   },
   {
@@ -103,7 +103,7 @@ export const dataAnalyticsServices: Service[] = [
     order: 3,
     seo: {
       description:
-        'VASTRIX collects, transforms, validates and moves data between systems — data ingestion, transformation, validation, scheduling and pipeline orchestration.',
+        'NEVIX collects, transforms, validates and moves data between systems — data ingestion, transformation, validation, scheduling and pipeline orchestration.',
     },
   },
   {
@@ -146,7 +146,7 @@ export const dataAnalyticsServices: Service[] = [
     order: 4,
     seo: {
       description:
-        'VASTRIX uses statistical and machine-learning methods to estimate future outcomes and risk — forecasting, regression, classification, evaluation and inference workflows.',
+        'NEVIX uses statistical and machine-learning methods to estimate future outcomes and risk — forecasting, regression, classification, evaluation and inference workflows.',
     },
   },
   {
@@ -177,7 +177,7 @@ export const dataAnalyticsServices: Service[] = [
     order: 5,
     seo: {
       description:
-        'VASTRIX automates recurring data collection, report preparation and distribution — extraction, transformation, templates, scheduling and delivery.',
+        'NEVIX automates recurring data collection, report preparation and distribution — extraction, transformation, templates, scheduling and delivery.',
     },
   },
   {
@@ -207,7 +207,7 @@ export const dataAnalyticsServices: Service[] = [
     order: 6,
     seo: {
       description:
-        'VASTRIX combines data, business rules and analytics to support faster decisions — decision models, scoring, dashboards and recommendation workflows.',
+        'NEVIX combines data, business rules and analytics to support faster decisions — decision models, scoring, dashboards and recommendation workflows.',
     },
   },
 ];

@@ -11,8 +11,8 @@
 
 | Item | Mechanism | Frequency | Retention |
 | --- | --- | --- | --- |
-| `vastrix` database | `pg_dump --format=custom --compress=9` | daily + pre-deploy | 30 days; pre-deploy kept indefinitely |
-| `vastrix_cms` database | same | daily + pre-deploy | same |
+| `nevix` database | `pg_dump --format=custom --compress=9` | daily + pre-deploy | 30 days; pre-deploy kept indefinitely |
+| `nevix_cms` database | same | daily + pre-deploy | same |
 | API uploads volume | `tar -czf` | daily | 30 days |
 | CMS media volume | `tar -czf` | daily | 30 days |
 | `.env` | **manual, out of band** | on change | — |
@@ -28,7 +28,7 @@ files that no longer exist — which is why both are in the same job.
 ## 2. Taking a backup
 
 ```bash
-cd /opt/vastrix
+cd /opt/nevix
 
 ./scripts/backup-database.sh                              # routine
 ./scripts/backup-database.sh --label pre-deploy-abc1234   # before a release
@@ -41,14 +41,14 @@ discarded and reported at backup time, rather than discovered during an incident
 ### Scheduling
 
 ```cron
-0 2 * * * cd /opt/vastrix && ./scripts/backup-database.sh >> /var/log/vastrix-backup.log 2>&1
+0 2 * * * cd /opt/nevix && ./scripts/backup-database.sh >> /var/log/nevix-backup.log 2>&1
 ```
 
 ### Off-host copies
 
 ```bash
 # In .env
-BACKUP_REMOTE_TARGET=backup@storage.example.com:/backups/vastrix
+BACKUP_REMOTE_TARGET=backup@storage.example.com:/backups/nevix
 ```
 
 Specification §24.1 requires backup storage separate from the primary server. The script warns
@@ -81,7 +81,7 @@ verification did not happen as far as an auditor is concerned.
 > lost.
 
 ```bash
-./scripts/restore-database.sh --file /var/backups/vastrix/vastrix-20260917-020000.dump --production
+./scripts/restore-database.sh --file /var/backups/nevix/nevix-20260917-020000.dump --production
 ```
 
 The script requires two explicit confirmations, then:
@@ -97,7 +97,7 @@ The script requires two explicit confirmations, then:
 
 ```bash
 docker compose stop api
-docker run --rm -v vastrix_api-uploads:/data -v /var/backups/vastrix:/backup alpine \
+docker run --rm -v nevix_api-uploads:/data -v /var/backups/nevix:/backup alpine \
   sh -c "rm -rf /data/* && tar -xzf /backup/uploads-20260917-020000.tar.gz -C /data --strip-components=1"
 docker compose start api
 ```
@@ -109,7 +109,7 @@ Assumes the host is gone and you have the backups and `.env`.
 ```bash
 # 1. New host: Docker Engine + Compose
 # 2. Restore the repository and configuration
-git clone <repository> /opt/vastrix && cd /opt/vastrix
+git clone <repository> /opt/nevix && cd /opt/nevix
 # Restore .env from the password manager — NOT from the backup target
 chmod 600 .env
 
@@ -119,23 +119,23 @@ sleep 20
 
 # 4. Create the databases
 docker compose exec -T postgres psql -U "$POSTGRES_USER" -d postgres \
-  -c "CREATE DATABASE vastrix;" -c "CREATE DATABASE vastrix_cms;"
+  -c "CREATE DATABASE nevix;" -c "CREATE DATABASE nevix_cms;"
 
 # 5. Restore both
-docker compose exec -T postgres pg_restore -U "$POSTGRES_USER" -d vastrix \
-  --no-owner --no-privileges --exit-on-error < /path/to/vastrix-*.dump
-docker compose exec -T postgres pg_restore -U "$POSTGRES_USER" -d vastrix_cms \
-  --no-owner --no-privileges --exit-on-error < /path/to/vastrix_cms-*.dump
+docker compose exec -T postgres pg_restore -U "$POSTGRES_USER" -d nevix \
+  --no-owner --no-privileges --exit-on-error < /path/to/nevix-*.dump
+docker compose exec -T postgres pg_restore -U "$POSTGRES_USER" -d nevix_cms \
+  --no-owner --no-privileges --exit-on-error < /path/to/nevix_cms-*.dump
 
 # 6. Restore the media volumes (see §4)
 
 # 7. Reissue TLS certificates, then bring everything up
-./scripts/issue-certificates.sh vastrix.ai
+./scripts/issue-certificates.sh nevix.ai
 docker compose up -d
 
 # 8. Verify
-curl -f https://vastrix.ai/
-curl -f https://api.vastrix.ai/api/v1/health
+curl -f https://nevix.ai/
+curl -f https://api.nevix.ai/api/v1/health
 ```
 
 **Realistic recovery time:** 30–60 minutes on a prepared host, dominated by image builds and DNS

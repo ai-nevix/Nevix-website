@@ -26,7 +26,7 @@ added to an existing column. Any of those makes the release destructive.
 ## 2. Rolling back code
 
 ```bash
-cd /opt/vastrix
+cd /opt/nevix
 
 ./scripts/rollback.sh --list            # what is available
 ./scripts/rollback.sh                   # to the previously recorded tag
@@ -49,22 +49,22 @@ docker compose stop web api
 
 # 2. Restore the pre-deploy backup
 ./scripts/restore-database.sh \
-  --file /var/backups/vastrix/vastrix-<timestamp>-pre-deploy-<sha>.dump \
+  --file /var/backups/nevix/nevix-<timestamp>-pre-deploy-<sha>.dump \
   --production
 
 # 3. Deploy the previous image tag
 IMAGE_TAG=<previous-sha> RUN_MIGRATIONS=false docker compose up -d
 
 # 4. Verify
-curl -f https://vastrix.ai/api/v1/health
-curl -f https://vastrix.ai/
+curl -f https://nevix.ai/api/v1/health
+curl -f https://nevix.ai/
 ```
 
 **Anything written between the backup and the rollback is lost.** For this site that means
 enquiries. Before restoring, check whether any arrived in that window:
 
 ```bash
-docker compose exec -T postgres psql -U "$POSTGRES_USER" -d vastrix -tAc \
+docker compose exec -T postgres psql -U "$POSTGRES_USER" -d nevix -tAc \
   "SELECT reference, email, created_at FROM leads WHERE created_at > '<backup-time>' ORDER BY created_at;"
 ```
 
@@ -80,10 +80,10 @@ are.
 ## 5. Verifying a rollback
 
 ```bash
-curl -f https://vastrix.ai/api/v1/health      # 200, status "ok"
-curl -f https://vastrix.ai/                   # 200
-curl -f https://vastrix.ai/services           # 200
-curl -f https://vastrix.ai/sitemap.xml        # 200
+curl -f https://nevix.ai/api/v1/health      # 200, status "ok"
+curl -f https://nevix.ai/                   # 200
+curl -f https://nevix.ai/services           # 200
+curl -f https://nevix.ai/sitemap.xml        # 200
 docker compose ps                             # all healthy
 docker compose logs --tail=50 api
 ```

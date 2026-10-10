@@ -1,8 +1,8 @@
 {
-  "name": "@vastrix/cms",
+  "name": "@nevix/cms",
   "version": "0.1.0",
   "private": true,
-  "description": "VASTRIX content management — self-hosted Strapi Community Edition",
+  "description": "NEVIX content management — self-hosted Strapi Community Edition",
   "license": "UNLICENSED",
   "scripts": {
     "develop": "strapi develop",
@@ -27,6 +27,6 @@
     "npm": ">=6.0.0"
   },
   "strapi": {
-    "uuid": "vastrix-cms"
+    "uuid": "nevix-cms"
   }
 }

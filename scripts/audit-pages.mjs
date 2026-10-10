@@ -29,6 +29,7 @@ const ROUTES = [
   '/',
   '/about',
   '/team',
+  '/brand',
   '/services',
   '/services/ai-intelligence',
   '/services/automation',

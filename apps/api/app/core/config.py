@@ -29,7 +29,7 @@ class Settings(BaseSettings):
 
     # --- Application -------------------------------------------------------------------------
     app_env: Environment = "local"
-    app_name: str = "VASTRIX API"
+    app_name: str = "NEVIX API"
     app_version: str = "0.1.0"
     debug: bool = False
     log_level: str = "INFO"
@@ -42,7 +42,7 @@ class Settings(BaseSettings):
     admin_api_key: str | None = None
 
     # --- Database ----------------------------------------------------------------------------
-    database_url: str = "postgresql+asyncpg://vastrix:vastrix@localhost:5432/vastrix"
+    database_url: str = "postgresql+asyncpg://nevix:nevix@localhost:5432/nevix"
     database_pool_size: int = 5
     database_max_overflow: int = 10
     database_echo: bool = False
@@ -71,8 +71,8 @@ class Settings(BaseSettings):
     smtp_password: str | None = None
     smtp_use_tls: bool = True
     smtp_timeout_seconds: int = 15
-    email_from: str = "no-reply@vastrix.ai"
-    email_from_name: str = "VASTRIX"
+    email_from: str = "no-reply@nevix.ai"
+    email_from_name: str = "NEVIX"
     # Where new enquiry notifications are sent.
     email_notify_to: str | None = None
 
@@ -93,20 +93,20 @@ class Settings(BaseSettings):
         ]
     )
     # Local directory used when object storage is not configured.
-    upload_dir: str = "/var/lib/vastrix/uploads"
+    upload_dir: str = "/var/lib/nevix/uploads"
 
     # --- Object storage (MinIO / S3-compatible) — profile-gated, see ADR-008 ------------------
     s3_enabled: bool = False
     s3_endpoint: str | None = None
-    s3_bucket: str = "vastrix-media"
+    s3_bucket: str = "nevix-media"
     s3_access_key: str | None = None
     s3_secret_key: str | None = None
     s3_region: str = "us-east-1"
 
     # --- Site configuration exposed publicly ---------------------------------------------------
-    site_company_name: str = "VASTRIX"
+    site_company_name: str = "NEVIX"
     site_tagline: str = "Explore. Automate. Evolve."
-    site_contact_email: str = "vastrix.ai@gmail.com"
+    site_contact_email: str = "nevix.ai@gmail.com"
     site_phone: str | None = None
     site_address: str | None = None
     site_url: str = "http://localhost:3000"
@@ -172,7 +172,7 @@ class Settings(BaseSettings):
         if self.admin_api_key is not None and len(self.admin_api_key) < 32:
             problems.append("ADMIN_API_KEY must be at least 32 characters in production.")
 
-        if self.database_url.startswith("postgresql+asyncpg://vastrix:vastrix@"):
+        if self.database_url.startswith("postgresql+asyncpg://nevix:nevix@"):
             problems.append("DATABASE_URL still uses the default development credentials.")
 
         if problems:

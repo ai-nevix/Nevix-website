@@ -17,7 +17,7 @@ import { buildMetadata } from '@/lib/seo/metadata';
  * Products index — specification §9.1, instruction §22.
  *
  * DUMMY-DATA: DD-002
- * VASTRIX has no products yet. Every entry is at concept status and the page says so plainly at
+ * NEVIX has no products yet. Every entry is at concept status and the page says so plainly at
  * the top rather than implying a shipping roadmap.
  */
 export const revalidate = 3600;
@@ -25,7 +25,7 @@ export const revalidate = 3600;
 export const metadata = buildMetadata({
   title: 'Products',
   description:
-    'Product directions VASTRIX is considering, and the lifecycle we use to take a product from concept to production. Nothing listed is currently available.',
+    'Product directions NEVIX is considering, and the lifecycle we use to take a product from concept to production. Nothing listed is currently available.',
   path: '/products',
 });
 
@@ -46,7 +46,7 @@ export default async function ProductsPage() {
         breadcrumbs={[{ name: 'Products', href: '/products' }]}
         eyebrow="Products"
         title="Nothing here is available yet — and we would rather say so"
-        description="VASTRIX does not currently ship a product. Below are directions under consideration, drawn from patterns we build repeatedly. They are listed at concept status so nobody mistakes an idea for a roadmap."
+        description="NEVIX does not currently ship a product. Below are directions under consideration, drawn from patterns we build repeatedly. They are listed at concept status so nobody mistakes an idea for a roadmap."
         notice={
           <Notice variant="demo" title="Concept stage — not available" onDark>
             Every product on this page is at concept stage. None has been built, none is available

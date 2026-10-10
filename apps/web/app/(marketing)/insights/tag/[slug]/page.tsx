@@ -31,7 +31,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 
   return buildMetadata({
     title: `${slugToLabel(slug)} insights`,
-    description: `VASTRIX articles tagged ${slugToLabel(slug)}.`,
+    description: `NEVIX articles tagged ${slugToLabel(slug)}.`,
     path: `/insights/tag/${slug}`,
     seo: { noIndex: true },
   });

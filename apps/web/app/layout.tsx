@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from 'next';
-import { Manrope } from 'next/font/google';
+import { Manrope, Sora } from 'next/font/google';
 import type { ReactNode } from 'react';
 
 import { JsonLd } from '@/components/seo/json-ld';
@@ -10,7 +10,9 @@ import { organizationSchema, websiteSchema } from '@/lib/seo/structured-data';
 import './globals.css';
 
 /**
- * Manrope is the VASTRIX brand typeface (specification §4).
+ * Two typefaces: Manrope for body copy and Sora for headings. Sora's geometric, slightly wide
+ * letterforms are the closest open typeface to the NEVIX wordmark, so headings sit naturally beside
+ * the logo; Manrope stays on long-form text, where Sora's width would tire the eye.
  *
  * `next/font` downloads and self-hosts the files at build time, so no request goes to a font CDN
  * at runtime — which is both faster and what allows the Content Security Policy to forbid
@@ -24,6 +26,14 @@ const manrope = Manrope({
   fallback: ['ui-sans-serif', 'system-ui', 'Segoe UI', 'Roboto', 'sans-serif'],
 });
 
+const sora = Sora({
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-sora',
+  weight: ['500', '600', '700'],
+  fallback: ['ui-sans-serif', 'system-ui', 'Segoe UI', 'Roboto', 'sans-serif'],
+});
+
 export const metadata: Metadata = buildRootMetadata();
 
 export const viewport: Viewport = {
@@ -31,8 +41,9 @@ export const viewport: Viewport = {
   initialScale: 1,
   viewportFit: 'cover',
   themeColor: [
-    { media: '(prefers-color-scheme: light)', color: '#f8fafc' },
-    { media: '(prefers-color-scheme: dark)', color: '#0a0f1c' },
+    // The header is midnight on every page, so the browser chrome matches it in both schemes.
+    { media: '(prefers-color-scheme: light)', color: '#02060f' },
+    { media: '(prefers-color-scheme: dark)', color: '#02060f' },
   ],
 };
 
@@ -71,8 +82,8 @@ if(location.pathname!=='/')return;
 if(window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches)return;
 if(sessionStorage.getItem(${JSON.stringify(storageKey)}))return;
 sessionStorage.setItem(${JSON.stringify(storageKey)},'1');
-var d=document.documentElement;d.classList.add('vastrix-intro-armed');
-setTimeout(function(){d.classList.remove('vastrix-intro-armed');},${failsafeMs});
+var d=document.documentElement;d.classList.add('nevix-intro-armed');
+setTimeout(function(){d.classList.remove('nevix-intro-armed');},${failsafeMs});
 }catch(e){}})();`;
 }
 
@@ -85,7 +96,7 @@ const introArmingScript = buildIntroArmingScript({
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="en-GB" className={manrope.variable} suppressHydrationWarning>
+    <html lang="en-GB" className={`${manrope.variable} ${sora.variable}`} suppressHydrationWarning>
       <body className="min-h-dvh bg-light font-sans antialiased">
         {introArmingScript ? (
           <script dangerouslySetInnerHTML={{ __html: introArmingScript }} />

@@ -1,4 +1,4 @@
-"""VASTRIX API application.
+"""NEVIX API application.
 
 Composition root: configuration, logging, middleware, routers, error handling and lifespan.
 
@@ -60,7 +60,7 @@ app = FastAPI(
     title=settings.app_name,
     version=settings.app_version,
     description=(
-        "Backend for the VASTRIX website: contact and lead management, newsletter "
+        "Backend for the NEVIX website: contact and lead management, newsletter "
         "subscriptions, attachment uploads and public site configuration."
     ),
     lifespan=lifespan,
@@ -100,7 +100,7 @@ if settings.is_production:
     # application-level equivalent for the case where it is bypassed.
     app.add_middleware(
         TrustedHostMiddleware,
-        allowed_hosts=["api.vastrix.ai", "www.vastrix.ai", "vastrix.ai", "api", "localhost"],
+        allowed_hosts=["api.nevix.ai", "www.nevix.ai", "nevix.ai", "api", "localhost"],
     )
 
 

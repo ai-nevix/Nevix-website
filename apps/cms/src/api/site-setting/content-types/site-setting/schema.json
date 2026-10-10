@@ -15,7 +15,7 @@
     "companyName": {
       "type": "string",
       "required": true,
-      "default": "VASTRIX"
+      "default": "NEVIX"
     },
     "tagline": {
       "type": "string",

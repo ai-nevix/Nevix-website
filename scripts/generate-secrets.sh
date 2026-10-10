@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# Generates every secret the VASTRIX stack needs (instruction §32, §45).
+# Generates every secret the NEVIX stack needs (instruction §32, §45).
 #
 #   ./scripts/generate-secrets.sh            # print to stdout
 #   ./scripts/generate-secrets.sh --write    # append to .env, refusing to overwrite a set value

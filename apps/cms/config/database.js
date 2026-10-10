@@ -14,8 +14,8 @@ module.exports = ({ env }) => {
       connection: {
         host: env('DATABASE_HOST', 'localhost'),
         port: env.int('DATABASE_PORT', 5432),
-        database: env('DATABASE_NAME', 'vastrix_cms'),
-        user: env('DATABASE_USERNAME', 'vastrix'),
+        database: env('DATABASE_NAME', 'nevix_cms'),
+        user: env('DATABASE_USERNAME', 'nevix'),
         password: env('DATABASE_PASSWORD'),
         ssl: env.bool('DATABASE_SSL', false) && {
           rejectUnauthorized: env.bool('DATABASE_SSL_REJECT_UNAUTHORIZED', true),

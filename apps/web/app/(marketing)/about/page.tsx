@@ -21,9 +21,9 @@ import { buildMetadata } from '@/lib/seo/metadata';
  * placeholder (DD-003) rather than fabricated profiles.
  */
 export const metadata = buildMetadata({
-  title: 'About VASTRIX',
+  title: 'About NEVIX',
   description:
-    'VASTRIX is an intelligent technology and engineering company working across AI, automation, digital engineering and data. Our vision, mission, engineering principles and how we work.',
+    'NEVIX is an intelligent technology and engineering company working across AI, automation, digital engineering and data. Our vision, mission, engineering principles and how we work.',
   path: '/about',
 });
 
@@ -88,15 +88,37 @@ export default function AboutPage() {
       </Section>
 
       {/* --- Brand visual -------------------------------------------------------------------- */}
-      <Section tone="midnight" size="sm" bleed className="bg-ink-950 py-0">
-        <Image
-          src={brandAssets.brandBoard}
-          alt="VASTRIX brand board: the logo, the tagline Explore. Automate. Evolve., and the four core pillars — AI and Intelligence, Automation, Digital Engineering, and Data and Analytics."
-          width={1600}
-          height={600}
-          sizes="100vw"
-          className="h-auto w-full object-cover"
-        />
+      <Section tone="brand-field" size="md" className="overflow-hidden">
+        <div className="grid items-center gap-12 lg:grid-cols-[minmax(0,1fr)_minmax(0,22rem)] lg:gap-16">
+          <Reveal>
+            <figure className="relative overflow-hidden rounded-(--radius-panel) shadow-[var(--shadow-panel)]">
+              <Image
+                src={brandAssets.wallpaper.src}
+                width={brandAssets.wallpaper.width}
+                height={brandAssets.wallpaper.height}
+                alt="The NEVIX brand wallpaper: a workspace overlooking a city at sunset, the NEVIX logo and tagline Explore. Automate. Evolve. above six themes — ideas, automation, technology, progress, people and impact — with the words A smarter tomorrow, together."
+                sizes="(max-width: 1024px) 100vw, 860px"
+                className="h-auto w-full"
+              />
+              <div
+                aria-hidden="true"
+                className="absolute inset-0 rounded-(--radius-panel) ring-1 ring-white/10 ring-inset"
+              />
+            </figure>
+          </Reveal>
+
+          <Reveal delay={0.1}>
+            <p className="text-eyebrow text-cyan-brand-300 uppercase">The identity</p>
+            <h2 className="mt-4 text-display-sm text-white">An N in motion</h2>
+            <p className="mt-4 text-base leading-relaxed text-neutral-300">
+              Three strokes written as one gesture, lit from electric blue to cyan: the mark is
+              meant to read as intelligence in motion — always moving forward.
+            </p>
+            <Button asChild variant="outlineOnDark" className="mt-7">
+              <Link href="/brand">Explore the brand</Link>
+            </Button>
+          </Reveal>
+        </div>
       </Section>
 
       {/* --- Values -------------------------------------------------------------------------- */}
@@ -132,7 +154,7 @@ export default function AboutPage() {
         <SectionHeading
           eyebrow="Engineering principles"
           title="How we build"
-          description="Taken from the VASTRIX service catalogue. They apply to a two-week assessment as much as to a multi-quarter build."
+          description="Taken from the NEVIX service catalogue. They apply to a two-week assessment as much as to a multi-quarter build."
           onDark
         />
 

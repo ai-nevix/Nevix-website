@@ -71,7 +71,7 @@ def _is_sensitive(key: str) -> bool:
 
 
 def _add_service_context(_logger: Any, _name: str, event_dict: EventDict) -> EventDict:
-    event_dict.setdefault("service", "vastrix-api")
+    event_dict.setdefault("service", "nevix-api")
     event_dict.setdefault("environment", settings.app_env)
     event_dict.setdefault("version", settings.app_version)
     return event_dict

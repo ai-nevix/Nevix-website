@@ -51,7 +51,7 @@ def lead_notification(
         f"{settings.site_url.rstrip('/')}{attachment_url}" if attachment_url else "None"
     )
 
-    text = f"""New enquiry via the VASTRIX website
+    text = f"""New enquiry via the NEVIX website
 
 Reference:    {reference}
 Name:         {name}
@@ -78,7 +78,7 @@ Reply directly to this message to reach the enquirer.
   <table role="presentation" style="max-width:640px;margin:0 auto;background:#ffffff;border:1px solid #e2e8f0;border-radius:12px;overflow:hidden">
     <tr>
       <td style="padding:20px 24px;background:#0a0f1c">
-        <div style="color:#22d3ee;font-size:11px;letter-spacing:0.16em;font-weight:700">VASTRIX</div>
+        <div style="color:#22d3ee;font-size:11px;letter-spacing:0.16em;font-weight:700">NEVIX</div>
         <div style="color:#ffffff;font-size:18px;font-weight:700;margin-top:6px">New enquiry</div>
         <div style="color:#94a3b8;font-size:13px;margin-top:4px">Reference {escape(reference)}</div>
       </td>
@@ -121,7 +121,7 @@ def lead_acknowledgement(*, reference: str, name: str) -> tuple[str, str, str]:
 
     text = f"""Hello {name},
 
-Thank you for contacting VASTRIX. Your enquiry has been received and your reference is {reference}.
+Thank you for contacting NEVIX. Your enquiry has been received and your reference is {reference}.
 
 A member of the engineering team will read it properly and reply, usually within two working days.
 If your enquiry turns out to be outside what we do well, we will tell you that rather than take
@@ -129,7 +129,7 @@ the work.
 
 Please quote {reference} if you follow up.
 
-VASTRIX
+NEVIX
 Explore. Automate. Evolve.
 {settings.site_url}
 """
@@ -140,7 +140,7 @@ Explore. Automate. Evolve.
   <table role="presentation" style="max-width:560px;margin:0 auto;background:#ffffff;border:1px solid #e2e8f0;border-radius:12px;overflow:hidden">
     <tr>
       <td style="padding:24px;background:#0a0f1c">
-        <div style="color:#22d3ee;font-size:11px;letter-spacing:0.16em;font-weight:700">VASTRIX</div>
+        <div style="color:#22d3ee;font-size:11px;letter-spacing:0.16em;font-weight:700">NEVIX</div>
         <div style="color:#ffffff;font-size:20px;font-weight:700;margin-top:8px">We have your enquiry</div>
       </td>
     </tr>
@@ -148,7 +148,7 @@ Explore. Automate. Evolve.
       <td style="padding:28px 24px;color:#334155;font-size:15px;line-height:1.7">
         <p style="margin:0">Hello {escape(name)},</p>
         <p style="margin:16px 0 0">
-          Thank you for contacting VASTRIX. Your reference is
+          Thank you for contacting NEVIX. Your reference is
           <strong style="color:#0f172a;font-family:ui-monospace,monospace">{escape(reference)}</strong>.
         </p>
         <p style="margin:16px 0 0">
@@ -178,11 +178,11 @@ def newsletter_confirmation(*, confirm_url: str) -> tuple[str, str, str]:
 
     DUMMY-DATA: DD-011 — pending brand and legal review.
     """
-    subject = "Confirm your VASTRIX subscription"
+    subject = "Confirm your NEVIX subscription"
 
     text = f"""Please confirm your subscription
 
-Someone — we hope you — asked to receive occasional emails from VASTRIX about applied AI,
+Someone — we hope you — asked to receive occasional emails from NEVIX about applied AI,
 automation, data and engineering.
 
 Confirm here:
@@ -190,7 +190,7 @@ Confirm here:
 
 If this was not you, ignore this message. Nothing will be sent and the request expires on its own.
 
-VASTRIX
+NEVIX
 {settings.site_url}
 """
 
@@ -200,14 +200,14 @@ VASTRIX
   <table role="presentation" style="max-width:560px;margin:0 auto;background:#ffffff;border:1px solid #e2e8f0;border-radius:12px;overflow:hidden">
     <tr>
       <td style="padding:24px;background:#0a0f1c">
-        <div style="color:#22d3ee;font-size:11px;letter-spacing:0.16em;font-weight:700">VASTRIX</div>
+        <div style="color:#22d3ee;font-size:11px;letter-spacing:0.16em;font-weight:700">NEVIX</div>
         <div style="color:#ffffff;font-size:20px;font-weight:700;margin-top:8px">Confirm your subscription</div>
       </td>
     </tr>
     <tr>
       <td style="padding:28px 24px;color:#334155;font-size:15px;line-height:1.7">
         <p style="margin:0">
-          Someone — we hope you — asked to receive occasional emails from VASTRIX about applied AI,
+          Someone — we hope you — asked to receive occasional emails from NEVIX about applied AI,
           automation, data and engineering.
         </p>
         <p style="margin:24px 0">

@@ -1,4 +1,4 @@
-# VASTRIX — local development overrides.
+# NEVIX — local development overrides.
 #
 #   docker compose -f docker-compose.yml -f docker-compose.dev.yml up -d
 #
@@ -11,7 +11,7 @@
 # Every credential here is a known-weak development value. The API refuses to start in production
 # with any of them (see Settings._enforce_production_hardening).
 
-name: vastrix-dev
+name: nevix-dev
 
 services:
   nginx:
@@ -21,7 +21,7 @@ services:
   web:
     build:
       target: builder
-    command: sh -c "npm run dev --workspace=@vastrix/web"
+    command: sh -c "npm run dev --workspace=@nevix/web"
     environment:
       NODE_ENV: development
       NEXT_PUBLIC_SITE_URL: http://localhost:3000
@@ -68,17 +68,17 @@ services:
       LOG_FORMAT: console
       SECRET_KEY: local-development-secret-key-not-for-production-use
       ADMIN_API_KEY: local-development-admin-key-not-for-production
-      DATABASE_URL: postgresql+asyncpg://vastrix:vastrix@postgres:5432/vastrix
+      DATABASE_URL: postgresql+asyncpg://nevix:nevix@postgres:5432/nevix
       DATABASE_ECHO: 'false'
       RATE_LIMIT_ENABLED: 'false'
       # Mailpit accepts anything and shows it in a web UI, so development never sends real mail.
       SMTP_HOST: mailpit
       SMTP_PORT: '1025'
       SMTP_USE_TLS: 'false'
-      EMAIL_FROM: no-reply@vastrix.local
-      EMAIL_NOTIFY_TO: team@vastrix.local
+      EMAIL_FROM: no-reply@nevix.local
+      EMAIL_NOTIFY_TO: team@nevix.local
       SITE_URL: http://localhost:3000
-      UPLOAD_DIR: /var/lib/vastrix/uploads
+      UPLOAD_DIR: /var/lib/nevix/uploads
     volumes:
       - ./apps/api/app:/srv/api/app
       - ./apps/api/alembic.ini:/srv/api/alembic.ini:ro
@@ -87,9 +87,9 @@ services:
 
   postgres:
     environment:
-      POSTGRES_USER: vastrix
-      POSTGRES_PASSWORD: vastrix
-      POSTGRES_DB: vastrix
+      POSTGRES_USER: nevix
+      POSTGRES_PASSWORD: nevix
+      POSTGRES_DB: nevix
     ports:
       # Published so a local client can inspect the database. Never do this in production.
       - '5432:5432'
@@ -105,9 +105,9 @@ services:
     command: sh -c "npm run develop"
     environment:
       NODE_ENV: development
-      DATABASE_NAME: vastrix_cms
-      DATABASE_USERNAME: vastrix
-      DATABASE_PASSWORD: vastrix
+      DATABASE_NAME: nevix_cms
+      DATABASE_USERNAME: nevix
+      DATABASE_PASSWORD: nevix
       APP_KEYS: devKeyOne,devKeyTwo,devKeyThree,devKeyFour
       API_TOKEN_SALT: development-api-token-salt
       ADMIN_JWT_SECRET: development-admin-jwt-secret
@@ -124,7 +124,7 @@ services:
   # ---------------------------------------------------------------------------------------------
   mailpit:
     image: axllent/mailpit:v1.27
-    container_name: vastrix-mailpit
+    container_name: nevix-mailpit
     restart: unless-stopped
     environment:
       MP_MAX_MESSAGES: 500

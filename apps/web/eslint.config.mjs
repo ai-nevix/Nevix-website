@@ -1,7 +1,7 @@
 import nextCoreWebVitals from 'eslint-config-next/core-web-vitals';
 import nextTypeScript from 'eslint-config-next/typescript';
 
-import { sharedRules } from '@vastrix/config/eslint';
+import { sharedRules } from '@nevix/config/eslint';
 
 /**
  * ESLint flat configuration.

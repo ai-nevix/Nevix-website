@@ -1,4 +1,4 @@
-import type { Service } from '@vastrix/types';
+import type { Service } from '@nevix/types';
 
 /**
  * AI & Intelligence services — catalogue §2.
@@ -73,7 +73,7 @@ export const aiIntelligenceServices: Service[] = [
     order: 1,
     seo: {
       description:
-        'VASTRIX builds LLM-powered applications for generation, summarization, classification, extraction and knowledge access, with evaluation, guardrails and deployment support.',
+        'NEVIX builds LLM-powered applications for generation, summarization, classification, extraction and knowledge access, with evaluation, guardrails and deployment support.',
     },
   },
   {
@@ -127,7 +127,7 @@ export const aiIntelligenceServices: Service[] = [
     order: 2,
     seo: {
       description:
-        'VASTRIX builds task-oriented AI agents that use approved tools and APIs to execute controlled multi-step workflows, with guardrails, approvals, logging and monitoring.',
+        'NEVIX builds task-oriented AI agents that use approved tools and APIs to execute controlled multi-step workflows, with guardrails, approvals, logging and monitoring.',
     },
   },
   {
@@ -175,7 +175,7 @@ export const aiIntelligenceServices: Service[] = [
     order: 3,
     seo: {
       description:
-        'VASTRIX builds predictive and classification systems on structured data — data preparation, feature engineering, model training, evaluation and deployment-ready APIs.',
+        'NEVIX builds predictive and classification systems on structured data — data preparation, feature engineering, model training, evaluation and deployment-ready APIs.',
     },
   },
   {
@@ -223,7 +223,7 @@ export const aiIntelligenceServices: Service[] = [
     order: 4,
     seo: {
       description:
-        'VASTRIX builds NLP systems for text classification, entity extraction, semantic search and summarization — applied to tickets, feedback, documents and correspondence.',
+        'NEVIX builds NLP systems for text classification, entity extraction, semantic search and summarization — applied to tickets, feedback, documents and correspondence.',
     },
   },
   {
@@ -270,7 +270,7 @@ export const aiIntelligenceServices: Service[] = [
     order: 5,
     seo: {
       description:
-        'VASTRIX builds computer vision systems for object detection, image classification, OCR workflows and video analytics, evaluated under real operating conditions.',
+        'NEVIX builds computer vision systems for object detection, image classification, OCR workflows and video analytics, evaluated under real operating conditions.',
     },
   },
   {
@@ -320,7 +320,7 @@ export const aiIntelligenceServices: Service[] = [
     order: 6,
     seo: {
       description:
-        'VASTRIX automates extraction, classification and validation of information from invoices, forms, applications and operational documents, with confidence scoring and human review.',
+        'NEVIX automates extraction, classification and validation of information from invoices, forms, applications and operational documents, with confidence scoring and human review.',
     },
   },
   {
@@ -364,7 +364,7 @@ export const aiIntelligenceServices: Service[] = [
     order: 7,
     seo: {
       description:
-        'VASTRIX identifies practical AI opportunities through use-case discovery, feasibility assessment, architecture and proof of concept, producing a prioritised implementation roadmap.',
+        'NEVIX identifies practical AI opportunities through use-case discovery, feasibility assessment, architecture and proof of concept, producing a prioritised implementation roadmap.',
     },
   },
 ];

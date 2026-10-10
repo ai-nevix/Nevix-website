@@ -1,12 +1,12 @@
 # Operations Runbook
 
-> Specification §24, instruction §48. Paired with `infra/monitoring/prometheus/rules/vastrix-alerts.yml`
+> Specification §24, instruction §48. Paired with `infra/monitoring/prometheus/rules/nevix-alerts.yml`
 > — each alert's `runbook` annotation points at a section here.
 
 ## Quick reference
 
 ```bash
-cd /opt/vastrix
+cd /opt/nevix
 
 docker compose ps                      # what is running, and whether it is healthy
 docker compose logs -f --tail=100 api  # follow one service
@@ -57,7 +57,7 @@ diagnose afterwards. Restoring service comes first.
 docker compose logs --tail=500 api | grep -F '"status": 5'
 ```
 
-In Grafana, filter Loki to `{container="vastrix-api"} |= "unhandled_exception"`.
+In Grafana, filter Loki to `{container="nevix-api"} |= "unhandled_exception"`.
 
 Common causes: connection-pool exhaustion after a traffic spike; an unhandled exception introduced
 by the last deploy; SMTP timeouts blocking request handlers.
@@ -97,11 +97,11 @@ warning.
 
 ```bash
 df -h
-du -sh /var/lib/docker/* /var/backups/vastrix 2>/dev/null | sort -h | tail
+du -sh /var/lib/docker/* /var/backups/nevix 2>/dev/null | sort -h | tail
 
 docker image prune -a --filter "until=168h"
 docker system df
-ls -la /var/backups/vastrix
+ls -la /var/backups/nevix
 ```
 
 Backups are capped at 30 days, but pre-deploy snapshots are kept indefinitely by design. If those
@@ -115,12 +115,12 @@ are the problem, move them off-host rather than deleting them.
 
 ```bash
 # Long-running queries
-docker compose exec postgres psql -U "$POSTGRES_USER" -d vastrix -c \
+docker compose exec postgres psql -U "$POSTGRES_USER" -d nevix -c \
   "SELECT pid, now()-query_start AS duration, state, left(query,100)
    FROM pg_stat_activity WHERE state != 'idle' ORDER BY duration DESC LIMIT 10;"
 
 # Connection saturation
-docker compose exec postgres psql -U "$POSTGRES_USER" -d vastrix -c \
+docker compose exec postgres psql -U "$POSTGRES_USER" -d nevix -c \
   "SELECT count(*) FROM pg_stat_activity;"
 
 docker stats --no-stream
@@ -139,8 +139,8 @@ unset `SMTP_HOST`, which degrades to recording the lead without notifying.
 
 ```bash
 docker compose ps
-docker inspect vastrix-api --format '{{.State.Health.Status}} {{.RestartCount}}'
-docker inspect vastrix-api --format '{{.State.OOMKilled}}'
+docker inspect nevix-api --format '{{.State.Health.Status}} {{.RestartCount}}'
+docker inspect nevix-api --format '{{.State.OOMKilled}}'
 docker compose logs --tail=100 <service>
 ```
 
@@ -153,10 +153,10 @@ Usual causes: a failing health check, a missing environment variable, or an OOM 
 **Alert:** `TlsCertificateExpiringSoon` — under 30 days remaining.
 
 ```bash
-echo | openssl s_client -servername vastrix.ai -connect vastrix.ai:443 2>/dev/null \
+echo | openssl s_client -servername nevix.ai -connect nevix.ai:443 2>/dev/null \
   | openssl x509 -noout -dates
 
-./scripts/issue-certificates.sh vastrix.ai --renew
+./scripts/issue-certificates.sh nevix.ai --renew
 docker compose exec nginx nginx -s reload
 ```
 

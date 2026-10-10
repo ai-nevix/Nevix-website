@@ -9,7 +9,7 @@ import type {
   ServiceCategory,
   ServiceCategorySlug,
   Solution,
-} from '@vastrix/types';
+} from '@nevix/types';
 
 import { caseStudies } from '@/content/case-studies';
 import { industries } from '@/content/industries';

@@ -1,6 +1,6 @@
 import 'server-only';
 
-import type { SearchEntityType, SearchResult } from '@vastrix/types';
+import type { SearchEntityType, SearchResult } from '@nevix/types';
 
 import {
   getCaseStudies,

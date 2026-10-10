@@ -23,7 +23,7 @@ export const revalidate = 3600;
 export const metadata = buildMetadata({
   title: 'Industries',
   description:
-    'Sector context for VASTRIX work across government and public sector, healthcare, manufacturing, finance, education and enterprise IT.',
+    'Sector context for NEVIX work across government and public sector, healthcare, manufacturing, finance, education and enterprise IT.',
   path: '/industries',
 });
 
@@ -68,8 +68,8 @@ export default async function IndustriesPage() {
 
         <Reveal className="mt-14">
           <Notice variant="compliance" title="What these pages do not claim">
-            These pages describe capabilities VASTRIX can deliver. They are not claims of sector
-            approval, empanelment, registration, accreditation or certification — VASTRIX does not
+            These pages describe capabilities NEVIX can deliver. They are not claims of sector
+            approval, empanelment, registration, accreditation or certification — NEVIX does not
             currently hold sector-specific credentials, and we will not imply otherwise. If a
             procurement process requires a specific credential, raise it with us and we will answer
             accurately.

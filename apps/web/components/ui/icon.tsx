@@ -100,9 +100,11 @@ export function IconTile({
     <span
       className={cn(
         'inline-flex size-11 shrink-0 items-center justify-center rounded-xl border',
-        tone === 'brand' && 'border-brand-100 bg-brand-50 text-brand-700',
+        tone === 'brand' &&
+          'border-brand-100 bg-linear-to-br from-brand-50 to-cyan-brand-300/15 text-brand-700',
         tone === 'cyan' && 'border-cyan-brand-400/30 bg-cyan-brand-500/10 text-cyan-brand-700',
-        tone === 'onDark' && 'border-white/15 bg-white/8 text-cyan-brand-300',
+        tone === 'onDark' &&
+          'border-white/12 bg-linear-to-br from-brand-500/25 to-cyan-brand-400/10 text-cyan-brand-300 shadow-[inset_0_1px_0_0_rgb(255_255_255/0.08)]',
         className,
       )}
     >

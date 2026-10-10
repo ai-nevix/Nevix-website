@@ -42,10 +42,10 @@ export function DesktopNav() {
                     href={item.href}
                     aria-current={active ? 'page' : undefined}
                     className={cn(
-                      'inline-flex h-10 items-center rounded-lg px-3 text-sm font-semibold transition-colors',
+                      'inline-flex h-10 items-center rounded-full px-3.5 text-sm font-semibold transition-colors',
                       active
-                        ? 'text-brand-700'
-                        : 'text-neutral-700 hover:bg-neutral-100 hover:text-neutral-900',
+                        ? 'bg-white/8 text-white'
+                        : 'text-neutral-300 hover:bg-white/8 hover:text-white',
                     )}
                   >
                     {item.label}
@@ -59,10 +59,10 @@ export function DesktopNav() {
             <NavigationMenu.Item key={item.href}>
               <NavigationMenu.Trigger
                 className={cn(
-                  'group inline-flex h-10 items-center gap-1 rounded-lg px-3 text-sm font-semibold transition-colors',
+                  'group inline-flex h-10 items-center gap-1 rounded-full px-3.5 text-sm font-semibold transition-colors',
                   active
-                    ? 'text-brand-700'
-                    : 'text-neutral-700 hover:bg-neutral-100 hover:text-neutral-900',
+                    ? 'bg-white/8 text-white'
+                    : 'text-neutral-300 hover:bg-white/8 hover:text-white data-[state=open]:bg-white/8 data-[state=open]:text-white',
                 )}
               >
                 {item.label}
@@ -80,10 +80,16 @@ export function DesktopNav() {
                     : 'w-[min(26rem,calc(100vw-4rem))]',
                 )}
               >
-                <div className="overflow-hidden rounded-(--radius-panel) border border-neutral-200 bg-white shadow-[var(--shadow-panel)]">
+                <div className="relative overflow-hidden rounded-(--radius-panel) border border-neutral-200 bg-white shadow-[var(--shadow-panel)]">
+                  <span
+                    aria-hidden="true"
+                    className="absolute inset-x-0 top-0 h-0.5 bg-linear-to-r from-cyan-brand-400 via-brand-600 to-nevix-indigo"
+                  />
                   <div className="grid gap-8 p-7 lg:grid-cols-[minmax(0,17rem)_1fr]">
                     <div className="lg:border-r lg:border-neutral-200 lg:pr-7">
-                      <p className="text-eyebrow text-brand-700 uppercase">{item.panelHeading}</p>
+                      <p className="font-display text-lg font-semibold tracking-tight text-neutral-900">
+                        {item.panelHeading}
+                      </p>
                       <p className="mt-3 text-sm leading-relaxed text-neutral-600">
                         {item.panelDescription}
                       </p>

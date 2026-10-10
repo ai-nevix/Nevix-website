@@ -1,53 +1,78 @@
 import { ArrowRight } from 'lucide-react';
+import Image from 'next/image';
 import Link from 'next/link';
 
 import { Button } from '@/components/ui/button';
 import { Container } from '@/components/ui/container';
 import { Icon } from '@/components/ui/icon';
 import { Reveal } from '@/components/ui/motion';
+import { Eyebrow } from '@/components/ui/section';
 import { corePillars } from '@/content/service-categories';
-import { ctas, siteConfig } from '@/content/site';
+import { brandAssets, ctas, siteConfig } from '@/content/site';
 
 /**
  * Homepage hero.
  *
- * Visual direction from the supplied brand material: a midnight field with blue/cyan light
- * sources and a faint engineering grid (the `.brand-field` treatment), rather than the supplied
- * banner image dropped in as a background. Instruction §68 asks for a coherent visual language
- * around intelligence, exploration, technology and progress — not a copy of the banner.
+ * Art direction is taken from the supplied NEVIX photography: a skyline at first light seen from a
+ * midnight workspace. The landscape half of that photograph fills the right of the hero and fades
+ * into midnight behind the text, so the headline always sits on a solid, high-contrast field — on
+ * a phone the picture recedes further still. The photograph's own logo and copy are outside the
+ * region used (see scripts/derive-brand-assets.mjs), so nothing on screen says the same thing twice.
  *
- * Deliberately server-rendered with no client JavaScript: this is the largest contentful paint on
- * the site, and the only motion is a CSS-driven sheen that respects reduced-motion.
+ * The four pillars run beneath the call to action as the divided icon row that appears across the
+ * brand artwork. It is real navigation, not decoration: each entry links to its pillar page.
+ *
+ * Server-rendered with no client JavaScript: this is the largest contentful paint on the site.
  */
 export function HomeHero() {
   return (
-    <section className="brand-field dark-section relative overflow-hidden">
+    <section className="dark-section relative isolate overflow-hidden bg-ink-950">
+      {/* --- The horizon --------------------------------------------------------------------- */}
+      <div aria-hidden="true" className="absolute inset-y-0 right-0 -z-10 w-full lg:w-[62%]">
+        <Image
+          src={brandAssets.heroHorizon.src}
+          width={brandAssets.heroHorizon.width}
+          height={brandAssets.heroHorizon.height}
+          alt=""
+          priority
+          sizes="(max-width: 1024px) 100vw, 62vw"
+          className="h-full w-full object-cover object-[60%_center] opacity-60 lg:opacity-100"
+        />
+        {/* Midnight runs in from the left and settles along the top and bottom edges. */}
+        <div className="absolute inset-0 bg-linear-to-r from-ink-950 via-ink-950/75 to-ink-950/0 lg:via-ink-950/40" />
+        <div className="absolute inset-0 bg-linear-to-t from-ink-950 via-transparent to-ink-950/50" />
+      </div>
+
+      {/* Electric-blue light behind the headline, as the N is lit on the supplied artwork. */}
+      <div
+        aria-hidden="true"
+        className="absolute top-[-12rem] left-[-10rem] -z-10 size-[40rem] rounded-full bg-brand-600/25 blur-[120px]"
+      />
+
       <Container className="relative">
-        <div className="grid gap-16 py-20 sm:py-24 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-center lg:gap-20 lg:py-32">
+        <div className="flex min-h-[calc(100svh-var(--header-height))] flex-col justify-center py-20 sm:py-24 lg:max-h-[56rem] lg:py-28">
           <div className="max-w-2xl">
             <Reveal>
-              <p className="inline-flex items-center gap-2.5 rounded-full border border-white/15 bg-white/5 px-3.5 py-1.5 text-eyebrow text-neutral-300 uppercase backdrop-blur-sm">
-                <span className="size-1.5 rounded-full bg-cyan-brand-400" aria-hidden="true" />
-                {siteConfig.pillarLine}
-              </p>
+              <Eyebrow onDark>{siteConfig.tagline}</Eyebrow>
             </Reveal>
 
             <Reveal delay={0.06}>
-              <h1 className="mt-7 text-display-xl text-white">
-                Intelligent Technology
-                <br />
-                for a <span className="text-gradient-brand">Smarter Tomorrow.</span>
+              <h1 className="mt-7 text-display-2xl text-white">
+                {/* The space keeps "Intelligence in Motion." whole for crawlers and screen readers,
+                    which read text content and ignore the line break. */}
+                Intelligence <br />
+                <span className="text-gradient-brand">in Motion.</span>
               </h1>
             </Reveal>
 
             <Reveal delay={0.12}>
-              <p className="mt-7 max-w-xl text-lg leading-relaxed text-neutral-300 sm:text-xl">
+              <p className="mt-8 max-w-xl text-lg leading-relaxed text-neutral-300 sm:text-xl">
                 {siteConfig.masterDescription}
               </p>
             </Reveal>
 
             <Reveal delay={0.18}>
-              <div className="mt-9 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+              <div className="mt-10 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
                 <Button asChild size="lg" variant="onDark">
                   <Link href={ctas.primary.href}>
                     {ctas.primary.label}
@@ -59,30 +84,26 @@ export function HomeHero() {
                 </Button>
               </div>
             </Reveal>
-
-            <Reveal delay={0.24}>
-              <p className="mt-12 text-eyebrow text-cyan-brand-400 uppercase">
-                {siteConfig.tagline}
-              </p>
-            </Reveal>
           </div>
 
-          {/*
-            Four-pillar strip. On desktop this sits beside the headline as a vertical list; on
-            mobile it stacks below. It is a real navigation list, not decoration — each entry is a
-            link to the pillar page.
-          */}
-          <Reveal delay={0.2} className="lg:w-72">
+          {/* --- Pillar row ---------------------------------------------------------------------- */}
+          <Reveal delay={0.24} className="mt-16 lg:mt-20">
             <nav aria-label="Core capabilities">
-              <ul className="grid grid-cols-2 gap-px overflow-hidden rounded-(--radius-panel) border border-white/12 bg-white/8 lg:grid-cols-1">
+              <ul className="grid max-w-3xl grid-cols-2 gap-y-6 sm:grid-cols-4 sm:divide-x sm:divide-white/15">
                 {corePillars.map((pillar) => (
-                  <li key={pillar.slug}>
+                  <li key={pillar.slug} className="sm:px-6 sm:first:pl-0">
                     <Link
                       href={`/services/${pillar.slug}`}
-                      className="flex h-full items-center gap-3.5 bg-ink-900/70 p-4 backdrop-blur-sm transition-colors hover:bg-ink-800/80 lg:p-5"
+                      className="group flex flex-col items-start gap-3 rounded-lg"
                     >
-                      <Icon name={pillar.icon} className="size-5 shrink-0 text-cyan-brand-400" />
-                      <span className="text-sm font-semibold text-white">{pillar.name}</span>
+                      <Icon
+                        name={pillar.icon}
+                        className="size-7 text-cyan-brand-400 transition-transform duration-300 group-hover:-translate-y-0.5"
+                        strokeWidth={1.4}
+                      />
+                      <span className="text-[0.7rem] font-semibold tracking-[0.18em] text-neutral-300 uppercase transition-colors group-hover:text-white">
+                        {pillar.name}
+                      </span>
                     </Link>
                   </li>
                 ))}
@@ -92,14 +113,7 @@ export function HomeHero() {
         </div>
       </Container>
 
-      {/* Hairline sheen across the bottom edge. Purely decorative, and paused for reduced motion. */}
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-x-0 bottom-0 h-px overflow-hidden"
-      >
-        <div className="h-full w-full bg-linear-to-r from-transparent via-cyan-brand-400/50 to-transparent" />
-        <div className="absolute inset-y-0 w-1/3 bg-linear-to-r from-transparent via-white/60 to-transparent motion-safe:animate-[vastrix-sheen_6s_var(--ease-in-out-brand)_infinite]" />
-      </div>
+      <div className="horizon-line" aria-hidden="true" />
     </section>
   );
 }

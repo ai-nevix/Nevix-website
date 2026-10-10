@@ -10,14 +10,14 @@
 | Route group | Mode | Revalidate | Why |
 | --- | --- | --- | --- |
 | `/` | Static + ISR | 1h | Content changes rarely; the largest page on the site |
-| `/about`, `/legal/*` | Static | — | Changes only on deploy |
+| `/about`, `/team`, `/brand`, `/legal/*` | Static | — | Changes only on deploy |
 | `/services`, `/services/[category]`, `/services/[category]/[service]` | SSG + ISR | 1h | 41 prerendered routes from `generateStaticParams` |
 | `/solutions`, `/industries`, `/products`, `/case-studies`, `/insights` and details | SSG + ISR | 1h | Same |
 | `/contact` | Static shell | — | The form is a client island inside a static page |
 | `/search` | Dynamic | — | Depends on `?q=` |
 | `/api/backend/*` | Dynamic route handler | — | Proxy to FastAPI |
 
-**116 routes prerender at build time.** In production the server does almost no work for a page
+**118 routes prerender at build time.** In production the server does almost no work for a page
 view; Nginx serves `_next/static` from its own cache.
 
 `dynamicParams = false` on every dynamic segment, so an unknown slug 404s at the routing layer
@@ -30,7 +30,7 @@ apps/web/
 ├── app/
 │   ├── (marketing)/          # route group sharing header + footer
 │   │   ├── page.tsx          # homepage
-│   │   ├── about/ services/ solutions/ industries/
+│   │   ├── about/ team/ brand/ services/ solutions/ industries/
 │   │   ├── products/ case-studies/ insights/ contact/ search/ legal/
 │   │   └── layout.tsx        # skip link, header, <main>, footer
 │   ├── api/backend/[...path] # same-origin proxy to FastAPI
@@ -40,12 +40,14 @@ apps/web/
 │   └── globals.css           # design tokens + component layer
 ├── components/
 │   ├── layout/               # header, footer, logo, breadcrumbs, skip link
+│   ├── branding/             # welcome intro (ADR-013), ambient background
 │   ├── navigation/           # desktop mega-menu, mobile panel
 │   ├── hero/ sections/ cards/ forms/ ui/ seo/
 ├── content/                  # typed content (see ADR-006)
 ├── lib/
 │   ├── cms/                  # content provider abstraction
 │   ├── api/                  # browser-side API client
+│   ├── brand/                # intro timeline, measured N geometry and lockup ratios
 │   ├── seo/                  # metadata builders, JSON-LD
 │   ├── validation/           # zod schemas mirroring Pydantic
 │   ├── env.ts                # validated environment, client/server split
@@ -85,9 +87,46 @@ mobile navigation panel and the contact form's success transition.
 
 ## 5. Design system
 
-Tokens live in `app/globals.css` under Tailwind 4's `@theme`, derived from the brand palette in
-specification §4. The visual language alternates deliberately between deep `midnight` sections and
-clean light sections; blue and cyan are accents, never full-page decoration.
+Tokens live in `app/globals.css` under Tailwind 4's `@theme`. Since the NEVIX rebrand they are
+taken from the supplied artwork rather than the specification §4 table
+([ADR-014](./adr/ADR-014-nevix-rebrand.md)):
+
+| Token | Value | Used for |
+| --- | --- | --- |
+| `--color-nevix-blue` | `#0B5CFF` | Electric blue — primary actions, links, highlights |
+| `--color-nevix-cyan` | `#00C8FF` | Light, glows, AI and future accents |
+| `--color-nevix-indigo` | `#1F2FD6` | Depth in gradients |
+| `--color-midnight` | `#050B1A` | Header on every page, heroes, dark sections, footer |
+| `--color-horizon` | `#FF9A4D` | Sunset tone — hairlines and glows only, never a fill or text |
+| `--color-light` | `#F6F8FC` | Cloud — light sections |
+
+The design is dark-led: a midnight header on every page, and a homepage hero that sets
+"Intelligence in Motion." over the sunset photograph with the four pillars as a divided icon row.
+Light sections still alternate with dark ones; blue and cyan are light, not decoration. Recurring
+brand devices: a faint large N in inner page heroes, the *horizon line* (`.horizon-line`, a hairline
+running cyan → blue → amber) on dark section edges, and the glowing N in CTA sections.
+
+**Type.** Headings use Sora (`--font-display`) — geometric and slightly wide, the closest open
+typeface to the wordmark. Body copy uses Manrope (`--font-sans`), where Sora's width would tire the
+eye. Both are loaded by `next/font` in `app/layout.tsx`.
+
+**Brand assets.** The supplied originals live in `brand-assets/nevix/` (plus
+`brand-assets/logo-summary.png`) and are never edited. Everything in `public/brand/`, the team cards
+in `public/team/`, and `app/favicon.ico`, `icon.png` and `apple-icon.png` are derived by
+`scripts/derive-brand-assets.mjs`:
+
+- the mark (`nevix-mark.png`, 450×551), the wordmark for light backgrounds
+  (`nevix-wordmark-dark.png`) and for dark (`nevix-wordmark-light.png`), and a silver watermark
+  (`nevix-mark-silver.png`, 420×509) — cut from the supplied lockups and separated from their flat
+  backgrounds by un-compositing the edge, so there is no halo on either surface
+- favicon, Apple touch and PWA icons from the supplied app icon (the ICO holds RGBA PNG payloads)
+- team cards and every board re-encoded whole as WebP; the homepage hero
+  (`nevix-hero-horizon.webp`) is the landscape-only region of the workspace photograph, so its own
+  logo and copy are not duplicated under the page heading
+
+`npm run brand:assets` regenerates them; `npm run brand:check` fails if any is stale and runs in
+`npm run verify`. Paths and dimensions are referenced through `brandAssets` in `content/site.ts`;
+the `/brand` page (`content/brand.ts`) shows every supplied picture whole.
 
 **A trap worth knowing:** `tailwind-merge` does not know about custom scales. Left unconfigured it
 classifies `text-display-md` as a *colour* utility and silently drops it when a later
@@ -124,9 +163,9 @@ Enforced structurally rather than by review:
 
 ## 8. Performance
 
-- 116 routes prerendered; minimal per-request work
-- `next/font` self-hosts Manrope at build time — no font CDN, which is also what lets `font-src`
-  stay `'self'`
+- 118 routes prerendered; minimal per-request work
+- `next/font` self-hosts Manrope and Sora at build time — no font CDN, which is also what lets
+  `font-src` stay `'self'`
 - AVIF and WebP via `next/image`, with an explicit device-size list
 - no third-party scripts at all ([ADR-009](./adr/ADR-009-no-analytics.md))
 - Nginx caches `_next/static` for a year (content-hashed) and `_next/image` for 30 days

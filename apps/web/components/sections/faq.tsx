@@ -3,7 +3,7 @@
 import * as Accordion from '@radix-ui/react-accordion';
 import { Plus } from 'lucide-react';
 
-import type { FaqItem } from '@vastrix/types';
+import type { FaqItem } from '@nevix/types';
 
 import { cn } from '@/lib/utils';
 

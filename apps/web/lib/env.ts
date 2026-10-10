@@ -15,7 +15,7 @@ const clientSchema = z.object({
   NEXT_PUBLIC_MEDIA_URL: z.string().optional(),
   NEXT_PUBLIC_ENV: z.enum(['local', 'development', 'staging', 'production']).default('local'),
   /**
-   * Master switch for the welcome intro (components/branding/vastrix-intro.tsx).
+   * Master switch for the welcome intro (components/branding/nevix-intro.tsx).
    *
    * Set `NEXT_PUBLIC_SHOW_INTRO=false` to drop it entirely — the overlay is then never rendered,
    * not merely hidden, so it costs nothing at all.

@@ -68,15 +68,15 @@ export default function TeamPage() {
           { name: 'Team', href: '/team' },
         ]}
         eyebrow="Team"
-        title="The people behind VASTRIX"
-        description="VASTRIX was founded to build intelligent technology that holds up in production. These are the people accountable for that."
+        title="The people behind NEVIX"
+        description="NEVIX was founded to build intelligent technology that holds up in production. These are the people accountable for that."
         actions={
           <>
             <Button asChild size="lg" variant="onDark">
               <Link href={ctas.primary.href}>{ctas.primary.label}</Link>
             </Button>
             <Button asChild size="lg" variant="outlineOnDark">
-              <Link href="/about">More about VASTRIX</Link>
+              <Link href="/about">More about NEVIX</Link>
             </Button>
           </>
         }
@@ -90,7 +90,11 @@ export default function TeamPage() {
         />
 
         <Stagger className="mt-14">
-          <ul className="mx-auto grid max-w-5xl gap-8 sm:grid-cols-2">
+          {/*
+            The founder's card is 3:2 and the co-founder's square. Splitting the row 3:2 gives both
+            the same height, so the pair sits level without either being cropped.
+          */}
+          <ul className="grid items-start gap-8 md:grid-cols-[3fr_2fr]">
             {team.map((member, index) => (
               <StaggerItem as="li" key={member.slug}>
                 <TeamCard member={member} priority={index === 0} />
@@ -102,7 +106,7 @@ export default function TeamPage() {
         <Reveal delay={0.1} className="mt-12">
           <p className="mx-auto max-w-prose text-center text-sm text-neutral-600">
             More of the team will appear here as their profiles are approved for release. See{' '}
-            <Link href="/about">about VASTRIX</Link> for how we work, or{' '}
+            <Link href="/about">about NEVIX</Link> for how we work, or{' '}
             <Link href="/contact">get in touch</Link> to talk to us directly.
           </p>
         </Reveal>

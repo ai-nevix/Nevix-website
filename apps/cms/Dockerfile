@@ -1,4 +1,4 @@
-# VASTRIX CMS (Strapi Community Edition) production image.
+# NEVIX CMS (Strapi Community Edition) production image.
 #
 # Strapi builds its admin panel at image build time, so the runtime image serves a prebuilt
 # bundle rather than compiling on start.

@@ -5,7 +5,7 @@
     "singularName": "service",
     "pluralName": "services",
     "displayName": "Service",
-    "description": "A VASTRIX service (specification §7.1)."
+    "description": "A NEVIX service (specification §7.1)."
   },
   "options": {
     "draftAndPublish": true

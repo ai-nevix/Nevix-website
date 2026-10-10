@@ -1,9 +1,9 @@
-import type { Industry } from '@vastrix/types';
+import type { Industry } from '@nevix/types';
 
 /**
  * Industries — specification §8.1, catalogue §8.
  *
- * Content governance: these pages describe the operational context VASTRIX works in and the
+ * Content governance: these pages describe the operational context NEVIX works in and the
  * capabilities it can bring. They do NOT claim sector credentials, certifications, approvals,
  * empanelments or existing client relationships. Government is a target market, not a claim of
  * government endorsement (catalogue §8, specification §31).
@@ -16,7 +16,7 @@ export const industries: Industry[] = [
       'Citizen-facing services, departmental workflow automation, analytics platforms and controlled AI — built to public-sector accessibility and access-control expectations.',
     heroTitle: 'Supporting digital initiatives in the public sector',
     heroDescription:
-      'Government is a target market for VASTRIX. The capability areas below describe what we can build for public-sector digital initiatives — accessible citizen services, departmental workflow automation, analytics platforms and carefully governed AI.',
+      'Government is a target market for NEVIX. The capability areas below describe what we can build for public-sector digital initiatives — accessible citizen services, departmental workflow automation, analytics platforms and carefully governed AI.',
     context:
       'Public-sector digital work carries constraints that shape engineering from the first decision: accessibility is a requirement rather than a goal, data handling and residency are governed, procurement favours transparent and portable technology, and systems are expected to outlive the teams that build them. Our default stack is open source and self-hostable specifically because those constraints reward it.',
     capabilityAreas: [
@@ -78,7 +78,7 @@ export const industries: Industry[] = [
     requiresComplianceNotice: true,
     seo: {
       description:
-        'VASTRIX supports public-sector digital initiatives with citizen-facing services, departmental workflow automation, analytics platforms and carefully governed AI.',
+        'NEVIX supports public-sector digital initiatives with citizen-facing services, departmental workflow automation, analytics platforms and carefully governed AI.',
     },
   },
   {
@@ -88,7 +88,7 @@ export const industries: Industry[] = [
       'Administrative workflow automation, document processing and operational reporting for healthcare organisations — with clinical decisions left to clinicians.',
     heroTitle: 'Reducing administrative load, not clinical judgement',
     heroDescription:
-      'Healthcare organisations carry substantial administrative burden alongside clinical work. VASTRIX focuses on the administrative and operational layer: referrals, documentation, scheduling data, reporting and system integration.',
+      'Healthcare organisations carry substantial administrative burden alongside clinical work. NEVIX focuses on the administrative and operational layer: referrals, documentation, scheduling data, reporting and system integration.',
     context:
       'Healthcare data is sensitive, systems are heterogeneous, and the cost of an error is measured in patient impact rather than efficiency. We scope carefully: administrative and operational automation, document processing and reporting. We do not build clinical decision systems, and we say so plainly rather than stretching a capability to fit a brief.',
     capabilityAreas: [
@@ -135,7 +135,7 @@ export const industries: Industry[] = [
     requiresComplianceNotice: true,
     seo: {
       description:
-        'VASTRIX builds administrative workflow automation, document processing and operational reporting for healthcare organisations, with human oversight throughout.',
+        'NEVIX builds administrative workflow automation, document processing and operational reporting for healthcare organisations, with human oversight throughout.',
     },
   },
   {
@@ -145,7 +145,7 @@ export const industries: Industry[] = [
       'Production reporting, quality data, visual inspection support and operational automation connecting shop-floor data to decisions.',
     heroTitle: 'Connecting production data to operational decisions',
     heroDescription:
-      'Manufacturing generates continuous operational data that frequently stays trapped in individual systems. VASTRIX builds the pipelines, reporting and automation that turn it into something teams can act on.',
+      'Manufacturing generates continuous operational data that frequently stays trapped in individual systems. NEVIX builds the pipelines, reporting and automation that turn it into something teams can act on.',
     context:
       'Manufacturing environments combine long-lived equipment with modern systems, so integration surfaces vary from clean APIs to file drops and legacy databases. Reliability matters more than sophistication: a reporting pipeline that halts visibly is worth far more than one that occasionally produces plausible wrong numbers.',
     capabilityAreas: [
@@ -192,7 +192,7 @@ export const industries: Industry[] = [
     order: 3,
     seo: {
       description:
-        'VASTRIX connects manufacturing production data to operational decisions with reporting pipelines, quality and inspection support, and process automation.',
+        'NEVIX connects manufacturing production data to operational decisions with reporting pipelines, quality and inspection support, and process automation.',
     },
   },
   {
@@ -202,7 +202,7 @@ export const industries: Industry[] = [
       'Document processing, reconciliation automation, reporting and explainable decision support for finance functions and financial services.',
     heroTitle: 'Automation with an audit trail attached',
     heroDescription:
-      'Finance work is exacting, heavily documented and subject to review. VASTRIX builds document processing, reconciliation automation, reporting and decision support where every figure can be traced back to its source.',
+      'Finance work is exacting, heavily documented and subject to review. NEVIX builds document processing, reconciliation automation, reporting and decision support where every figure can be traced back to its source.',
     context:
       'In finance, an unexplainable automated decision is not usable regardless of its accuracy. We keep decision logic in auditable rules, retain the evidence behind every derived figure, and design for the reviewer as much as for the operator.',
     capabilityAreas: [
@@ -251,7 +251,7 @@ export const industries: Industry[] = [
     requiresComplianceNotice: true,
     seo: {
       description:
-        'VASTRIX builds document processing, reconciliation automation, reporting and explainable decision support for finance functions, with a full audit trail.',
+        'NEVIX builds document processing, reconciliation automation, reporting and explainable decision support for finance functions, with a full audit trail.',
     },
   },
   {
@@ -261,7 +261,7 @@ export const industries: Industry[] = [
       'Student-facing portals, administrative workflow automation, reporting and knowledge access for educational institutions.',
     heroTitle: 'Administrative systems that do not consume teaching time',
     heroDescription:
-      'Educational institutions run substantial administrative operations alongside teaching. VASTRIX builds the portals, workflows and reporting that keep administration from consuming academic capacity.',
+      'Educational institutions run substantial administrative operations alongside teaching. NEVIX builds the portals, workflows and reporting that keep administration from consuming academic capacity.',
     context:
       'Education combines high seasonal peaks — admissions, enrolment, results — with limited technical capacity and strong accessibility obligations. Systems need to be operable by administrative staff without engineering support, and accessible to every student.',
     capabilityAreas: [
@@ -307,7 +307,7 @@ export const industries: Industry[] = [
     order: 5,
     seo: {
       description:
-        'VASTRIX builds student-facing portals, administrative workflow automation, reporting and knowledge access for educational institutions.',
+        'NEVIX builds student-facing portals, administrative workflow automation, reporting and knowledge access for educational institutions.',
     },
   },
   {
@@ -317,7 +317,7 @@ export const industries: Industry[] = [
       'Service-desk automation, internal tooling, integration architecture and infrastructure automation for enterprise technology functions.',
     heroTitle: 'Engineering capacity for the work your team cannot get to',
     heroDescription:
-      'Enterprise IT functions carry a backlog of integrations, internal tools and automation that never reaches the top of the list. VASTRIX delivers that work to the same standard as customer-facing systems.',
+      'Enterprise IT functions carry a backlog of integrations, internal tools and automation that never reaches the top of the list. NEVIX delivers that work to the same standard as customer-facing systems.',
     context:
       'Enterprise technology teams are typically constrained by capacity rather than capability. The work that gets deferred — integrations, internal tooling, service-desk automation, infrastructure codification — is exactly the work that compounds into operational load.',
     capabilityAreas: [
@@ -365,7 +365,7 @@ export const industries: Industry[] = [
     order: 6,
     seo: {
       description:
-        'VASTRIX delivers service-desk automation, internal tooling, integration architecture and infrastructure automation for enterprise technology functions.',
+        'NEVIX delivers service-desk automation, internal tooling, integration architecture and infrastructure automation for enterprise technology functions.',
     },
   },
 ];

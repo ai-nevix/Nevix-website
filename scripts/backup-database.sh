@@ -6,7 +6,7 @@
 #   ./scripts/backup-database.sh --label pre-deploy-abc1234
 #
 # Run daily from cron:
-#   0 2 * * * cd /opt/vastrix && ./scripts/backup-database.sh >> /var/log/vastrix-backup.log 2>&1
+#   0 2 * * * cd /opt/nevix && ./scripts/backup-database.sh >> /var/log/nevix-backup.log 2>&1
 #
 # Important: a backup is a hypothesis until it has been restored. `restore-database.sh --verify`
 # restores into a scratch database and checks the result; run it on a schedule, not only when
@@ -21,7 +21,7 @@ set -euo pipefail
 REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$REPO_ROOT"
 
-BACKUP_DIR="${BACKUP_DIR:-/var/backups/vastrix}"
+BACKUP_DIR="${BACKUP_DIR:-/var/backups/nevix}"
 RETENTION_DAYS="${BACKUP_RETENTION_DAYS:-30}"
 LABEL=""
 COMPOSE="${COMPOSE:-docker compose}"
@@ -40,7 +40,7 @@ if [ -f .env ]; then
 fi
 
 : "${POSTGRES_USER:?POSTGRES_USER is not set. Is .env present?}"
-: "${POSTGRES_DB:=vastrix}"
+: "${POSTGRES_DB:=nevix}"
 
 TIMESTAMP="$(date -u +%Y%m%d-%H%M%S)"
 mkdir -p "$BACKUP_DIR"
@@ -78,13 +78,13 @@ backup_one() {
 
 FAILED=0
 backup_one "$POSTGRES_DB" || FAILED=1
-backup_one "${CMS_DATABASE_NAME:-vastrix_cms}" || FAILED=1
+backup_one "${CMS_DATABASE_NAME:-nevix_cms}" || FAILED=1
 
 # --- Uploaded files -----------------------------------------------------------------------------
 # The database records an attachment_url; without the files themselves a restore is incomplete.
 log "Backing up uploaded files..."
 UPLOADS_ARCHIVE="${BACKUP_DIR}/uploads-${TIMESTAMP}${LABEL}.tar.gz"
-if $COMPOSE exec -T api tar -czf - -C /var/lib/vastrix uploads > "$UPLOADS_ARCHIVE" 2>/dev/null; then
+if $COMPOSE exec -T api tar -czf - -C /var/lib/nevix uploads > "$UPLOADS_ARCHIVE" 2>/dev/null; then
   log "  ${UPLOADS_ARCHIVE} ($(du -h "$UPLOADS_ARCHIVE" | cut -f1))"
 else
   log "  WARNING: upload backup failed or there are no uploads yet"

@@ -36,7 +36,7 @@ The full inventory, with pinned versions and the licence checked at that version
 
 **No third-party SaaS is required to run the system.** There is no analytics vendor, no CDN
 dependency, no hosted CMS, no error-tracking service and no font CDN — `next/font` downloads and
-self-hosts the Manrope files at build time.
+self-hosts the Manrope and Sora files at build time.
 
 ## Caveats recorded honestly
 
@@ -49,7 +49,7 @@ hit it. Noted so it is a known boundary rather than a surprise.
 
 **Grafana and Loki (AGPL 3.0).** AGPL is a strong copyleft that extends to network use. It is not a
 problem here because we operate them internally and do not offer them as a service to third
-parties. It *would* become a consideration if VASTRIX ever embedded Grafana in a client-facing
+parties. It *would* become a consideration if NEVIX ever embedded Grafana in a client-facing
 product, which is exactly the kind of thing that is expensive to discover late.
 
 ## Alternatives considered

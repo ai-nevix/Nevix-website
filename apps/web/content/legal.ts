@@ -12,7 +12,7 @@
 
 export const draftNotice = {
   label: 'Draft',
-  text: 'This document is a working draft prepared during website development. It has not been reviewed by legal counsel and is not yet a binding statement of VASTRIX policy. Contact us for any question about how your information is handled in the meantime.',
+  text: 'This document is a working draft prepared during website development. It has not been reviewed by legal counsel and is not yet a binding statement of NEVIX policy. Contact us for any question about how your information is handled in the meantime.',
 } as const;
 
 export interface LegalSection {
@@ -35,7 +35,7 @@ export const legalDocuments: LegalDocument[] = [
     slug: 'privacy',
     title: 'Privacy Policy',
     description:
-      'How VASTRIX collects, uses and retains the personal information submitted through this website. Draft — pending legal review.',
+      'How NEVIX collects, uses and retains the personal information submitted through this website. Draft — pending legal review.',
     lastUpdated: '2026-09-17',
     intro:
       'This policy describes what personal information this website collects, why it is collected, how long it is kept and how you can ask for it to be removed. It covers this website only.',
@@ -97,7 +97,7 @@ export const legalDocuments: LegalDocument[] = [
           'Passwords, tokens and secrets are never written to application logs.',
         ],
         paragraphs: [
-          'We describe the controls we implement. We do not claim any security or compliance certification, because VASTRIX does not currently hold one.',
+          'We describe the controls we implement. We do not claim any security or compliance certification, because NEVIX does not currently hold one.',
         ],
       },
       {
@@ -120,12 +120,12 @@ export const legalDocuments: LegalDocument[] = [
     description: 'The terms on which this website is made available. Draft — pending legal review.',
     lastUpdated: '2026-09-17',
     intro:
-      'These terms govern your use of this website. They do not govern any engagement between VASTRIX and a client, which is covered by a separate written agreement.',
+      'These terms govern your use of this website. They do not govern any engagement between NEVIX and a client, which is covered by a separate written agreement.',
     sections: [
       {
         heading: 'Purpose of this website',
         paragraphs: [
-          'This website describes the services VASTRIX offers. It is provided for information. Nothing on it constitutes an offer, a quotation, a warranty or professional advice, and nothing on it forms a contract.',
+          'This website describes the services NEVIX offers. It is provided for information. Nothing on it constitutes an offer, a quotation, a warranty or professional advice, and nothing on it forms a contract.',
         ],
       },
       {
@@ -138,7 +138,7 @@ export const legalDocuments: LegalDocument[] = [
       {
         heading: 'No performance guarantees',
         paragraphs: [
-          'Where this site describes outcomes, those descriptions are illustrative of the kind of result a given approach is designed to produce. VASTRIX does not guarantee any return on investment, any level of AI accuracy, or that any process can be fully automated. Specific, measurable objectives for an engagement are agreed in the written agreement for that engagement.',
+          'Where this site describes outcomes, those descriptions are illustrative of the kind of result a given approach is designed to produce. NEVIX does not guarantee any return on investment, any level of AI accuracy, or that any process can be fully automated. Specific, measurable objectives for an engagement are agreed in the written agreement for that engagement.',
         ],
       },
       {
@@ -153,7 +153,7 @@ export const legalDocuments: LegalDocument[] = [
       {
         heading: 'Intellectual property',
         paragraphs: [
-          'The VASTRIX name, logo and brand assets, and the content of this website, belong to VASTRIX unless stated otherwise. You may read, quote and link to this content with attribution. You may not reproduce it wholesale or present it as your own.',
+          'The NEVIX name, logo and brand assets, and the content of this website, belong to NEVIX unless stated otherwise. You may read, quote and link to this content with attribution. You may not reproduce it wholesale or present it as your own.',
           'Third-party open-source components used to build this site remain the property of their respective authors and are used under their licences. A licence inventory is maintained as part of the project documentation.',
         ],
       },
@@ -214,7 +214,7 @@ export const legalDocuments: LegalDocument[] = [
       {
         heading: 'If this changes',
         paragraphs: [
-          'If VASTRIX later introduces analytics, we intend to use a self-hosted, privacy-respecting option and to update this notice before doing so. If any future measurement requires consent, a consent mechanism will be added at that point.',
+          'If NEVIX later introduces analytics, we intend to use a self-hosted, privacy-respecting option and to update this notice before doing so. If any future measurement requires consent, a consent mechanism will be added at that point.',
         ],
       },
     ],

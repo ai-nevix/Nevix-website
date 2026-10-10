@@ -1,5 +1,5 @@
 /**
- * VASTRIX API contract types.
+ * NEVIX API contract types.
  *
  * These mirror the Pydantic schemas in `apps/api/app/schemas`. Keeping them in a shared package
  * means a breaking backend change shows up as a TypeScript error in the web app rather than as a

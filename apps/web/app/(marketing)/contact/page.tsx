@@ -23,7 +23,7 @@ import { contactPageSchema } from '@/lib/seo/structured-data';
 export const metadata = buildMetadata({
   title: 'Contact',
   description:
-    'Tell VASTRIX what you are trying to solve. Structured enquiry form for AI, automation, digital engineering, data, product engineering and consulting requirements.',
+    'Tell NEVIX what you are trying to solve. Structured enquiry form for AI, automation, digital engineering, data, product engineering and consulting requirements.',
   path: '/contact',
 });
 

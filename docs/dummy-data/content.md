@@ -15,7 +15,7 @@ company facts, and never let demo content read as real.**
 grounded knowledge assistant.
 
 **The problem.** Case studies are the most persuasive content a technology company publishes, and
-VASTRIX has none it may publish. Leaving the section empty wastes an opportunity to show how the
+NEVIX has none it may publish. Leaving the section empty wastes an opportunity to show how the
 team thinks; filling it with invented client work would be dishonest and would breach catalogue
 §16.
 
@@ -49,7 +49,7 @@ Suite, Knowledge Assistant.
 **The problem.** Instruction §22 requires a Products section but forbids inventing products.
 
 **The approach taken.** Each is presented as *a direction under consideration*, drawn from
-patterns the catalogue already documents VASTRIX building repeatedly. The page leads with
+patterns the catalogue already documents NEVIX building repeatedly. The page leads with
 "Nothing here is available yet — and we would rather say so".
 
 **Deliberately absent:** availability dates, pricing, screenshots, waiting lists, customer counts,
@@ -78,8 +78,9 @@ No stock photographs, no invented names, no "Founder & CEO" with a silhouette.
 
 ## DD-004 — Contact details
 
-**Published:** `vastrix.ai@gmail.com` only.
-**Not published:** phone number, street address.
+**Published:** `nevix.ai@gmail.com` only — confirmed by the user as the contact address at the
+rebrand on 2026-10-10. The email part of this entry is resolved.
+**Not published:** phone number, street address. Still pending.
 
 `siteConfig.contact.phone` and `.address` are explicitly `null`, and there is a content test
 asserting they stay that way. The contact page says a phone number and registered office will be
@@ -110,7 +111,7 @@ each carries a prominent **DRAFT — not reviewed by counsel** banner plus `noIn
 - claim any regulatory compliance status or certification
 - name a governing jurisdiction (not yet known — DD-005)
 - state specific retention periods (marked as pending review)
-- promise a security standard VASTRIX does not hold
+- promise a security standard NEVIX does not hold
 
 **What they do accurately, today:** describe the data actually collected, state that no
 third-party analytics or tracking exists (verifiable by viewing source), and explain why there is
@@ -128,11 +129,11 @@ of models, deployment topology, and open-source reversibility.
 **The problem.** The Insights system needs content to be demonstrably working, and thin filler
 articles would undercut the positioning they are meant to support.
 
-**The approach taken.** Each article argues a position the catalogue already commits VASTRIX to —
+**The approach taken.** Each article argues a position the catalogue already commits NEVIX to —
 problem-first engineering, human-in-the-loop, measurable outcomes. They contain no client
 references, no benchmarks, no statistics and no vendor comparisons.
 
-**Authors (DD-008)** are *team accounts* — "VASTRIX Engineering", "VASTRIX Editorial" — not
+**Authors (DD-008)** are *team accounts* — "NEVIX Engineering", "NEVIX Editorial" — not
 invented individuals. This exercises the author relation without fabricating people.
 
 ---
@@ -149,13 +150,16 @@ It describes *how the company approaches work*, which is documented in the catal
 
 ## DD-010 — Social profile URLs
 
-LinkedIn, GitHub and X links following the brand name, **unconfirmed**.
+LinkedIn, GitHub and X links that **intentionally still point to the profiles registered under the
+company's former name**. No NEVIX profiles exist yet, and the rename did not touch these URLs on
+purpose ([ADR-014](../architecture/adr/ADR-014-nevix-rebrand.md)). The LinkedIn URL had lost its
+`https://` and rendered as a broken relative link; that was fixed at the rebrand.
 
 These appear in the footer and in the `Organization` structured data. A dead link inside structured
 data is worse than no link — search engines treat it as a factual claim about the company.
 
-**Replacement:** confirm each URL, or delete the entry. The pre-launch checklist lists this as
-blocking.
+**Replacement:** as each NEVIX profile is created, replace its URL in `siteConfig.social`; delete
+any entry that will not get one. The pre-launch checklist lists this as blocking.
 
 ---
 
@@ -171,7 +175,7 @@ simply not reviewed.
 Every solution page lists expected outcomes, each rendered under a visible notice:
 
 > **Illustrative — not a guarantee.** These describe what the pattern is designed to achieve, not
-> a promised result. VASTRIX does not publish guaranteed ROI, accuracy or automation figures.
+> a promised result. NEVIX does not publish guaranteed ROI, accuracy or automation figures.
 
 **The problem.** Solutions need outcome framing to be useful, and specification §31 forbids
 guaranteed ROI or performance claims.

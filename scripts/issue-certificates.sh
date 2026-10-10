@@ -2,9 +2,9 @@
 #
 # Issues or renews Let's Encrypt certificates using the webroot challenge (specification §22).
 #
-#   ./scripts/issue-certificates.sh vastrix.ai
-#   ./scripts/issue-certificates.sh vastrix.ai --renew
-#   ./scripts/issue-certificates.sh vastrix.ai --staging   # rehearse without burning rate limits
+#   ./scripts/issue-certificates.sh nevix.ai
+#   ./scripts/issue-certificates.sh nevix.ai --renew
+#   ./scripts/issue-certificates.sh nevix.ai --staging   # rehearse without burning rate limits
 #
 # Webroot rather than standalone, so Nginx keeps serving throughout. The ACME challenge path is the
 # only route exempt from the HTTPS redirect (infra/nginx/snippets/acme-challenge.conf).
@@ -64,7 +64,7 @@ log "Running certbot ($ACTION) for $DOMAIN..."
 
 docker run --rm \
   -v "$REPO_ROOT/infra/nginx/certs:/etc/letsencrypt" \
-  -v vastrix_certbot-webroot:/var/www/certbot \
+  -v nevix_certbot-webroot:/var/www/certbot \
   certbot/certbot:latest \
   "$ACTION" \
   --webroot --webroot-path=/var/www/certbot \
@@ -105,7 +105,7 @@ cat <<NEXT
 
 Add automatic renewal to cron:
 
-  0 3 * * 1 cd $REPO_ROOT && ./scripts/issue-certificates.sh $DOMAIN --renew >> /var/log/vastrix-certs.log 2>&1
+  0 3 * * 1 cd $REPO_ROOT && ./scripts/issue-certificates.sh $DOMAIN --renew >> /var/log/nevix-certs.log 2>&1
 
 Prometheus alerts 30 days before expiry (TlsCertificateExpiringSoon), which is the backstop for a
 renewal that has silently stopped working.

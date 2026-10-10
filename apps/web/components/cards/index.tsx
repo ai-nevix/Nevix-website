@@ -11,7 +11,7 @@ import type {
   Service,
   ServiceCategory,
   Solution,
-} from '@vastrix/types';
+} from '@nevix/types';
 
 import { Badge } from '@/components/ui/badge';
 import { Card, CardBody, CardDescription, CardTitle } from '@/components/ui/card';
@@ -37,17 +37,25 @@ const stretchedLink = 'after:absolute after:inset-0 after:content-[""] focus-vis
 export function PillarCard({ category, index }: { category: ServiceCategory; index?: number }) {
   return (
     <Card variant="glass" interactive className="group h-full overflow-hidden">
+      {/* A light that travels along the top edge on interaction — the N's gradient, in motion. */}
+      <span
+        aria-hidden="true"
+        className="absolute inset-x-6 top-0 h-px origin-left scale-x-25 bg-linear-to-r from-cyan-brand-400 to-brand-500 opacity-70 transition-transform duration-500 group-focus-within:scale-x-100 group-hover:scale-x-100"
+      />
       <CardBody className="gap-4">
         <div className="flex items-start justify-between gap-4">
           <IconTile name={category.icon} tone="onDark" />
           {typeof index === 'number' ? (
-            <span className="font-mono text-sm text-neutral-400 tabular-nums" aria-hidden="true">
+            <span
+              className="font-display text-sm font-semibold text-neutral-500 tabular-nums"
+              aria-hidden="true"
+            >
               {String(index + 1).padStart(2, '0')}
             </span>
           ) : null}
         </div>
 
-        <h3 className="text-lg font-bold tracking-tight text-white">
+        <h3 className="text-lg font-semibold tracking-tight text-white">
           <Link href={`/services/${category.slug}`} className={stretchedLink}>
             {category.name}
           </Link>
@@ -226,7 +234,11 @@ export function CaseStudyCard({ caseStudy }: { caseStudy: CaseStudy }) {
           in the detail page heading — catalogue §16 forbids presenting unapproved case studies as
           client work.
         */}
-        {caseStudy.kind === 'demo' ? <Badge tone="warning">Demo Case Study</Badge> : null}
+        {caseStudy.kind === 'demo' ? (
+          <Badge tone="warning" className="self-start">
+            Demo Case Study
+          </Badge>
+        ) : null}
 
         <CardTitle>
           <Link href={`/case-studies/${caseStudy.slug}`} className={stretchedLink}>

@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 
-import type { SeoMetadata } from '@vastrix/types';
+import type { SeoMetadata } from '@nevix/types';
 
 import { siteConfig, siteUrl } from '@/content/site';
 

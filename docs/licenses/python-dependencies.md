@@ -87,8 +87,8 @@
 | `typing_extensions` | 4.16.0 | PSF-2.0 | Backported and Experimental Type Hints for Python 3.9+ |
 | `tzdata` | 2026.4 | Apache-2.0 | Provider of IANA time zone data |
 | `uvicorn` | 0.38.0 | BSD-3-Clause | The lightning-fast ASGI server. |
-| `vastrix-api` | 0.1.0 | UNLICENSED | VASTRIX backend — contact, lead management, newsletter and public site configuration |
-| `vastrix-api` | 0.1.0 | UNLICENSED | VASTRIX backend — contact, lead management, newsletter and public site configuration |
+| `nevix-api` | 0.1.0 | UNLICENSED | NEVIX backend — contact, lead management, newsletter and public site configuration |
+| `nevix-api` | 0.1.0 | UNLICENSED | NEVIX backend — contact, lead management, newsletter and public site configuration |
 | `watchfiles` | 1.2.0 | MIT License | Simple, modern and high performance file watching and code reload in python. |
 | `websockets` | 17.1 | BSD-3-Clause | An implementation of the WebSocket Protocol (RFC 6455 & 7692) |
 | `wrapt` | 2.4.1 | BSD-2-Clause | Module for decorators, wrappers and monkey patching. |

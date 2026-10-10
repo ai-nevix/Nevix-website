@@ -28,10 +28,10 @@ Observability (-f docker-compose.monitoring.yml), all bound to 127.0.0.1:
 
 | Hostname | Routes to | Notes |
 | --- | --- | --- |
-| `vastrix.ai` | Next.js | Canonical origin |
-| `www.vastrix.ai` | 301 → apex | One origin ranks |
-| `api.vastrix.ai` | FastAPI | `/admin`, `/metrics`, `/docs` return 404 here |
-| `cms.vastrix.ai` | Strapi | Restrict `/admin` by IP before public exposure |
+| `nevix.ai` | Next.js | Canonical origin |
+| `www.nevix.ai` | 301 → apex | One origin ranks |
+| `api.nevix.ai` | FastAPI | `/admin`, `/metrics`, `/docs` return 404 here |
+| `cms.nevix.ai` | Strapi | Restrict `/admin` by IP before public exposure |
 | *(none)* | Monitoring | Loopback only — reachable via SSH tunnel or VPN |
 
 ## 3. Environments
@@ -50,7 +50,7 @@ set a flag.
 
 ```bash
 # On the host
-git clone <repository> /opt/vastrix && cd /opt/vastrix
+git clone <repository> /opt/nevix && cd /opt/nevix
 
 cp .env.example .env
 ./scripts/generate-secrets.sh --write     # generates and writes every secret, chmod 600
@@ -60,15 +60,15 @@ cp .env.example .env
 $EDITOR .env
 
 # TLS — see docs/deployment/tls.md
-./scripts/issue-certificates.sh vastrix.ai
+./scripts/issue-certificates.sh nevix.ai
 
 docker compose build
 docker compose up -d
 
 # Verify before announcing anything
-curl -f https://vastrix.ai/
-curl -f https://api.vastrix.ai/api/v1/health
-curl -f https://vastrix.ai/sitemap.xml
+curl -f https://nevix.ai/
+curl -f https://api.nevix.ai/api/v1/health
+curl -f https://nevix.ai/sitemap.xml
 ```
 
 Migrations run automatically from the API container's entrypoint, with a bounded retry so a

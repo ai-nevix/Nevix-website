@@ -1,4 +1,4 @@
-# Starting VASTRIX locally and publishing it over ngrok
+# Starting NEVIX locally and publishing it over ngrok
 
 For this workstation, where Node, PostgreSQL and ngrok are portable copies in `.tooling/` rather
 than system installs. All commands are PowerShell, run from the repository root.
@@ -102,6 +102,27 @@ Check <http://localhost:8000/docs> lists the endpoints.
 No SMTP server is configured, so nothing is emailed. Enquiries are recorded and the API reports
 `notification_sent: false` — accurately, rather than claiming a send that did not happen.
 
+**A database created before the rebrand.** The API's default `DATABASE_URL` is now
+`postgresql+asyncpg://nevix:nevix@localhost:5432/nevix`. A local database set up before the rename
+still has the role and database `vastrix`, so the API cannot connect to it. Either rename them once,
+or point the API at the old name.
+
+To rename — with the API stopped, connected to a *different* database (`postgres`) as a superuser
+(substitute your cluster's superuser for `postgres` after `-U` if it differs):
+
+```powershell
+.\.tooling\pgsql\bin\psql.exe -h localhost -U postgres -d postgres -c "ALTER DATABASE vastrix RENAME TO nevix;"
+.\.tooling\pgsql\bin\psql.exe -h localhost -U postgres -d postgres -c "ALTER ROLE vastrix RENAME TO nevix;"
+.\.tooling\pgsql\bin\psql.exe -h localhost -U postgres -d postgres -c "ALTER ROLE nevix WITH PASSWORD 'nevix';"
+```
+
+The third line is not optional: the new default URL expects the password `nevix`, and renaming a
+role whose password is stored as MD5 clears it anyway. A database cannot be renamed while anything
+is connected to it, and a role cannot rename itself — hence `postgres`, not `vastrix`.
+
+Or, without renaming, set `$env:DATABASE_URL` in the API's terminal before starting it: the default
+URL above with `nevix` replaced by `vastrix` in all three places — user, password and database.
+
 ---
 
 ## Shutting down
@@ -128,6 +149,7 @@ Ctrl+C in each terminal, then, if the database was started:
 | `EBUSY` during build | A server is holding the build directory | Stop it, then rebuild |
 | Links point at `localhost` | Served without rebuilding | `npm run serve:public --rebuild` |
 | Contact form returns 502 | The API is not running | See *Optional: the backend* |
+| API: `password authentication failed for user "nevix"` or `database "nevix" does not exist` | The local database predates the rebrand | Rename it, or set `$env:DATABASE_URL` — see *Optional: the backend* |
 
 ---
 

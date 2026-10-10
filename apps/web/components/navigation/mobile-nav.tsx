@@ -44,7 +44,7 @@ export function MobileNav() {
       <Dialog.Trigger asChild>
         <button
           type="button"
-          className="inline-flex size-11 items-center justify-center rounded-lg text-neutral-700 transition-colors hover:bg-neutral-100 hover:text-neutral-900 lg:hidden"
+          className="inline-flex size-11 items-center justify-center rounded-lg text-neutral-200 transition-colors hover:bg-white/8 hover:text-white lg:hidden"
           aria-label="Open menu"
         >
           <Menu className="size-6" aria-hidden="true" />
@@ -56,7 +56,7 @@ export function MobileNav() {
 
         <Dialog.Content
           className={cn(
-            'fixed inset-y-0 right-0 z-50 flex w-full max-w-sm flex-col bg-white shadow-[var(--shadow-panel)] lg:hidden',
+            'dark-section brand-field fixed inset-y-0 right-0 z-50 flex w-full max-w-sm flex-col border-l border-white/10 shadow-[var(--shadow-panel)] lg:hidden',
             'motion-safe:data-[state=open]:animate-in motion-safe:data-[state=closed]:animate-out',
           )}
           aria-label="Site menu"
@@ -66,12 +66,12 @@ export function MobileNav() {
             Primary site navigation and contact links.
           </Dialog.Description>
 
-          <div className="flex items-center justify-between border-b border-neutral-200 px-5 py-4">
-            <Logo className="h-9" />
+          <div className="flex items-center justify-between border-b border-white/10 px-5 py-4">
+            <Logo size="sm" />
             <Dialog.Close asChild>
               <button
                 type="button"
-                className="inline-flex size-11 items-center justify-center rounded-lg text-neutral-700 transition-colors hover:bg-neutral-100"
+                className="inline-flex size-11 items-center justify-center rounded-lg text-neutral-200 transition-colors hover:bg-white/8 hover:text-white"
                 aria-label="Close menu"
               >
                 <X className="size-6" aria-hidden="true" />
@@ -90,7 +90,7 @@ export function MobileNav() {
                   aria-current={pathname === '/' ? 'page' : undefined}
                   className={cn(
                     'flex min-h-11 items-center rounded-lg px-3 text-base font-semibold',
-                    pathname === '/' ? 'bg-brand-50 text-brand-700' : 'text-neutral-800',
+                    pathname === '/' ? 'bg-white/8 text-white' : 'text-neutral-200',
                   )}
                 >
                   Home
@@ -109,7 +109,7 @@ export function MobileNav() {
                         aria-current={active ? 'page' : undefined}
                         className={cn(
                           'flex min-h-11 flex-1 items-center rounded-lg px-3 text-base font-semibold',
-                          active ? 'bg-brand-50 text-brand-700' : 'text-neutral-800',
+                          active ? 'bg-white/8 text-white' : 'text-neutral-200',
                         )}
                       >
                         {item.label}
@@ -122,7 +122,7 @@ export function MobileNav() {
                           aria-expanded={isExpanded}
                           aria-controls={`submenu-${item.href.replace(/\//g, '-')}`}
                           aria-label={`${isExpanded ? 'Collapse' : 'Expand'} ${item.label} menu`}
-                          className="inline-flex size-11 shrink-0 items-center justify-center rounded-lg text-neutral-600 hover:bg-neutral-100"
+                          className="inline-flex size-11 shrink-0 items-center justify-center rounded-lg text-neutral-300 hover:bg-white/8 hover:text-white"
                         >
                           <ChevronDown
                             className={cn(
@@ -139,13 +139,13 @@ export function MobileNav() {
                       <ul
                         id={`submenu-${item.href.replace(/\//g, '-')}`}
                         hidden={!isExpanded}
-                        className="mt-1 mb-2 ml-3 flex flex-col gap-0.5 border-l border-neutral-200 pl-3"
+                        className="mt-1 mb-2 ml-3 flex flex-col gap-0.5 border-l border-white/10 pl-3"
                       >
                         {item.children.map((child) => (
                           <li key={child.href}>
                             <Link
                               href={child.href}
-                              className="flex min-h-11 items-center rounded-lg px-3 text-sm font-medium text-neutral-700 hover:bg-neutral-50 hover:text-brand-700"
+                              className="flex min-h-11 items-center rounded-lg px-3 text-sm font-medium text-neutral-300 hover:bg-white/5 hover:text-white"
                             >
                               {child.label}
                             </Link>
@@ -159,13 +159,13 @@ export function MobileNav() {
             </ul>
           </nav>
 
-          <div onClick={handleNavigate} className="border-t border-neutral-200 p-5">
-            <Button asChild size="lg" className="w-full">
+          <div onClick={handleNavigate} className="border-t border-white/10 p-5">
+            <Button asChild size="lg" variant="onDark" className="w-full">
               <Link href={ctas.primary.href}>{ctas.primary.label}</Link>
             </Button>
             <a
               href={`mailto:${siteConfig.contact.email}`}
-              className="mt-3 block text-center text-sm font-medium text-neutral-600 hover:text-brand-700"
+              className="mt-3 block text-center text-sm font-medium text-neutral-300 hover:text-white"
             >
               {siteConfig.contact.email}
             </a>

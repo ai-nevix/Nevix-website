@@ -21,3 +21,4 @@ Format: context → decision → alternatives → consequences → revisit when.
 | [011](./ADR-011-css-scroll-reveal.md) | CSS scroll-driven reveals instead of JavaScript | Accepted |
 | [012](./ADR-012-packages-ui-deferred.md) | `packages/ui` deferred | Accepted |
 | [013](./ADR-013-welcome-intro.md) | Welcome intro: CSS-armed, React-animated, self-cancelling | Accepted |
+| [014](./ADR-014-nevix-rebrand.md) | Rebrand to NEVIX: renamed repo-wide, redesigned from the new artwork | Accepted |

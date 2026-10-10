@@ -1,4 +1,4 @@
-# VASTRIX — observability stack (specification §24, instruction §48).
+# NEVIX — observability stack (specification §24, instruction §48).
 #
 #   docker compose -f docker-compose.yml -f docker-compose.monitoring.yml up -d
 #
@@ -15,7 +15,7 @@
 # authentication." Binding to loopback means they are not reachable even if authentication is
 # later misconfigured.
 
-name: vastrix
+name: nevix
 
 x-logging: &default-logging
   driver: json-file
@@ -26,7 +26,7 @@ x-logging: &default-logging
 services:
   prometheus:
     image: prom/prometheus:v3.2.1
-    container_name: vastrix-prometheus
+    container_name: nevix-prometheus
     restart: unless-stopped
     logging: *default-logging
     command:
@@ -54,7 +54,7 @@ services:
 
   grafana:
     image: grafana/grafana:11.6.1
-    container_name: vastrix-grafana
+    container_name: nevix-grafana
     restart: unless-stopped
     logging: *default-logging
     environment:
@@ -95,7 +95,7 @@ services:
 
   loki:
     image: grafana/loki:3.4.2
-    container_name: vastrix-loki
+    container_name: nevix-loki
     restart: unless-stopped
     logging: *default-logging
     command: -config.file=/etc/loki/loki-config.yml
@@ -109,7 +109,7 @@ services:
 
   promtail:
     image: grafana/promtail:3.4.2
-    container_name: vastrix-promtail
+    container_name: nevix-promtail
     restart: unless-stopped
     logging: *default-logging
     command: -config.file=/etc/promtail/promtail-config.yml
@@ -130,7 +130,7 @@ services:
   # ---------------------------------------------------------------------------------------------
   node-exporter:
     image: prom/node-exporter:v1.9.1
-    container_name: vastrix-node-exporter
+    container_name: nevix-node-exporter
     restart: unless-stopped
     logging: *default-logging
     command:
@@ -147,11 +147,11 @@ services:
 
   postgres-exporter:
     image: prometheuscommunity/postgres-exporter:v0.17.1
-    container_name: vastrix-postgres-exporter
+    container_name: nevix-postgres-exporter
     restart: unless-stopped
     logging: *default-logging
     environment:
-      DATA_SOURCE_NAME: 'postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB:-vastrix}?sslmode=disable'
+      DATA_SOURCE_NAME: 'postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB:-nevix}?sslmode=disable'
       PG_EXPORTER_EXCLUDE_DATABASES: 'template0,template1'
     depends_on:
       postgres:
@@ -161,7 +161,7 @@ services:
 
   cadvisor:
     image: gcr.io/cadvisor/cadvisor:v0.52.1
-    container_name: vastrix-cadvisor
+    container_name: nevix-cadvisor
     restart: unless-stopped
     logging: *default-logging
     privileged: true
@@ -180,7 +180,7 @@ services:
   # ---------------------------------------------------------------------------------------------
   glitchtip:
     image: glitchtip/glitchtip:v4.2.5
-    container_name: vastrix-glitchtip
+    container_name: nevix-glitchtip
     restart: unless-stopped
     logging: *default-logging
     environment:

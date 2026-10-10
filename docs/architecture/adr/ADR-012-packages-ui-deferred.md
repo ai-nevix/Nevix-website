@@ -25,8 +25,8 @@ components live in `apps/web/components` until a second consumer exists.
 
 | Package | Status | Consumers | Why |
 | --- | --- | --- | --- |
-| `@vastrix/types` | Populated | `apps/web`, mirrors `apps/api` schemas | A shared contract genuinely spanning two applications |
-| `@vastrix/config` | Populated | `apps/web` | Base TypeScript and ESLint config, ready for the next app |
+| `@nevix/types` | Populated | `apps/web`, mirrors `apps/api` schemas | A shared contract genuinely spanning two applications |
+| `@nevix/config` | Populated | `apps/web` | Base TypeScript and ESLint config, ready for the next app |
 | `packages/ui` | Deferred | — | One consumer |
 
 ## Reasoning
@@ -55,7 +55,7 @@ When a second consumer appears. The realistic candidates, from specification §3
 
 - the **client portal** (stage 3) — would share buttons, forms, cards, layout primitives
 - a **SaaS product UI** (stage 5)
-- a Strapi admin customisation using the VASTRIX design language
+- a Strapi admin customisation using the NEVIX design language
 
 At that point the move is mechanical: `apps/web/components/ui/*` are already dependency-free
 primitives built on Radix and the design tokens, with no imports from `content/` or `lib/cms`. They

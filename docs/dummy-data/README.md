@@ -1,6 +1,6 @@
-# VASTRIX Dummy / Demo Data Governance
+# NEVIX Dummy / Demo Data Governance
 
-VASTRIX is a new company and the supplied source material does not contain verified client work,
+NEVIX is a new company and the supplied source material does not contain verified client work,
 product data, team biographies, testimonials, legal entity details or contact details.
 
 The specification (§2, §31) and the build instruction (§33, §34) both forbid fabricating that
@@ -15,7 +15,7 @@ information. This directory is the control system that keeps the site honest.
 3. **Everything is marked in code.** The source carries a comment at the definition site:
    ```ts
    // DUMMY-DATA: DD-004
-   // Demo case study. Replace with an approved VASTRIX case study before launch.
+   // Demo case study. Replace with an approved NEVIX case study before launch.
    ```
 4. **Nothing forbidden is invented.** No government approvals, empanelments, certifications,
    client names, client logos, revenue, headcount, partnerships, testimonials, ROI figures or

@@ -1,8 +1,8 @@
-# VASTRIX — Architecture Overview
+# NEVIX — Architecture Overview
 
 > Source of truth: `docs/source-material/VASTRIX_Website_Development_Master_Specification.docx`
-> (§12, §20) and the supplied architecture diagram, reproduced at
-> [`vastrix-architecture-diagram.png`](./vastrix-architecture-diagram.png).
+> (§12, §20) and the supplied architecture diagram, reproduced below as
+> [a Mermaid diagram](#logical-architecture).
 
 ## 1. What this system is
 
@@ -12,6 +12,78 @@ client portal, product suite and AI assistant can be added later without redesig
 Everything in the stack is open source and self-hostable. That is a deliberate constraint from the
 specification (§11) rather than a preference — see
 [ADR-007](./adr/ADR-007-open-source-stack.md).
+
+### Logical architecture
+
+The supplied architecture diagram, redrawn as text so it renders in any Markdown viewer and can be
+changed in a diff. It is the *logical* picture as supplied; §2 below is the runtime topology as
+built, which adds Strapi and holds Redis, MinIO and pgvector behind Compose profiles
+([ADR-008](./adr/ADR-008-deferred-infrastructure.md)).
+
+```mermaid
+flowchart TB
+  subgraph users["Users"]
+    direction LR
+    visitors["Visitors<br/>(website users)"]
+    clients["Clients / partners"]
+    government["Government stakeholders"]
+    team["Team members<br/>(admin)"]
+  end
+
+  internet(("Internet"))
+  dns["Domain & DNS<br/>nevix.ai · www.nevix.ai"]
+  nginx["Nginx reverse proxy<br/>SSL termination (HTTPS) · load balancing<br/>static files · security headers · rate limiting"]
+
+  subgraph application["Application"]
+    direction LR
+    frontend["Frontend — web application<br/>Next.js + React + TypeScript<br/>Tailwind CSS · Framer Motion"]
+    backend["Backend — API server<br/>FastAPI + Python<br/>contact / leads · content APIs<br/>admin authentication · email notifications<br/>file handling · AI integration (future)"]
+    frontend <-->|"REST / JSON over HTTPS"| backend
+  end
+
+  subgraph external["External services"]
+    direction TB
+    smtp["Email service<br/>(SMTP)"]
+    newsletter["Newsletter / notifications"]
+    ai["AI services (future)<br/>Ollama / open-source LLM"]
+  end
+
+  subgraph data["Data layer"]
+    direction LR
+    postgres[("PostgreSQL<br/>relational database")]
+    redis[("Redis<br/>cache / queue — Celery")]
+    minio[("MinIO<br/>object storage")]
+    pgvector[("pgvector<br/>vector search — future")]
+  end
+
+  users <-->|"HTTPS"| internet
+  internet --> dns --> nginx
+  nginx --> frontend
+  nginx --> backend
+  backend <--> external
+  backend --> data
+
+  subgraph delivery["Development & deployment"]
+    direction LR
+    developer["Developer"] --> git["Git"] --> gitlab["GitLab CE<br/>(self-hosted)"] --> runner["CI/CD<br/>(GitLab Runner)"] --> docker["Docker<br/>(containers)"] --> server["Server<br/>(Ubuntu / Debian)"]
+  end
+
+  subgraph monitoring["Monitoring & logging"]
+    direction LR
+    prometheus["Prometheus<br/>(metrics)"]
+    grafana["Grafana<br/>(dashboards)"]
+    loki["Loki<br/>(logs)"]
+    glitchtip["GlitchTip<br/>(error tracking)"]
+  end
+
+  subgraph security["Security"]
+    direction LR
+    https["HTTPS<br/>(SSL/TLS)"]
+    adminauth["Admin<br/>authentication"]
+    firewall["Firewall"]
+    headers["Security headers<br/>& rate limiting"]
+  end
+```
 
 ## 2. Runtime topology
 
@@ -26,9 +98,9 @@ specification (§11) rather than a preference — see
                     │      Nginx      │  TLS, security headers, rate limiting,
                     │  reverse proxy  │  request size limits, static caching
                     └───┬────┬────┬───┘
-         vastrix.ai     │    │    │     cms.vastrix.ai
+         nevix.ai     │    │    │     cms.nevix.ai
         ┌───────────────┘    │    └──────────────┐
-        │          api.vastrix.ai                │
+        │          api.nevix.ai                │
   ┌─────▼─────┐        ┌─────▼─────┐       ┌─────▼─────┐
   │  Next.js  │        │  FastAPI  │       │  Strapi   │
   │   :3000   │        │   :8000   │       │   :1337   │
@@ -143,7 +215,7 @@ VPN — not merely a correct password (instruction §48).
 | Kubernetes | Specification §20.1 is explicit: do not introduce it for appearance | Multiple services with independent deploy cadences, or isolation requirements a single host cannot meet |
 | Redis / Celery | Nothing in the MVP needs a cache or a job queue. Wired into compose behind profiles ([ADR-008](./adr/ADR-008-deferred-infrastructure.md)) | Background email sending, scheduled reports, or rate limits shared across API replicas |
 | MinIO | Uploads are low volume and a mounted volume is simpler to back up | Media volume outgrows the host disk, or multiple hosts need shared storage |
-| pgvector | The AI layer is not in the first release. The PostgreSQL image already includes the extension, so enabling it is a migration, not a rebuild | The VASTRIX AI assistant (specification §19) |
+| pgvector | The AI layer is not in the first release. The PostgreSQL image already includes the extension, so enabling it is a migration, not a rebuild | The NEVIX AI assistant (specification §19) |
 | Keycloak | No user accounts exist yet | The client portal (specification §32, stage 3) |
 | A custom admin UI | Strapi handles content; lead management is a small JSON API | Lead volume justifies a workflow interface |
 

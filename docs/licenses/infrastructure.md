@@ -51,7 +51,7 @@ distinguishes it from GPL.
 **Acceptable here** because these run as internal observability tooling, bound to `127.0.0.1`, and
 are not offered as a service to third parties.
 
-**Would need review** if VASTRIX embedded Grafana in a client-facing product or exposed a
+**Would need review** if NEVIX embedded Grafana in a client-facing product or exposed a
 dashboard to clients as part of a paid service. Recorded now so it is a known boundary rather than
 a late discovery.
 
@@ -78,8 +78,9 @@ linked into shipped software, so GPL obligations do not extend to the applicatio
 
 | Asset | Source | Licence |
 | --- | --- | --- |
-| Manrope | Google Fonts, self-hosted by `next/font` at build time | SIL Open Font License 1.1 |
-| VASTRIX logo, mark, brand board, wallpaper | Supplied with the project | **Proprietary — VASTRIX.** Not open source. Do not redistribute. |
+| Manrope (body copy) | Google Fonts, self-hosted by `next/font` at build time | SIL Open Font License 1.1 |
+| Sora (headings) | Google Fonts, self-hosted by `next/font` at build time | SIL Open Font License 1.1 |
+| NEVIX logo, mark, wordmark, app icon, brand boards, photographs and team cards — the originals in `brand-assets/nevix/` and `brand-assets/logo-summary.png`, and everything derived from them in `apps/web/public/brand/`, `apps/web/public/team/` and the app icons | Supplied with the project | **Proprietary — NEVIX.** Not open source. Shown on the site, including as downloads on `/brand`, but not licensed for reuse or redistribution. |
 
 The OFL permits embedding and self-hosting. `next/font` downloads the files at build time, so no
 request reaches a font CDN at runtime — which is also what allows `font-src 'self'` in the Content

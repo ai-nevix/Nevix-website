@@ -1,7 +1,7 @@
 import { expect, test } from '@playwright/test';
 
 /**
- * The VASTRIX welcome intro.
+ * The NEVIX welcome intro.
  *
  * The animation itself needs no test — a screenshot comparison of a cinematic reveal would fail on
  * every deliberate change and catch nothing that matters. What does need testing is everything
@@ -13,7 +13,7 @@ import { expect, test } from '@playwright/test';
  * about reloads therefore has to happen on the same page object.
  */
 
-const INTRO = '[data-vastrix-intro]';
+const INTRO = '[data-nevix-intro]';
 /** Comfortably longer than the ~3.5s sequence, so a slow CI machine does not fail the suite. */
 const SETTLE = 9000;
 
@@ -27,7 +27,7 @@ test.describe('Welcome intro', () => {
     await expect(page.locator(INTRO)).toHaveCount(0, { timeout: SETTLE });
 
     // The page beneath is the real homepage, and it scrolls again.
-    await expect(page.getByRole('heading', { level: 1 })).toContainText('Intelligent Technology');
+    await expect(page.getByRole('heading', { level: 1 })).toContainText('Intelligence in Motion');
     await expect(page.locator('body')).toHaveCSS('overflow', 'visible');
   });
 
@@ -99,7 +99,7 @@ test.describe('Welcome intro', () => {
     // The intro must not cost anything in SEO terms: the homepage is prerendered, and the overlay
     // is painted over content that is already there.
     const html = await (await request.get('/')).text();
-    expect(html).toContain('Intelligent Technology');
+    expect(html).toContain('Intelligence');
     expect(html).toContain('Explore. Automate. Evolve.');
   });
 });

@@ -36,7 +36,7 @@ scroll-driven animations:
 @media (prefers-reduced-motion: no-preference) {
   @supports (animation-timeline: view()) {
     .reveal {
-      animation: vastrix-reveal linear both;
+      animation: nevix-reveal linear both;
       animation-timeline: view();
       animation-range: entry 0% cover calc(16% + (var(--reveal-step, 0) * 3%));
     }

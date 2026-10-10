@@ -32,7 +32,7 @@ on the public host; Prometheus scrapes it over the internal network.
 
 | Source | Provides |
 | --- | --- |
-| `vastrix-api` | Request rate, latency histogram, status codes by endpoint |
+| `nevix-api` | Request rate, latency histogram, status codes by endpoint |
 | `node-exporter` | CPU, memory, disk, filesystem, network |
 | `cadvisor` | Per-container CPU, memory, restart counts |
 | `postgres-exporter` | Connections, transaction rate, database size |
@@ -72,14 +72,14 @@ Every response carries `X-Request-ID`, and the same id appears in the Nginx, Nex
 log lines. Given an id from a user report:
 
 ```logql
-{container=~"vastrix-.*"} |= "a1b2c3d4e5f6g7h8"
+{container=~"nevix-.*"} |= "a1b2c3d4e5f6g7h8"
 ```
 
 That returns the full path of one request across all three services.
 
 ## 4. Alerts
 
-Defined in `infra/monitoring/prometheus/rules/vastrix-alerts.yml`. Each carries a `runbook`
+Defined in `infra/monitoring/prometheus/rules/nevix-alerts.yml`. Each carries a `runbook`
 annotation pointing at [`../deployment/runbook.md`](../deployment/runbook.md).
 
 | Alert | Condition | Severity |

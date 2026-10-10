@@ -5,7 +5,7 @@
     "singularName": "product",
     "pluralName": "products",
     "displayName": "Product",
-    "description": "A VASTRIX product. Status must reflect reality (specification §9.1)."
+    "description": "A NEVIX product. Status must reflect reality (specification §9.1)."
   },
   "options": {
     "draftAndPublish": true

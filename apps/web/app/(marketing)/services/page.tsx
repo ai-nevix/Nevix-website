@@ -21,7 +21,7 @@ export const revalidate = 3600;
 export const metadata = buildMetadata({
   title: 'Services',
   description:
-    'VASTRIX services across six categories: AI & Intelligence, Automation, Digital Engineering, Data & Analytics, Product & SaaS Engineering, and Consulting & Technology Advisory.',
+    'NEVIX services across six categories: AI & Intelligence, Automation, Digital Engineering, Data & Analytics, Product & SaaS Engineering, and Consulting & Technology Advisory.',
   path: '/services',
 });
 

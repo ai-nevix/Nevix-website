@@ -24,7 +24,7 @@ COLLECTION_TYPES: dict[str, dict] = {
         "singular": "service-category",
         "plural": "service-categories",
         "display": "Service Category",
-        "description": "One of the six VASTRIX service categories (specification §5.1).",
+        "description": "One of the six NEVIX service categories (specification §5.1).",
         "attributes": {
             "name": {"type": "string", "required": True, "unique": True, "maxLength": 120},
             "slug": {"type": "uid", "targetField": "name", "required": True},
@@ -51,7 +51,7 @@ COLLECTION_TYPES: dict[str, dict] = {
         "singular": "service",
         "plural": "services",
         "display": "Service",
-        "description": "A VASTRIX service (specification §7.1).",
+        "description": "A NEVIX service (specification §7.1).",
         "attributes": {
             "name": {"type": "string", "required": True, "maxLength": 160},
             "slug": {"type": "uid", "targetField": "name", "required": True},
@@ -154,7 +154,7 @@ COLLECTION_TYPES: dict[str, dict] = {
         "singular": "product",
         "plural": "products",
         "display": "Product",
-        "description": "A VASTRIX product. Status must reflect reality (specification §9.1).",
+        "description": "A NEVIX product. Status must reflect reality (specification §9.1).",
         "attributes": {
             "name": {"type": "string", "required": True, "maxLength": 120},
             "slug": {"type": "uid", "targetField": "name", "required": True},
@@ -313,7 +313,7 @@ SINGLE_TYPES: dict[str, dict] = {
         "display": "Site Settings",
         "description": "Global site configuration (specification §16).",
         "attributes": {
-            "companyName": {"type": "string", "required": True, "default": "VASTRIX"},
+            "companyName": {"type": "string", "required": True, "default": "NEVIX"},
             "tagline": {"type": "string", "default": "Explore. Automate. Evolve."},
             "positioning": {
                 "type": "string",

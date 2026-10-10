@@ -1,5 +1,5 @@
 /**
- * VASTRIX content domain types.
+ * NEVIX content domain types.
  *
  * These mirror the CMS content model in specification §7.1, §15 and §16. They are the contract
  * between `apps/web/lib/cms` and everything that renders content, so a provider swap (local
@@ -148,7 +148,7 @@ export interface Industry {
   summary: string;
   heroTitle: string;
   heroDescription: string;
-  /** The operational context VASTRIX works in — not a claim of sector credentials. */
+  /** The operational context NEVIX works in — not a claim of sector credentials. */
   context: string;
   capabilityAreas: ListItem[];
   /** Constraints typical of the sector that shape the engineering approach. */

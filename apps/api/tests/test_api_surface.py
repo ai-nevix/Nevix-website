@@ -53,7 +53,7 @@ class TestSiteConfig:
         assert response.status_code == 200
 
         body = response.json()
-        assert body["company_name"] == "VASTRIX"
+        assert body["company_name"] == "NEVIX"
         assert body["tagline"] == "Explore. Automate. Evolve."
         assert set(body["features"]) == {
             "newsletter_enabled",

@@ -23,8 +23,7 @@ export const dynamic = 'force-dynamic';
 
 export const metadata = buildMetadata({
   title: 'Search',
-  description:
-    'Search VASTRIX services, solutions, industries, products, case studies and insights.',
+  description: 'Search NEVIX services, solutions, industries, products, case studies and insights.',
   path: '/search',
   seo: { noIndex: true },
 });
@@ -107,7 +106,7 @@ export default async function SearchPage({
             {/* A plain GET form: works with JavaScript disabled, and results are linkable. */}
             <form action="/search" method="get" role="search" className="mt-8">
               <label htmlFor="q" className="sr-only">
-                Search VASTRIX
+                Search NEVIX
               </label>
               <div className="flex gap-2">
                 <div className="relative flex-1">

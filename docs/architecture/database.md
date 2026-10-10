@@ -8,12 +8,12 @@ PostgreSQL 16 (`pgvector/pgvector:pg16`). One instance, two databases.
 
 | Database | Owner | Contents |
 | --- | --- | --- |
-| `vastrix` | FastAPI | leads, contact_events, newsletter_subscribers, site_settings |
-| `vastrix_cms` | Strapi | CMS content and Strapi's own tables |
+| `nevix` | FastAPI | leads, contact_events, newsletter_subscribers, site_settings |
+| `nevix_cms` | Strapi | CMS content and Strapi's own tables |
 
 Created by `infra/docker/postgres/init/01-create-cms-database.sh` on first start.
 
-**Content entities are not duplicated into `vastrix`.** Specification §16 and instruction §28 both
+**Content entities are not duplicated into `nevix`.** Specification §16 and instruction §28 both
 require this: the CMS is the single source of truth for services, solutions, industries, products,
 case studies and insights, and the API never reads or writes them.
 

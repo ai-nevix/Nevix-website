@@ -1,4 +1,4 @@
-import type { CaseStudy } from '@vastrix/types';
+import type { CaseStudy } from '@nevix/types';
 
 /**
  * Case studies.
@@ -8,7 +8,7 @@ import type { CaseStudy } from '@vastrix/types';
  * client logos or case studies without permission.
  *
  * Every entry below has `kind: 'demo'`, which causes the UI to render a prominent
- * "Demo Case Study — illustrative example, not a VASTRIX client engagement" banner on the card,
+ * "Demo Case Study — illustrative example, not a NEVIX client engagement" banner on the card,
  * the detail page and in the page title. No client is named, no client logo is used, and the
  * outcomes are described qualitatively rather than as measured statistics, because specification
  * §31 requires evidence for case-study metrics and forbids guaranteed ROI claims.
@@ -23,7 +23,7 @@ export const caseStudies: CaseStudy[] = [
     kind: 'demo',
     industrySlug: 'finance',
     summary:
-      'An illustrative walkthrough of how VASTRIX approaches a high-volume invoice processing problem, from discovery through to a validated document-to-workflow pipeline.',
+      'An illustrative walkthrough of how NEVIX approaches a high-volume invoice processing problem, from discovery through to a validated document-to-workflow pipeline.',
     problem:
       'A finance function receives several thousand supplier invoices a month across PDF, scanned paper and email body text. Each is read by a clerk, keyed into the finance system, matched to a purchase order and routed for approval. Errors surface at month-end reconciliation, by which point tracing them back to a source document is slow.',
     constraints: [
@@ -85,7 +85,7 @@ export const caseStudies: CaseStudy[] = [
     order: 1,
     seo: {
       description:
-        'Demo case study: an illustrative walkthrough of VASTRIX’s approach to high-volume invoice processing using document intelligence and workflow automation.',
+        'Demo case study: an illustrative walkthrough of NEVIX’s approach to high-volume invoice processing using document intelligence and workflow automation.',
       noIndex: true,
     },
   },

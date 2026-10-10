@@ -1,4 +1,4 @@
-import type { ServiceCategory } from '@vastrix/types';
+import type { ServiceCategory } from '@nevix/types';
 
 /**
  * The six service categories.
@@ -16,7 +16,7 @@ export const serviceCategories: ServiceCategory[] = [
     oneLineValue: 'Build AI systems that understand, generate, predict and assist.',
     cardCta: 'Explore AI',
     description:
-      "VASTRIX's primary differentiator: combining AI with real business and operational problems. We work from a clearly understood problem towards a system that can be evaluated, deployed and maintained — not towards a demo.",
+      "NEVIX's primary differentiator: combining AI with real business and operational problems. We work from a clearly understood problem towards a system that can be evaluated, deployed and maintained — not towards a demo.",
     heroTitle: 'AI applied to real operational problems',
     heroDescription:
       'Generative AI, agents, machine learning, language, vision and document intelligence — designed around a defined problem, evaluated against it, and built to run in production with human oversight where it matters.',
@@ -26,7 +26,7 @@ export const serviceCategories: ServiceCategory[] = [
     seo: {
       title: 'AI & Intelligence Services',
       description:
-        'VASTRIX builds intelligent systems that understand, predict, generate, classify and assist — generative AI, AI agents, machine learning, NLP, computer vision and document intelligence.',
+        'NEVIX builds intelligent systems that understand, predict, generate, classify and assist — generative AI, AI agents, machine learning, NLP, computer vision and document intelligence.',
     },
   },
   {
@@ -38,7 +38,7 @@ export const serviceCategories: ServiceCategory[] = [
     oneLineValue: 'Eliminate repetitive work and connect workflows and systems.',
     cardCta: 'Automate Work',
     description:
-      'Remove repetitive work, connect systems and create repeatable operational workflows. Automation at VASTRIX starts with process discovery, because automating a badly understood process only makes it fail faster.',
+      'Remove repetitive work, connect systems and create repeatable operational workflows. Automation at NEVIX starts with process discovery, because automating a badly understood process only makes it fail faster.',
     heroTitle: 'Automation that holds up under real operating conditions',
     heroDescription:
       'Process automation, Python automation, workflow orchestration, RPA, API integration and infrastructure automation — with exception handling, notifications and operational logging designed in from the start.',
@@ -48,7 +48,7 @@ export const serviceCategories: ServiceCategory[] = [
     seo: {
       title: 'Automation Services',
       description:
-        'VASTRIX turns repetitive, rule-based and multi-step work into reliable automated workflows — business process automation, Python automation, RPA, API orchestration and infrastructure automation.',
+        'NEVIX turns repetitive, rule-based and multi-step work into reliable automated workflows — business process automation, Python automation, RPA, API orchestration and infrastructure automation.',
     },
   },
   {
@@ -70,7 +70,7 @@ export const serviceCategories: ServiceCategory[] = [
     seo: {
       title: 'Digital Engineering Services',
       description:
-        'VASTRIX designs and builds modern websites, web applications, APIs, custom software and user experiences, with cloud and DevOps engineering for reliable delivery.',
+        'NEVIX designs and builds modern websites, web applications, APIs, custom software and user experiences, with cloud and DevOps engineering for reliable delivery.',
     },
   },
   {
@@ -91,7 +91,7 @@ export const serviceCategories: ServiceCategory[] = [
     seo: {
       title: 'Data & Analytics Services',
       description:
-        'VASTRIX turns raw data into reporting, insight, prediction and decision support — analytics, BI dashboards, data engineering and ETL, predictive analytics and reporting automation.',
+        'NEVIX turns raw data into reporting, insight, prediction and decision support — analytics, BI dashboards, data engineering and ETL, predictive analytics and reporting automation.',
     },
   },
   {
@@ -99,11 +99,11 @@ export const serviceCategories: ServiceCategory[] = [
     name: 'Product & SaaS Engineering',
     navLabel: 'Product & SaaS',
     positioning:
-      'Extend engineering capability into VASTRIX-owned and client-owned software products.',
+      'Extend engineering capability into NEVIX-owned and client-owned software products.',
     oneLineValue: 'Take a product from validated idea to running SaaS.',
     cardCta: 'Build a Product',
     description:
-      'VASTRIX can extend its engineering capability into its own SaaS products and client-owned products. This is presented as a capability and a product-development practice, covering concept through MVP, production and iterative improvement.',
+      'NEVIX can extend its engineering capability into its own SaaS products and client-owned products. This is presented as a capability and a product-development practice, covering concept through MVP, production and iterative improvement.',
     heroTitle: 'Product engineering, from validated idea to running service',
     heroDescription:
       'SaaS product development, MVPs for stakeholder validation, AI-enabled products and secure role-based internal tools — engineered as products, with the operational concerns that implies.',
@@ -113,7 +113,7 @@ export const serviceCategories: ServiceCategory[] = [
     seo: {
       title: 'Product & SaaS Engineering',
       description:
-        'VASTRIX builds cloud products from concept through MVP, production and iterative improvement — SaaS product development, MVP development, AI product development and internal tools.',
+        'NEVIX builds cloud products from concept through MVP, production and iterative improvement — SaaS product development, MVP development, AI product development and internal tools.',
     },
   },
   {
@@ -134,7 +134,7 @@ export const serviceCategories: ServiceCategory[] = [
     seo: {
       title: 'Consulting & Technology Advisory',
       description:
-        'VASTRIX assesses workflows, systems and opportunities for digitalisation, automation and AI — producing feasibility findings, solution architecture and a prioritised roadmap.',
+        'NEVIX assesses workflows, systems and opportunities for digitalisation, automation and AI — producing feasibility findings, solution architecture and a prioritised roadmap.',
     },
   },
 ];

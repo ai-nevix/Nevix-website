@@ -17,7 +17,7 @@ set -euo pipefail
 REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$REPO_ROOT"
 
-BACKUP_DIR="${BACKUP_DIR:-/var/backups/vastrix}"
+BACKUP_DIR="${BACKUP_DIR:-/var/backups/nevix}"
 COMPOSE="${COMPOSE:-docker compose}"
 DUMP_FILE=""
 MODE="verify"
@@ -38,7 +38,7 @@ if [ -f .env ]; then
 fi
 
 : "${POSTGRES_USER:?POSTGRES_USER is not set. Is .env present?}"
-: "${POSTGRES_DB:=vastrix}"
+: "${POSTGRES_DB:=nevix}"
 
 log() { echo "[$(date -u +%H:%M:%S)] $*"; }
 
@@ -60,7 +60,7 @@ log "  Dump is valid."
 # Verify mode — restores into a scratch database and leaves production untouched
 # =================================================================================================
 if [ "$MODE" = "verify" ]; then
-  SCRATCH="vastrix_restore_check_$(date -u +%s)"
+  SCRATCH="nevix_restore_check_$(date -u +%s)"
   log "Restoring into scratch database ${SCRATCH}..."
 
   cleanup() {

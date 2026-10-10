@@ -22,7 +22,7 @@ export const revalidate = 3600;
 export const metadata = buildMetadata({
   title: 'Insights',
   description:
-    'Practical writing from the VASTRIX engineering team on applied AI, automation, data engineering, architecture and deployment.',
+    'Practical writing from the NEVIX engineering team on applied AI, automation, data engineering, architecture and deployment.',
   path: '/insights',
 });
 

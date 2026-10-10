@@ -36,7 +36,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 
   return buildMetadata({
     title: `${category.name} insights`,
-    description: `${category.description} Articles from the VASTRIX engineering team.`,
+    description: `${category.description} Articles from the NEVIX engineering team.`,
     path: `/insights/category/${category.slug}`,
   });
 }

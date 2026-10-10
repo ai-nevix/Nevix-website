@@ -189,6 +189,7 @@ describe('referential integrity', () => {
       '/',
       '/about',
       '/team',
+      '/brand',
       '/services',
       '/solutions',
       '/industries',
@@ -342,7 +343,7 @@ describe('content governance (specification §31, catalogue §16)', () => {
 
   it('claims no certification, approval or empanelment', () => {
     const forbidden = [
-      /\b(we are|vastrix is)\s+(iso|soc\s*2|cmmi)[- ]?\d*\s*(certified|compliant)/i,
+      /\b(we are|nevix is)\s+(iso|soc\s*2|cmmi)[- ]?\d*\s*(certified|compliant)/i,
       /\bgovernment[- ](approved|empanelled|empaneled|certified|registered)\b/i,
       /\b(empanelment|empanelled|empaneled)\b/i,
       /\bgem\s+registered\b/i,
@@ -466,7 +467,7 @@ describe('catalogue fidelity', () => {
 
   it('uses the master description from catalogue §14 verbatim', () => {
     expect(siteConfig.masterDescription).toBe(
-      'VASTRIX builds intelligent technology solutions across AI, automation, digital ' +
+      'NEVIX builds intelligent technology solutions across AI, automation, digital ' +
         'engineering and data. We help organizations simplify complex processes, connect ' +
         'systems, turn data into insight and build scalable digital products.',
     );
@@ -495,7 +496,7 @@ describe('team', () => {
 
   it('quotes each founder exactly as the supplied card credits them', () => {
     expect(team.map((l) => l.quote)).toEqual([
-      'Technology creates opportunities. People give them meaning.',
+      'Turning Ideas into Impact. At NEVIX, we build intelligent solutions with AI, automation and digital engineering to create a smarter, more connected tomorrow.',
       'Ideas grow brighter when we build them together.',
     ]);
   });
@@ -505,6 +506,18 @@ describe('team', () => {
       expect(leader.card.startsWith('/team/')).toBe(true);
       const file = join(__dirname, '..', 'public', leader.card.replace(/^\//, ''));
       expect(existsSync(file), `${leader.name}: ${leader.card} is missing`).toBe(true);
+    }
+  });
+
+  it('frames each card at the size it actually is, so none is cropped', async () => {
+    const { default: sharp } = await import('sharp');
+    for (const leader of team) {
+      const file = join(__dirname, '..', 'public', leader.card.replace(/^\//, ''));
+      const { width, height } = await sharp(file).metadata();
+      expect({ width, height }, leader.name).toEqual({
+        width: leader.cardWidth,
+        height: leader.cardHeight,
+      });
     }
   });
 

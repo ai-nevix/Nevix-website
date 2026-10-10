@@ -1,4 +1,4 @@
-import type { Service } from '@vastrix/types';
+import type { Service } from '@nevix/types';
 
 /**
  * Product & SaaS Engineering (catalogue §6) and Consulting & Technology Advisory (catalogue §7).
@@ -62,7 +62,7 @@ export const productSaasServices: Service[] = [
     order: 1,
     seo: {
       description:
-        'VASTRIX builds cloud-based SaaS products from concept through MVP, production and iterative improvement, with tenancy, access control and observability designed in.',
+        'NEVIX builds cloud-based SaaS products from concept through MVP, production and iterative improvement, with tenancy, access control and observability designed in.',
     },
   },
   {
@@ -102,7 +102,7 @@ export const productSaasServices: Service[] = [
     order: 2,
     seo: {
       description:
-        'VASTRIX turns a validated idea into a working product for stakeholder or user validation — scoped to test the riskiest assumption, built on a production-ready stack.',
+        'NEVIX turns a validated idea into a working product for stakeholder or user validation — scoped to test the riskiest assumption, built on a production-ready stack.',
     },
   },
   {
@@ -150,7 +150,7 @@ export const productSaasServices: Service[] = [
     order: 3,
     seo: {
       description:
-        'VASTRIX embeds AI features into products as part of the architecture — model integration, evaluation, quality monitoring, cost and latency management and guardrails.',
+        'NEVIX embeds AI features into products as part of the architecture — model integration, evaluation, quality monitoring, cost and latency management and guardrails.',
     },
   },
   {
@@ -190,7 +190,7 @@ export const productSaasServices: Service[] = [
     order: 4,
     seo: {
       description:
-        'VASTRIX builds secure, role-based operational tools and internal portals with server-side authorisation, audit logging and integration with existing systems.',
+        'NEVIX builds secure, role-based operational tools and internal portals with server-side authorisation, audit logging and integration with existing systems.',
     },
   },
 ];
@@ -232,7 +232,7 @@ export const consultingServices: Service[] = [
     order: 1,
     seo: {
       description:
-        'VASTRIX assesses workflows, systems and opportunities for digitalization, producing a prioritised, sequenced roadmap grounded in real constraints.',
+        'NEVIX assesses workflows, systems and opportunities for digitalization, producing a prioritised, sequenced roadmap grounded in real constraints.',
     },
   },
   {
@@ -271,7 +271,7 @@ export const consultingServices: Service[] = [
     order: 2,
     seo: {
       description:
-        'VASTRIX identifies high-value processes for automation and prioritises pilots, assessing volume, variability, error cost and integration feasibility.',
+        'NEVIX identifies high-value processes for automation and prioritises pilots, assessing volume, variability, error cost and integration feasibility.',
     },
   },
   {
@@ -313,7 +313,7 @@ export const consultingServices: Service[] = [
     order: 3,
     seo: {
       description:
-        'VASTRIX identifies practical AI opportunities and assesses data needs, feasibility and governance, producing a prioritised roadmap and proof-of-concept definition.',
+        'NEVIX identifies practical AI opportunities and assesses data needs, feasibility and governance, producing a prioritised roadmap and proof-of-concept definition.',
     },
   },
   {
@@ -354,7 +354,7 @@ export const consultingServices: Service[] = [
     order: 4,
     seo: {
       description:
-        'VASTRIX translates requirements into scalable architecture, integrations and deployment design, with architecture decision records capturing the reasoning.',
+        'NEVIX translates requirements into scalable architecture, integrations and deployment design, with architecture decision records capturing the reasoning.',
     },
   },
 ];

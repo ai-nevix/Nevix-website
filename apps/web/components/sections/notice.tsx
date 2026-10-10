@@ -6,7 +6,7 @@ import { cn } from '@/lib/utils';
 /**
  * Governance notices.
  *
- * These exist to keep the site honest about what is demonstration content and what VASTRIX does
+ * These exist to keep the site honest about what is demonstration content and what NEVIX does
  * not claim. Specification §31 and instruction §33/§34 require that unverified content is never
  * presented as fact, so these notices are part of the content contract rather than decoration —
  * do not remove one without removing the content it qualifies.
@@ -91,8 +91,8 @@ export function Notice({
 export function DemoCaseStudyNotice({ onDark = false }: { onDark?: boolean }) {
   return (
     <Notice variant="demo" title="Demo Case Study — illustrative example" onDark={onDark}>
-      This is demonstration content written to show how VASTRIX approaches a problem. It is not an
-      account of work delivered to a client, no organisation described here is a VASTRIX client, and
+      This is demonstration content written to show how NEVIX approaches a problem. It is not an
+      account of work delivered to a client, no organisation described here is a NEVIX client, and
       the outcomes are design intentions rather than measured results.
     </Notice>
   );
@@ -111,10 +111,10 @@ export function NoCredentialsNotice({
 }) {
   return (
     <Notice variant="compliance" title="What this page does not claim" onDark={onDark}>
-      This page describes capabilities VASTRIX can deliver for the {sector.toLowerCase()} sector. It
+      This page describes capabilities NEVIX can deliver for the {sector.toLowerCase()} sector. It
       is not a claim of approval, empanelment, registration, accreditation or certification, and
-      VASTRIX does not currently hold sector-specific credentials. Any requirement of that kind
-      should be raised with us directly so we can answer it accurately.
+      NEVIX does not currently hold sector-specific credentials. Any requirement of that kind should
+      be raised with us directly so we can answer it accurately.
     </Notice>
   );
 }

@@ -1,11 +1,11 @@
-import type { Product } from '@vastrix/types';
+import type { Product } from '@nevix/types';
 
 /**
  * Products — specification §9.1, instruction §22.
  *
  * DUMMY-DATA: DD-002
- * No VASTRIX product data was supplied with the source material. Instruction §22 is explicit:
- * "Do not invent actual VASTRIX products unless project data explicitly contains them. Where
+ * No NEVIX product data was supplied with the source material. Instruction §22 is explicit:
+ * "Do not invent actual NEVIX products unless project data explicitly contains them. Where
  * actual product information is unavailable: use clearly marked demo content or 'Coming Soon'."
  *
  * Every entry below is therefore at `concept` status, flagged `isPlaceholder`, and rendered with
@@ -23,10 +23,10 @@ export const products: Product[] = [
     tagline: 'Concept — document processing as a reusable product',
     status: 'concept',
     summary:
-      'A concept for packaging VASTRIX document intelligence work into a configurable product rather than a per-client build.',
+      'A concept for packaging NEVIX document intelligence work into a configurable product rather than a per-client build.',
     heroTitle: 'Document Intelligence Platform',
     heroDescription:
-      'A product direction under consideration: the document classification, extraction, validation and review workflow VASTRIX builds for clients, packaged as a configurable platform.',
+      'A product direction under consideration: the document classification, extraction, validation and review workflow NEVIX builds for clients, packaged as a configurable platform.',
     problem:
       'Document processing engagements repeat the same architecture — ingest, classify, extract, validate, review, deliver — while differing mainly in document types and business rules. A configurable product would make that repeatable work faster to deploy and cheaper to operate.',
     plannedCapabilities: [
@@ -42,7 +42,7 @@ export const products: Product[] = [
     order: 1,
     seo: {
       description:
-        'A VASTRIX product concept: document classification, extraction, validation and review packaged as a configurable, self-hostable platform. Not yet available.',
+        'A NEVIX product concept: document classification, extraction, validation and review packaged as a configurable, self-hostable platform. Not yet available.',
       noIndex: true,
     },
   },
@@ -52,10 +52,10 @@ export const products: Product[] = [
     tagline: 'Concept — workflow modelling without the bespoke build',
     status: 'concept',
     summary:
-      'A concept for a configurable workflow engine covering the state machines, approvals and escalations VASTRIX builds repeatedly.',
+      'A concept for a configurable workflow engine covering the state machines, approvals and escalations NEVIX builds repeatedly.',
     heroTitle: 'Workflow Automation Suite',
     heroDescription:
-      'A product direction under consideration: the state machines, role-based approvals, notifications and escalation logic behind VASTRIX workflow engagements, made configurable rather than bespoke.',
+      'A product direction under consideration: the state machines, role-based approvals, notifications and escalation logic behind NEVIX workflow engagements, made configurable rather than bespoke.',
     problem:
       'Workflow automation engagements consistently need the same core: explicit states, role-based transitions, timeouts, escalation and an audit trail. Rebuilding that per engagement spends effort on the part that does not vary.',
     plannedCapabilities: [
@@ -71,7 +71,7 @@ export const products: Product[] = [
     order: 2,
     seo: {
       description:
-        'A VASTRIX product concept: a configurable workflow engine with states, role-based approvals, escalation and audit trail. Not yet available.',
+        'A NEVIX product concept: a configurable workflow engine with states, role-based approvals, escalation and audit trail. Not yet available.',
       noIndex: true,
     },
   },
@@ -100,7 +100,7 @@ export const products: Product[] = [
     order: 3,
     seo: {
       description:
-        'A VASTRIX product concept: a self-hostable, retrieval-grounded knowledge assistant with citations and retrieval-time access control. Not yet available.',
+        'A NEVIX product concept: a self-hostable, retrieval-grounded knowledge assistant with citations and retrieval-time access control. Not yet available.',
       noIndex: true,
     },
   },

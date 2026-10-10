@@ -1,4 +1,4 @@
-# VASTRIX API (FastAPI) production image.
+# NEVIX API (FastAPI) production image.
 #
 # Instruction §43: non-root user, health check, no unnecessary packages, environment-driven
 # configuration.
@@ -43,23 +43,23 @@ ENV PYTHONDONTWRITEBYTECODE=1 \
 RUN apt-get update \
  && apt-get install --no-install-recommends -y libmagic1 curl \
  && rm -rf /var/lib/apt/lists/* \
- && groupadd --system --gid 1001 vastrix \
- && useradd --system --uid 1001 --gid vastrix --create-home vastrix
+ && groupadd --system --gid 1001 nevix \
+ && useradd --system --uid 1001 --gid nevix --create-home nevix
 
 COPY --from=builder /opt/venv /opt/venv
 
 WORKDIR /srv/api
 
-COPY --chown=vastrix:vastrix app ./app
-COPY --chown=vastrix:vastrix alembic.ini ./
-COPY --chown=vastrix:vastrix docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
+COPY --chown=nevix:nevix app ./app
+COPY --chown=nevix:nevix alembic.ini ./
+COPY --chown=nevix:nevix docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
 
 # Attachment storage. Owned by the application user; the rest of the image is not writable by it.
-RUN mkdir -p /var/lib/vastrix/uploads \
- && chown -R vastrix:vastrix /var/lib/vastrix \
+RUN mkdir -p /var/lib/nevix/uploads \
+ && chown -R nevix:nevix /var/lib/nevix \
  && chmod +x /usr/local/bin/docker-entrypoint.sh
 
-USER vastrix
+USER nevix
 
 EXPOSE 8000
 

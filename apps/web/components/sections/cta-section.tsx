@@ -1,10 +1,12 @@
 import { ArrowRight } from 'lucide-react';
+import Image from 'next/image';
 import Link from 'next/link';
 
 import { Button } from '@/components/ui/button';
 import { Container } from '@/components/ui/container';
 import { Reveal } from '@/components/ui/motion';
-import { ctas, siteConfig } from '@/content/site';
+import { Eyebrow } from '@/components/ui/section';
+import { brandAssets, ctas, siteConfig } from '@/content/site';
 
 export interface CtaSectionProps {
   eyebrow?: string;
@@ -22,6 +24,9 @@ export interface CtaSectionProps {
  * Reused at the foot of every content page with a context-appropriate label. Catalogue §15 lists
  * the approved CTA wording; buttons describe the action rather than saying "Learn more"
  * (specification §10.1).
+ *
+ * The midnight version is lit by the N itself: the mark sits above the heading with the glow it has
+ * on the supplied app icon and wall sign.
  */
 export function CtaSection({
   eyebrow = 'Next step',
@@ -34,15 +39,29 @@ export function CtaSection({
   const onDark = tone === 'midnight';
 
   return (
-    <section className={onDark ? 'brand-field dark-section' : 'bg-neutral-50'}>
+    <section
+      className={onDark ? 'brand-field dark-section relative overflow-hidden' : 'bg-neutral-50'}
+    >
       <Container>
-        <Reveal className="py-20 sm:py-24 lg:py-28">
+        <Reveal className="py-20 sm:py-24 lg:py-32">
           <div className="mx-auto max-w-3xl text-center">
-            <p
-              className={`text-eyebrow uppercase ${onDark ? 'text-cyan-brand-400' : 'text-brand-700'}`}
-            >
+            {onDark ? (
+              <div className="relative mx-auto mb-10 w-16 sm:w-20" aria-hidden="true">
+                <div className="absolute -inset-6 rounded-full bg-brand-500/45 blur-2xl motion-safe:animate-[nevix-glow_5s_ease-in-out_infinite]" />
+                <Image
+                  src={brandAssets.mark.src}
+                  width={brandAssets.mark.width}
+                  height={brandAssets.mark.height}
+                  alt=""
+                  sizes="80px"
+                  className="relative h-auto w-full drop-shadow-[0_0_18px_rgb(51_198_255/0.55)]"
+                />
+              </div>
+            ) : null}
+
+            <Eyebrow onDark={onDark} align="center">
               {eyebrow}
-            </p>
+            </Eyebrow>
 
             <h2 className={`mt-5 text-display-md ${onDark ? 'text-white' : 'text-neutral-900'}`}>
               {title}
@@ -56,7 +75,7 @@ export function CtaSection({
               {description}
             </p>
 
-            <div className="mt-9 flex flex-col justify-center gap-3 sm:flex-row">
+            <div className="mt-10 flex flex-col justify-center gap-3 sm:flex-row">
               <Button asChild size="lg" variant={onDark ? 'onDark' : 'primary'}>
                 <Link href={primary.href}>
                   {primary.label}

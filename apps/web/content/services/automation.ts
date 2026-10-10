@@ -1,4 +1,4 @@
-import type { Service } from '@vastrix/types';
+import type { Service } from '@nevix/types';
 
 /**
  * Automation services — catalogue §3.
@@ -54,7 +54,7 @@ export const automationServices: Service[] = [
     order: 1,
     seo: {
       description:
-        'VASTRIX maps repetitive business processes and converts them into controlled automated workflows with process discovery, workflow design, notifications and exception handling.',
+        'NEVIX maps repetitive business processes and converts them into controlled automated workflows with process discovery, workflow design, notifications and exception handling.',
     },
   },
   {
@@ -95,7 +95,7 @@ export const automationServices: Service[] = [
     order: 2,
     seo: {
       description:
-        'VASTRIX builds Python automation for technical, data and operational tasks — reusable scripts, schedulers, API integrations and data processing with real logging and error handling.',
+        'NEVIX builds Python automation for technical, data and operational tasks — reusable scripts, schedulers, API integrations and data processing with real logging and error handling.',
     },
   },
   {
@@ -131,7 +131,7 @@ export const automationServices: Service[] = [
     order: 3,
     seo: {
       description:
-        'VASTRIX connects people, systems, approvals and actions into end-to-end workflows with triggers, notifications, scheduled execution and status tracking.',
+        'NEVIX connects people, systems, approvals and actions into end-to-end workflows with triggers, notifications, scheduled execution and status tracking.',
     },
   },
   {
@@ -173,7 +173,7 @@ export const automationServices: Service[] = [
     order: 4,
     seo: {
       description:
-        'VASTRIX automates repetitive user-level tasks with rule-based bots and browser or desktop workflows where direct APIs are unavailable or impractical.',
+        'NEVIX automates repetitive user-level tasks with rule-based bots and browser or desktop workflows where direct APIs are unavailable or impractical.',
     },
   },
   {
@@ -214,7 +214,7 @@ export const automationServices: Service[] = [
     order: 5,
     seo: {
       description:
-        'VASTRIX connects independent applications and services with REST APIs, webhooks, authentication, data transformation, retries and orchestration.',
+        'NEVIX connects independent applications and services with REST APIs, webhooks, authentication, data transformation, retries and orchestration.',
     },
   },
   {
@@ -255,7 +255,7 @@ export const automationServices: Service[] = [
     order: 6,
     seo: {
       description:
-        'VASTRIX automates repeatable infrastructure and system-administration operations with configuration management, provisioning, Ansible automation and operational logging.',
+        'NEVIX automates repeatable infrastructure and system-administration operations with configuration management, provisioning, Ansible automation and operational logging.',
     },
   },
   {
@@ -304,7 +304,7 @@ export const automationServices: Service[] = [
     order: 7,
     seo: {
       description:
-        'VASTRIX combines AI classification and extraction with deterministic rules, approvals and monitoring — intelligent automation for ticket triage, document-to-workflow and routing.',
+        'NEVIX combines AI classification and extraction with deterministic rules, approvals and monitoring — intelligent automation for ticket triage, document-to-workflow and routing.',
     },
   },
 ];

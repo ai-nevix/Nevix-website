@@ -1,7 +1,7 @@
 [project]
-name = "vastrix-api"
+name = "nevix-api"
 version = "0.1.0"
-description = "VASTRIX backend — contact, lead management, newsletter and public site configuration"
+description = "NEVIX backend — contact, lead management, newsletter and public site configuration"
 requires-python = ">=3.12"
 license = { text = "UNLICENSED" }
 

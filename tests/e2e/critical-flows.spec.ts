@@ -13,7 +13,7 @@ import { expect, test } from '@playwright/test';
 test.describe('Flow 1 — Home to a service detail page', () => {
   test('navigates Home -> Services -> AI & Intelligence -> service detail', async ({ page }) => {
     await page.goto('/');
-    await expect(page.getByRole('heading', { level: 1 })).toContainText('Intelligent Technology');
+    await expect(page.getByRole('heading', { level: 1 })).toContainText('Intelligence in Motion');
 
     // The four pillars are reachable from the hero without opening a menu (specification §10.1:
     // no critical content may depend on hover).
@@ -120,7 +120,7 @@ test.describe('Flow 5 — Contact form validation', () => {
     await page.getByLabel('Your name').fill('Test Person');
     await page.getByLabel('Work email').fill('test@example.org');
     await page.getByLabel('What are you trying to solve?').fill('Too short');
-    await page.getByLabel(/I am happy for VASTRIX to contact me/).check();
+    await page.getByLabel(/I am happy for NEVIX to contact me/).check();
 
     await page.getByRole('button', { name: 'Send enquiry' }).click();
 
@@ -135,7 +135,7 @@ test.describe('Flow 5 — Contact form validation', () => {
     await page
       .getByLabel('What are you trying to solve?')
       .fill('A requirement long enough to satisfy the minimum length validation rule.');
-    await page.getByLabel(/I am happy for VASTRIX to contact me/).check();
+    await page.getByLabel(/I am happy for NEVIX to contact me/).check();
 
     await page.getByRole('button', { name: 'Send enquiry' }).click();
 
@@ -177,7 +177,7 @@ test.describe('Flow 6 — Valid contact submission', () => {
     await page
       .getByLabel('What are you trying to solve?')
       .fill('We process around two thousand supplier invoices a month entirely by hand.');
-    await page.getByLabel(/I am happy for VASTRIX to contact me/).check();
+    await page.getByLabel(/I am happy for NEVIX to contact me/).check();
 
     // The form rejects submissions faster than a person could complete it.
     await page.waitForTimeout(3200);
@@ -209,7 +209,7 @@ test.describe('Flow 6 — Valid contact submission', () => {
     await page
       .getByLabel('What are you trying to solve?')
       .fill('A requirement long enough to satisfy the minimum length validation rule.');
-    await page.getByLabel(/I am happy for VASTRIX to contact me/).check();
+    await page.getByLabel(/I am happy for NEVIX to contact me/).check();
     await page.waitForTimeout(3200);
 
     await page.getByRole('button', { name: 'Send enquiry' }).click();
@@ -273,7 +273,7 @@ test.describe('Search', () => {
   test('finds content and works from a shareable URL', async ({ page }) => {
     await page.goto('/search');
 
-    await page.getByLabel('Search VASTRIX').fill('document');
+    await page.getByLabel('Search NEVIX').fill('document');
     await page.getByRole('button', { name: 'Search' }).click();
 
     await expect(page).toHaveURL(/\/search\?q=document/);

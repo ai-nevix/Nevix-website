@@ -1,6 +1,6 @@
-import type { Author, CaseStudy, Insight, Service, ServiceCategory } from '@vastrix/types';
+import type { Author, CaseStudy, Insight, Service, ServiceCategory } from '@nevix/types';
 
-import { siteConfig, siteUrl } from '@/content/site';
+import { brandAssets, siteConfig, siteUrl } from '@/content/site';
 
 import { canonicalUrl } from './metadata';
 
@@ -21,9 +21,12 @@ export function organizationSchema(): JsonLd {
     '@id': `${siteUrl}/#organization`,
     name: siteConfig.name,
     url: siteUrl,
+    // The square app icon: search engines crop logos to a square, which would cut a wide lockup.
     logo: {
       '@type': 'ImageObject',
-      url: `${siteUrl}/brand/vastrix-logo.png`,
+      url: `${siteUrl}${brandAssets.appIcon.src}`,
+      width: brandAssets.appIcon.width,
+      height: brandAssets.appIcon.height,
     },
     description: siteConfig.masterDescription,
     slogan: siteConfig.tagline,

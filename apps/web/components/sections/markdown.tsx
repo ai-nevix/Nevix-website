@@ -170,7 +170,7 @@ export function Markdown({ content, className }: { content: string; className?: 
   const blocks = parse(content);
 
   return (
-    <div className={cn('prose-vastrix', className)}>
+    <div className={cn('prose-nevix', className)}>
       {blocks.map((block, index) => {
         const key = `block-${index}`;
 

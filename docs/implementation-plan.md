@@ -1,4 +1,4 @@
-# VASTRIX Website — Implementation Plan
+# NEVIX Website — Implementation Plan
 
 **Status:** Active
 **Owner:** Engineering
@@ -12,7 +12,7 @@
 
 ### 1.1 Positioning (catalogue §1, §17; specification §1)
 
-VASTRIX is an **intelligent technology and engineering company**, not a generic software agency.
+NEVIX is an **intelligent technology and engineering company**, not a generic software agency.
 The site leads with four core pillars and extends into product engineering and advisory.
 
 | Pillar | Positioning (verbatim from catalogue) |
@@ -33,7 +33,7 @@ These are hard constraints on the build, not stylistic preferences:
   marketplace registrations.
 - Do **not** publish client logos or case studies without permission.
 - Do **not** guarantee ROI, 100% automation, or AI accuracy.
-- Do **not** claim security/compliance certifications VASTRIX does not hold.
+- Do **not** claim security/compliance certifications NEVIX does not hold.
 - Do **not** pad technology lists to appear larger.
 - Use **"Coming Soon"** for planned capabilities.
 
@@ -62,7 +62,7 @@ Tracked verbatim in `docs/acceptance-criteria.md` with current status per item.
                           └────┬────┘
         ┌──────────────────────┼──────────────────────┐
         │                      │                      │
-  vastrix.ai            api.vastrix.ai          cms.vastrix.ai
+  nevix.ai            api.nevix.ai          cms.nevix.ai
   ┌─────▼─────┐          ┌─────▼─────┐          ┌─────▼─────┐
   │  Next.js  │──REST──▶ │  FastAPI  │          │  Strapi   │
   │  (web)    │          │   (api)   │          │   (cms)   │
@@ -77,8 +77,8 @@ Tracked verbatim in `docs/acceptance-criteria.md` with current status per item.
               └──────────┘ └───────┘ └─────────┘
 ```
 
-Reproduced from the supplied architecture diagram
-(`docs/architecture/vastrix-architecture-diagram.png`).
+Simplified from the supplied architecture diagram, which is reproduced in full as a Mermaid diagram
+in [architecture-overview.md → Logical architecture](./architecture/architecture-overview.md#logical-architecture).
 
 **Boundaries**
 
@@ -98,6 +98,8 @@ Reproduced from the supplied architecture diagram
 | --- | --- | --- |
 | `/` | Static (ISR 1h) | CMS + local content |
 | `/about` | Static | Local content |
+| `/team` | Static | Local content (supplied founder cards) |
+| `/brand` | Static | Local content (supplied brand artwork) |
 | `/services` | ISR | CMS |
 | `/services/[slug]` (6 categories) | ISR, `generateStaticParams` | CMS |
 | `/services/[slug]/[service]` (35 services) | ISR | CMS |
@@ -258,7 +260,7 @@ registry entry in `docs/dummy-data/registry.md`.
 5. **Products** — no actual product data supplied. Products ship as *Concept* / *Coming Soon*.
 6. **Testimonials / client logos** — none supplied; the site ships without a testimonials section
    rather than fabricating one.
-7. **Domain confirmation** — `vastrix.ai` is used throughout per the specification; confirm
+7. **Domain confirmation** — `nevix.ai` is used throughout per the specification; confirm
    registration before DNS/TLS provisioning.
 8. **SMTP credentials** — notification email is implemented and disabled-by-default until
    `SMTP_HOST` is configured.

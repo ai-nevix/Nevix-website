@@ -1,8 +1,8 @@
 {
-  "name": "@vastrix/config",
+  "name": "@nevix/config",
   "version": "0.1.0",
   "private": true,
-  "description": "Shared TypeScript and ESLint configuration for the VASTRIX monorepo",
+  "description": "Shared TypeScript and ESLint configuration for the NEVIX monorepo",
   "license": "UNLICENSED",
   "files": [
     "tsconfig.base.json",

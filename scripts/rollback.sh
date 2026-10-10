@@ -34,7 +34,7 @@ if [ "$LIST" = true ]; then
   [ -f "$STATE_FILE" ] && cat "$STATE_FILE" || echo "  none recorded"
   echo
   echo "Locally available images:"
-  docker images --format '  {{.Repository}}:{{.Tag}}' | grep -E 'vastrix/(web|api)' | sort -u || true
+  docker images --format '  {{.Repository}}:{{.Tag}}' | grep -E 'nevix/(web|api)' | sort -u || true
   exit 0
 fi
 

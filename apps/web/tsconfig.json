@@ -1,10 +1,10 @@
 {
-  "extends": "@vastrix/config/tsconfig.base.json",
+  "extends": "@nevix/config/tsconfig.base.json",
   "compilerOptions": {
     "plugins": [{ "name": "next" }],
     "paths": {
       "@/*": ["./*"],
-      "@vastrix/types": ["../../packages/types/src/index.ts"]
+      "@nevix/types": ["../../packages/types/src/index.ts"]
     },
     "allowJs": true,
     "noEmit": true
