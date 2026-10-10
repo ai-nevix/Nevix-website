@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from 'next';
 import { Manrope, Sora } from 'next/font/google';
 import type { ReactNode } from 'react';
 
+import { PointerEffects } from '@/components/effects/pointer-effects';
 import { JsonLd } from '@/components/seo/json-ld';
 import { INTRO_ENABLED, INTRO_STORAGE_KEY, INTRO_TOTAL_MS } from '@/lib/brand/intro-config';
 import { buildRootMetadata } from '@/lib/seo/metadata';
@@ -104,6 +105,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <JsonLd id="organization" data={organizationSchema()} />
         <JsonLd id="website" data={websiteSchema()} />
         {children}
+        <PointerEffects />
       </body>
     </html>
   );

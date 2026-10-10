@@ -97,7 +97,7 @@ export default async function SearchPage({
 
   return (
     <>
-      <section className="brand-field dark-section">
+      <section className="brand-field dark-section hero-offset">
         <Container size="prose">
           <div className="py-14 sm:py-16">
             <Breadcrumbs entries={[{ name: 'Search', href: '/search' }]} onDark />

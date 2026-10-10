@@ -44,7 +44,7 @@ export default async function LegalPage({ params }: { params: Promise<{ slug: st
 
   return (
     <>
-      <section className="brand-field dark-section">
+      <section className="brand-field dark-section hero-offset">
         <Container size="prose">
           <div className="py-14 sm:py-16">
             <Breadcrumbs

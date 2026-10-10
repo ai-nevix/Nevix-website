@@ -26,7 +26,7 @@ import { brandAssets, ctas, siteConfig } from '@/content/site';
  */
 export function HomeHero() {
   return (
-    <section className="dark-section relative isolate overflow-hidden bg-ink-950">
+    <section className="dark-section hero-offset relative isolate overflow-hidden bg-ink-950">
       {/* --- The horizon --------------------------------------------------------------------- */}
       <div aria-hidden="true" className="absolute inset-y-0 right-0 -z-10 w-full lg:w-[62%]">
         <Image

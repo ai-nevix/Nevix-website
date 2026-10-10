@@ -42,7 +42,7 @@ export function DesktopNav() {
                     href={item.href}
                     aria-current={active ? 'page' : undefined}
                     className={cn(
-                      'inline-flex h-10 items-center rounded-full px-3.5 text-sm font-semibold transition-colors',
+                      'inline-flex h-10 items-center rounded-full px-2.5 text-sm font-semibold whitespace-nowrap transition-colors xl:px-3.5',
                       active
                         ? 'bg-white/8 text-white'
                         : 'text-neutral-300 hover:bg-white/8 hover:text-white',
@@ -59,7 +59,7 @@ export function DesktopNav() {
             <NavigationMenu.Item key={item.href}>
               <NavigationMenu.Trigger
                 className={cn(
-                  'group inline-flex h-10 items-center gap-1 rounded-full px-3.5 text-sm font-semibold transition-colors',
+                  'group inline-flex h-10 items-center gap-1 rounded-full px-2.5 text-sm font-semibold whitespace-nowrap transition-colors xl:px-3.5',
                   active
                     ? 'bg-white/8 text-white'
                     : 'text-neutral-300 hover:bg-white/8 hover:text-white data-[state=open]:bg-white/8 data-[state=open]:text-white',

@@ -50,7 +50,7 @@ export default function ContactPage() {
     <>
       <JsonLd id="contact-page" data={contactPageSchema()} />
 
-      <section className="brand-field dark-section">
+      <section className="brand-field dark-section hero-offset">
         <Container>
           <div className="py-14 sm:py-16 lg:py-20">
             <Breadcrumbs entries={[{ name: 'Contact', href: '/contact' }]} onDark />

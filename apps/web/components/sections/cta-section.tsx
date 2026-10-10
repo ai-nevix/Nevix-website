@@ -4,6 +4,7 @@ import Link from 'next/link';
 
 import { Button } from '@/components/ui/button';
 import { Container } from '@/components/ui/container';
+import { LiveBackdrop } from '@/components/ui/live-backdrop';
 import { Reveal } from '@/components/ui/motion';
 import { Eyebrow } from '@/components/ui/section';
 import { brandAssets, ctas, siteConfig } from '@/content/site';
@@ -40,8 +41,14 @@ export function CtaSection({
 
   return (
     <section
-      className={onDark ? 'brand-field dark-section relative overflow-hidden' : 'bg-neutral-50'}
+      className={
+        onDark
+          ? 'brand-field dark-section relative overflow-hidden'
+          : 'relative isolate bg-neutral-50'
+      }
+      data-spotlight={onDark ? undefined : ''}
     >
+      {onDark ? null : <LiveBackdrop warm />}
       <Container>
         <Reveal className="py-20 sm:py-24 lg:py-32">
           <div className="mx-auto max-w-3xl text-center">

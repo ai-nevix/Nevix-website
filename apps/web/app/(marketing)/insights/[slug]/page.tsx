@@ -66,7 +66,7 @@ export default async function InsightDetailPage({ params }: { params: Promise<{ 
 
       <article>
         {/* --- Article header ------------------------------------------------------------------- */}
-        <header className="brand-field dark-section">
+        <header className="brand-field dark-section hero-offset">
           <Container size="prose">
             <div className="py-14 sm:py-16 lg:py-20">
               <Breadcrumbs

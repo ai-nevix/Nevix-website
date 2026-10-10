@@ -59,12 +59,13 @@ apps/web/
 
 ## 3. Server and client boundary
 
-Server Components are the default. Exactly four components are client components, and each has a
-reason that cannot be met on the server:
+Server Components are the default. Only these are client components, and each has a reason that
+cannot be met on the server:
 
 | Component | Why client |
 | --- | --- |
-| `layout/header.tsx` | Scroll position for the sticky border state |
+| `layout/header.tsx` | Scroll position, which thickens the glass once light sections pass beneath |
+| `effects/pointer-effects.tsx` | One document-level listener: section visibility (aurora drift) and the pointer (spotlight, card tilt) |
 | `navigation/desktop-nav.tsx` | Radix NavigationMenu open/close state |
 | `navigation/mobile-nav.tsx` | Radix Dialog focus trap and panel state |
 | `forms/contact-form.tsx`, `forms/newsletter-form.tsx`, `sections/faq.tsx` | User input and disclosure state |
@@ -85,6 +86,24 @@ replaced, is in [ADR-011](./adr/ADR-011-css-scroll-reveal.md).
 Framer Motion is retained for motion that has to coordinate with mounting and unmounting — the
 mobile navigation panel and the contact form's success transition.
 
+**Live light sections.** Every light `Section` (except reading-width `prose` ones, and any with
+`ambient={false}`) renders a `LiveBackdrop`: two or three radial-gradient clouds of the brand blue
+and cyan drifting slowly behind the content, a soft spotlight that follows the cursor, and a faint
+dot lattice uncovered around it. The drift is CSS (`transform` only, compositor-friendly) and runs
+only while the section is on screen; `components/effects/pointer-effects.tsx` sets `data-inview`
+through an IntersectionObserver and writes the cursor position as CSS variables, coalesced to one
+update per animation frame. The same listener gives `.card-interactive` cards a cursor-following
+glow and up to 5° of tilt. Reduced-motion visitors get none of it, touch users get the drift but
+no pointer effects, and without JavaScript the clouds hold still.
+
+**Floating glass header.** The header is `fixed` and out of flow: a rounded pill of frosted midnight
+glass (`backdrop-blur` + `backdrop-saturate`) inset from the viewport edges. Each page's opening
+section carries `.hero-offset` (`padding-top: var(--header-height)`) so its background runs up
+behind the glass while its content clears it. Every page — the 404 included — opens on midnight, so
+the sheer top state always sits on a dark field; on scroll the glass thickens to keep white text
+above AA contrast over light sections. Between 1024 and 1279px the header CTA is hidden so the full
+navigation fits.
+
 ## 5. Design system
 
 Tokens live in `app/globals.css` under Tailwind 4's `@theme`. Since the NEVIX rebrand they are
@@ -100,7 +119,7 @@ taken from the supplied artwork rather than the specification §4 table
 | `--color-horizon` | `#FF9A4D` | Sunset tone — hairlines and glows only, never a fill or text |
 | `--color-light` | `#F6F8FC` | Cloud — light sections |
 
-The design is dark-led: a midnight header on every page, and a homepage hero that sets
+The design is dark-led: a floating midnight-glass header on every page, and a homepage hero that sets
 "Intelligence in Motion." over the sunset photograph with the four pillars as a divided icon row.
 Light sections still alternate with dark ones; blue and cyan are light, not decoration. Recurring
 brand devices: a faint large N in inner page heroes, the *horizon line* (`.horizon-line`, a hairline

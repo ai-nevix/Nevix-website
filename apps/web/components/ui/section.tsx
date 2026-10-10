@@ -3,12 +3,17 @@ import * as React from 'react';
 import { cn } from '@/lib/utils';
 
 import { Container } from './container';
+import { LiveBackdrop } from './live-backdrop';
 
 /**
  * Page section with a consistent vertical rhythm and one of four surface treatments.
  *
  * Alternating cool light sections with midnight ones is the core of the NEVIX visual language
  * (specification §4.1: "use dark sections selectively; not every page should be dark").
+ *
+ * Light sections are alive: they carry the drifting aurora and the cursor spotlight of
+ * `LiveBackdrop`. Reading-width (`prose`) sections leave it off by default — long-form text reads
+ * best on a still page — and any section can opt in or out with `ambient`.
  */
 export type SectionTone = 'light' | 'subtle' | 'midnight' | 'brand-field';
 
@@ -18,6 +23,8 @@ export interface SectionProps extends React.HTMLAttributes<HTMLElement> {
   containerSize?: 'content' | 'prose' | 'wide';
   /** Set to render children without the inner Container, for full-bleed content. */
   bleed?: boolean;
+  /** The live backdrop on light sections. Defaults to on, except for reading-width sections. */
+  ambient?: boolean;
   as?: React.ElementType;
 }
 
@@ -39,16 +46,23 @@ export function Section({
   size = 'md',
   containerSize = 'content',
   bleed = false,
+  ambient,
   className,
   children,
   as: Component = 'section',
   ...props
 }: SectionProps) {
+  const isLight = tone === 'light' || tone === 'subtle';
+  const live = isLight && (ambient ?? containerSize !== 'prose');
+
   return (
     <Component
-      className={cn(toneClasses[tone], sizeClasses[size], 'relative', className)}
+      className={cn(toneClasses[tone], sizeClasses[size], 'relative', live && 'isolate', className)}
+      // Marks the section for the shared pointer listener: spotlight position and on-screen state.
+      data-spotlight={live ? '' : undefined}
       {...props}
     >
+      {live ? <LiveBackdrop warm={tone === 'subtle'} /> : null}
       {bleed ? children : <Container size={containerSize}>{children}</Container>}
     </Component>
   );

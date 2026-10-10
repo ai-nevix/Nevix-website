@@ -145,13 +145,15 @@
 @layer base {
   :root {
     color-scheme: light;
-    /* Height of the sticky header, used by scroll-margin and sticky offsets. */
+    /* Space the floating header occupies at the top of the viewport: the pill plus the air above
+       it. Every page's opening section is padded by this (`.hero-offset`) so it runs up behind the
+       glass, and anchored sections clear it via scroll-margin. */
     --header-height: 4.5rem;
   }
 
   @media (min-width: 1024px) {
     :root {
-      --header-height: 5rem;
+      --header-height: 5.25rem;
     }
   }
 
@@ -344,6 +346,135 @@
     filter: blur(6px);
   }
 
+  /*
+   * The opening section of every page runs up behind the floating glass header, so the glass has
+   * something to blur. This pads its content clear of the header; the background still starts at
+   * the very top of the viewport.
+   */
+  .hero-offset {
+    padding-top: var(--header-height);
+  }
+
+  /* --- Live backdrop (light sections) ---------------------------------------------------------- */
+
+  /*
+   * Light sections are lit the way the midnight ones are, only far more softly: two or three clouds
+   * of the N's blue and cyan drift slowly behind the content, and a gentle light follows the
+   * cursor, uncovering a faint dot lattice around it.
+   *
+   * Everything here is decoration on a `pointer-events: none` layer behind the content. Only
+   * `transform` and `opacity` animate, so the drift runs on the compositor without layout or
+   * paint. The clouds are radial gradients, not blurred elements — soft by construction, so no
+   * blur filter has to be rendered.
+   *
+   * The drift only runs while the section is on screen (`data-inview`, set by
+   * components/effects/pointer-effects.tsx); without JavaScript the clouds simply hold still. The
+   * spotlight needs a fine pointer and is never shown to touch or reduced-motion visitors.
+   */
+  .live-backdrop {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    overflow: hidden;
+    pointer-events: none;
+  }
+
+  .live-backdrop__cloud {
+    position: absolute;
+    border-radius: 9999px;
+    will-change: transform;
+    animation-play-state: paused;
+  }
+
+  [data-inview] .live-backdrop__cloud {
+    animation-play-state: running;
+  }
+
+  .live-backdrop__cloud--blue {
+    top: -18rem;
+    left: -14rem;
+    width: 48rem;
+    height: 48rem;
+    background: radial-gradient(
+      closest-side,
+      color-mix(in srgb, var(--color-brand-500) 18%, transparent),
+      transparent
+    );
+    animation: nevix-aurora-one 17s var(--ease-in-out-brand) infinite alternate paused;
+  }
+
+  .live-backdrop__cloud--cyan {
+    right: -16rem;
+    bottom: -20rem;
+    width: 52rem;
+    height: 52rem;
+    background: radial-gradient(
+      closest-side,
+      color-mix(in srgb, var(--color-cyan-brand-400) 17%, transparent),
+      transparent
+    );
+    animation: nevix-aurora-two 21s var(--ease-in-out-brand) infinite alternate paused;
+  }
+
+  /* The warm horizon, very faint — only on the cool `subtle` sections, as in the photography. */
+  .live-backdrop__cloud--horizon {
+    left: 30%;
+    bottom: -24rem;
+    width: 40rem;
+    height: 30rem;
+    background: radial-gradient(
+      closest-side,
+      color-mix(in srgb, var(--color-horizon) 9%, transparent),
+      transparent
+    );
+    animation: nevix-aurora-three 25s var(--ease-in-out-brand) infinite alternate paused;
+  }
+
+  /* Alternate sections mirror the arrangement, so no two neighbours are lit the same way. */
+  main > section:nth-of-type(even) .live-backdrop {
+    transform: scaleX(-1);
+  }
+
+  .live-backdrop__spotlight,
+  .live-backdrop__lattice {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transition: opacity 600ms var(--ease-out-brand);
+  }
+
+  .live-backdrop__spotlight {
+    background: radial-gradient(
+      36rem circle at var(--spot-x, 50%) var(--spot-y, 50%),
+      color-mix(in srgb, var(--color-brand-500) 9%, transparent),
+      transparent 62%
+    );
+  }
+
+  .live-backdrop__lattice {
+    background-image: radial-gradient(
+      color-mix(in srgb, var(--color-brand-600) 32%, transparent) 1px,
+      transparent 1.4px
+    );
+    background-size: 1.5rem 1.5rem;
+    mask-image: radial-gradient(
+      15rem circle at var(--spot-x, 50%) var(--spot-y, 50%),
+      #000 0%,
+      transparent 100%
+    );
+  }
+
+  /* The mirror above would flip the cursor position too; the lattice and light un-flip it. */
+  main > section:nth-of-type(even) .live-backdrop__spotlight,
+  main > section:nth-of-type(even) .live-backdrop__lattice {
+    transform: scaleX(-1);
+  }
+
+  [data-spot-active] .live-backdrop__spotlight,
+  [data-spot-active] .live-backdrop__lattice {
+    opacity: 1;
+  }
+
   /* --- Cards --------------------------------------------------------------------------------- */
 
   .card-surface {
@@ -386,16 +517,73 @@
     border-color: transparent;
   }
 
+  /*
+   * Interactive cards tilt a few degrees towards the cursor and carry a soft light that follows it.
+   * `--tilt-x`, `--tilt-y`, `--glow-x` and `--glow-y` are set by components/effects/pointer-effects.tsx
+   * for fine pointers only; without them the card simply lifts, as it always has.
+   *
+   * `isolation` makes the card its own stacking context, so the glow (z-index -1) paints above the
+   * card's background but beneath its text.
+   */
+  .card-interactive {
+    isolation: isolate;
+    transform: perspective(1000px) rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg));
+  }
+
+  /* Doubled selectors outrank `.card-surface` and `.card-glass`, which declare their own lists. */
+  .card-surface.card-interactive,
+  .card-glass.card-interactive {
+    transition:
+      transform var(--duration-slow) var(--ease-out-brand),
+      box-shadow var(--duration-base) var(--ease-out-brand),
+      border-color var(--duration-base) var(--ease-out-brand),
+      background-color var(--duration-base) var(--ease-out-brand);
+  }
+
   .card-interactive:hover {
-    transform: translateY(-3px);
+    transform: perspective(1000px) rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg))
+      translateY(-3px);
+  }
+
+  /* Quick while tracking the pointer, so the tilt follows the hand rather than lagging behind it;
+     slow on the way back, so letting go settles rather than snaps. */
+  .card-surface.card-interactive:hover,
+  .card-glass.card-interactive:hover {
+    transition-duration: 160ms, var(--duration-base), var(--duration-base), var(--duration-base);
+  }
+
+  .card-interactive::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    border-radius: inherit;
+    pointer-events: none;
+    opacity: 0;
+    background: radial-gradient(
+      22rem circle at var(--glow-x, 50%) var(--glow-y, 0%),
+      color-mix(in srgb, var(--color-brand-500) 10%, transparent),
+      transparent 60%
+    );
+    transition: opacity var(--duration-slow) var(--ease-out-brand);
+  }
+
+  .card-glass.card-interactive::after {
+    background: radial-gradient(
+      22rem circle at var(--glow-x, 50%) var(--glow-y, 0%),
+      color-mix(in srgb, var(--color-cyan-brand-400) 16%, transparent),
+      transparent 60%
+    );
   }
 
   .card-interactive:hover::before,
-  .card-interactive:focus-within::before {
+  .card-interactive:focus-within::before,
+  .card-interactive:hover::after {
     opacity: 1;
   }
 
   @media (prefers-reduced-motion: reduce) {
+    .card-interactive,
     .card-interactive:hover {
       transform: none;
     }
@@ -659,6 +847,42 @@
   }
   50% {
     transform: translate3d(0, -10px, 0);
+  }
+}
+
+/* The aurora clouds on light sections. Slow, wide and out of phase with one another. */
+@keyframes nevix-aurora-one {
+  0% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(12rem, 6rem, 0) scale(1.12);
+  }
+  100% {
+    transform: translate3d(4rem, 14rem, 0) scale(0.94);
+  }
+}
+
+@keyframes nevix-aurora-two {
+  0% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(-14rem, -8rem, 0) scale(0.92);
+  }
+  100% {
+    transform: translate3d(-6rem, -16rem, 0) scale(1.1);
+  }
+}
+
+@keyframes nevix-aurora-three {
+  0% {
+    transform: translate3d(0, 0, 0) scale(1);
+    opacity: 0.6;
+  }
+  100% {
+    transform: translate3d(-10rem, -4rem, 0) scale(1.2);
+    opacity: 1;
   }
 }
 

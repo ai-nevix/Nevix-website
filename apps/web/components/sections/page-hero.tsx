@@ -39,7 +39,7 @@ export function PageHero({
   notice?: ReactNode;
 }) {
   return (
-    <section className="brand-field dark-section relative overflow-hidden">
+    <section className="brand-field dark-section hero-offset relative overflow-hidden">
       {aside ? null : (
         <div
           aria-hidden="true"
