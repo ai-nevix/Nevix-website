@@ -1,5 +1,9 @@
 import { describe, expect, it } from 'vitest';
 
+import { existsSync } from 'node:fs';
+import { join } from 'node:path';
+
+import { team, teamCardAlt } from './about';
 import { caseStudies } from './case-studies';
 import { industries } from './industries';
 import { authors, insightCategories, insights } from './insights';
@@ -184,6 +188,7 @@ describe('referential integrity', () => {
     const staticRoutes = new Set([
       '/',
       '/about',
+      '/team',
       '/services',
       '/solutions',
       '/industries',
@@ -469,5 +474,65 @@ describe('catalogue fidelity', () => {
 
   it('uses the tagline from catalogue §17', () => {
     expect(siteConfig.tagline).toBe('Explore. Automate. Evolve.');
+  });
+});
+
+/**
+ * The team.
+ *
+ * Only three facts about each founder were supplied — a name, a role and a quote — and they are
+ * published verbatim. The risk here is not that the current content is wrong; it is that somebody
+ * later "fills out" a thin profile with plausible-sounding career history. These tests make that
+ * fail loudly.
+ */
+describe('team', () => {
+  it('publishes exactly the people named on the supplied material', () => {
+    expect(team.map((l) => `${l.name} — ${l.role}`)).toEqual([
+      'Jyoti Rokade — Founder & CEO',
+      'Vaidehi Bhagane — Co-Founder',
+    ]);
+  });
+
+  it('quotes each founder exactly as the supplied card credits them', () => {
+    expect(team.map((l) => l.quote)).toEqual([
+      'Technology creates opportunities. People give them meaning.',
+      'Ideas grow brighter when we build them together.',
+    ]);
+  });
+
+  it('has a portrait on disk for every profile', () => {
+    for (const leader of team) {
+      expect(leader.card.startsWith('/team/')).toBe(true);
+      const file = join(__dirname, '..', 'public', leader.card.replace(/^\//, ''));
+      expect(existsSync(file), `${leader.name}: ${leader.card} is missing`).toBe(true);
+    }
+  });
+
+  it('describes each card for anyone who cannot see it, without drifting from the facts', () => {
+    for (const leader of team) {
+      const alt = teamCardAlt(leader);
+      // The card carries the name, role and quote as pixels; the alt text has to carry the same
+      // three, spelled the same way, or the two versions of the page disagree.
+      expect(alt).toContain(leader.name);
+      expect(alt).toContain(leader.role);
+      expect(alt).toContain(leader.quote);
+    }
+  });
+
+  it('claims no career history, qualification or tenure for anyone', () => {
+    // Nothing of the sort was supplied. Anything matching these is invented biography.
+    const invented =
+      /(years? of experience|previously|prior to|formerly|ex-|graduat|degree|MBA|PhD|B\.?Tech|M\.?Tech|university|college|certified|award|founded in|since \d{4}|veteran|decade)/i;
+
+    for (const leader of team) {
+      const text = `${leader.name} ${leader.role} ${leader.quote} ${teamCardAlt(leader)}`;
+      expect(invented.test(text), `${leader.name}: reads as invented biography`).toBe(false);
+    }
+  });
+
+  it('gives every profile a unique slug usable as an anchor', () => {
+    const slugs = team.map((l) => l.slug);
+    expect(new Set(slugs).size).toBe(slugs.length);
+    for (const slug of slugs) expect(slug).toMatch(/^[a-z0-9-]+$/);
   });
 });

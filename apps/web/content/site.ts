@@ -23,12 +23,12 @@ export const siteConfig = {
 
   /**
    * DUMMY-DATA: DD-004
-   * Official contact details were not supplied. `hello@vastrix.ai` is a conventional placeholder
+   * Official contact details were not supplied. `vastrix.ai@gmail.com` is a conventional placeholder
    * and no phone number or street address is published rather than inventing one.
    * Replace with verified details before launch.
    */
   contact: {
-    email: 'hello@vastrix.ai',
+    email: 'vastrix.ai@gmail.com',
     /** Intentionally null until a verified number is supplied. */
     phone: null as string | null,
     /** Intentionally null until a registered address is supplied. */
@@ -49,7 +49,7 @@ export const siteConfig = {
    * than no link at all.
    */
   social: [
-    { label: 'LinkedIn', href: 'https://www.linkedin.com/company/vastrix' },
+    { label: 'LinkedIn', href: 'www.linkedin.com/in/vastrix-ai-3a88ba437' },
     { label: 'GitHub', href: 'https://github.com/vastrix' },
     { label: 'X', href: 'https://x.com/vastrix' },
   ],
@@ -267,6 +267,7 @@ export const footerNav: FooterColumn[] = [
     title: 'Company',
     links: [
       { label: 'About VASTRIX', href: '/about' },
+      { label: 'Team', href: '/team' },
       { label: 'How We Work', href: '/about#how-we-work' },
       { label: 'Engineering Principles', href: '/about#principles' },
       { label: 'Engagement Models', href: '/about#engagement' },
@@ -293,4 +294,15 @@ export const brandAssets = {
   brandBoard: '/brand/vastrix-brand-board.jpg',
   /** Hero-scale brand visual from the supplied wallpaper. */
   wallpaper: '/brand/vastrix-wallpaper.jpg',
+  /** The isolated mark, used by the brand intro animation. */
+  symbol: '/brand/vastrix-symbol.png',
+  /**
+   * The wordmark alone, cropped losslessly from the lower band of the supplied lockups. The
+   * artwork is the supplied one, trimmed — not redrawn.
+   *
+   * `wordmarkDark` is the navy wordmark from `vastrix-logo.png`, for light backgrounds;
+   * `wordmarkLight` is the white one from `vastrix-logo-dark.png`, for dark backgrounds.
+   */
+  wordmarkDark: '/brand/vastrix-wordmark-dark.png',
+  wordmarkLight: '/brand/vastrix-wordmark-light.png',
 } as const;

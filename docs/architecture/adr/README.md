@@ -20,3 +20,4 @@ Format: context → decision → alternatives → consequences → revisit when.
 | [010](./ADR-010-csp-unsafe-inline.md) | `script-src 'unsafe-inline'` with compensating controls | Accepted |
 | [011](./ADR-011-css-scroll-reveal.md) | CSS scroll-driven reveals instead of JavaScript | Accepted |
 | [012](./ADR-012-packages-ui-deferred.md) | `packages/ui` deferred | Accepted |
+| [013](./ADR-013-welcome-intro.md) | Welcome intro: CSS-armed, React-animated, self-cancelling | Accepted |

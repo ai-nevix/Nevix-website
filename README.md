@@ -103,7 +103,7 @@ vastrix-website/
 
 | Section | Routes |
 | --- | --- |
-| Home, About | 2 |
+| Home, About, Team | 3 |
 | Services | 1 index + 6 categories + 35 services |
 | Solutions | 1 index + 10 details |
 | Industries | 1 index + 6 details |
@@ -214,8 +214,8 @@ contains `*`, or the database URL still holds the development credentials.
 | Suite | Count | Command |
 | --- | ---: | --- |
 | Backend (pytest) | 55 | `cd apps/api && .venv/bin/pytest` |
-| Content integrity + governance (Vitest) | 42 | `npm run test` |
-| End-to-end (Playwright, desktop + mobile) | 60 | `npm run test:e2e` |
+| Content integrity + governance (Vitest) | 48 | `npm run test` |
+| End-to-end (Playwright, desktop + mobile) | 92 | `npm run test:e2e` |
 | Accessibility + responsive sweep | 35 routes × 3 viewports | `npm run audit:pages` |
 | Dummy-data registry | — | `npm run audit:dummy-data` |
 | Committed secrets | — | `npm run audit:secrets` |
@@ -255,6 +255,76 @@ Production deployment takes a backup before running migrations, then smoke-tests
 - [Rollback](docs/deployment/rollback.md)
 - [Backup and restore](docs/deployment/backup-and-restore.md)
 - [Runbook](docs/deployment/runbook.md)
+
+### The welcome intro
+
+A logo reveal plays on a first homepage visit: the emblem draws itself in light, the artwork fills
+in behind it, a sweep crosses it, then the wordmark and tagline settle. About 3.5s.
+
+| To change | Where |
+| --- | --- |
+| **Turn it off** | `NEXT_PUBLIC_SHOW_INTRO=false` — never rendered, not merely hidden |
+| **Speed** | `durationScale` in [`lib/brand/intro-config.ts`](apps/web/lib/brand/intro-config.ts) |
+| **Choreography** | the `timeline` in the same file — absolute milliseconds per phase |
+| **Intensity** | `MOTE_COUNT` there, and the gradients in [`ambient-background.tsx`](apps/web/components/branding/ambient-background.tsx) |
+| **Replay frequency** | clear the `vastrix_intro_seen` session key, or drop the check in [`app/layout.tsx`](apps/web/app/layout.tsx) |
+| **Skip** | the button in [`skip-intro.tsx`](apps/web/components/branding/skip-intro.tsx); Escape is wired in `vastrix-intro-stage.tsx` |
+
+Never plays under `prefers-reduced-motion: reduce`, on any page but `/`, or without JavaScript.
+Page content is prerendered either way, so the intro costs nothing in SEO terms. See
+[ADR-013](docs/architecture/adr/ADR-013-welcome-intro.md).
+
+### Team page
+
+`/team` publishes the supplied team cards whole and uncropped, so each arrives as it was designed.
+Content is in [`content/about.ts`](apps/web/content/about.ts) → `team`.
+
+Each entry states **only** a name, a role and the quote credited to that person. No biography,
+career history or qualification appears, because none was supplied — and a content test fails if
+any is added later.
+
+Because the cards carry their text as artwork, the same facts are served separately to anything
+that cannot see a picture: derived alternative text, a visually hidden caption, and `Person`
+structured data. To add someone: drop their card in `brand-assets/`, add it to `TEAM_CARDS` in
+[`scripts/derive-brand-assets.mjs`](scripts/derive-brand-assets.mjs), run `npm run brand:assets`,
+then add the entry to `team`.
+
+### Brand assets
+
+The supplied files in `apps/web/public/brand/` and `brand-assets/` are the source of truth and are
+never edited. Everything else is *derived* and reproducible:
+
+```bash
+npm run brand:assets     # regenerate
+npm run brand:check      # verify they match the originals (runs in `npm run verify`)
+```
+
+The derivation repairs a white matte baked into the logo artwork by flattening — invisible on
+white, a pale outline around every stroke on the brand midnight. Shape, proportion and gradient
+are untouched. See [`scripts/derive-brand-assets.mjs`](scripts/derive-brand-assets.mjs).
+
+### Sharing a preview over ngrok
+
+For review before there is a server — a tunnel from a public address to the site running locally.
+
+```bash
+export NGROK_DOMAIN=<your-reserved-domain>   # omit for a random address
+npm run serve:public
+```
+
+This starts the tunnel, asks it what address it was given, rebuilds if that address changed, then
+serves. The rebuild is the point: `NEXT_PUBLIC_SITE_URL` is baked in at build time, so serving an
+existing build through a tunnel publishes canonical links and a sitemap pointing at `localhost`.
+
+Reserving a domain (free, one per ngrok account) keeps the address stable across restarts, which
+also lets the rebuild be skipped — a restart then takes seconds.
+
+`NEXT_PUBLIC_ENV` defaults to `staging` here, so `robots.txt` disallows everything. Leave it that
+way until the placeholders in [`docs/dummy-data/`](docs/dummy-data/) are replaced — see
+[content governance](#content-governance).
+
+**This is a preview, not a deployment.** It serves from a workstation, has no TLS of its own, no
+monitoring and no backups. Production is Docker Compose behind Nginx, as above.
 
 ---
 
@@ -330,3 +400,9 @@ a separate job owns migrations.
 **VASTRIX** — Explore. Automate. Evolve.
 
 </div>
+
+
+
+
+
+

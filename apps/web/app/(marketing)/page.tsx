@@ -9,6 +9,7 @@ import {
   ProductCard,
   SolutionCard,
 } from '@/components/cards';
+import { VastrixIntro } from '@/components/branding/vastrix-intro';
 import { HomeHero } from '@/components/hero/home-hero';
 import { CtaSection } from '@/components/sections/cta-section';
 import { ProcessTimeline } from '@/components/sections/process-timeline';
@@ -65,6 +66,8 @@ export default async function HomePage() {
 
   return (
     <>
+      <VastrixIntro />
+
       <HomeHero />
 
       {/* --- What we do ------------------------------------------------------------------------ */}

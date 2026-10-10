@@ -127,7 +127,9 @@ services:
       EMAIL_FROM: ${EMAIL_FROM:-no-reply@vastrix.ai}
       EMAIL_NOTIFY_TO: ${EMAIL_NOTIFY_TO:-}
       SITE_URL: ${NEXT_PUBLIC_SITE_URL:-https://vastrix.ai}
-      SITE_CONTACT_EMAIL: ${SITE_CONTACT_EMAIL:-hello@vastrix.ai}
+      SITE_CONTACT_EMAIL: ${SITE_CONTACT_EMAIL:-vastrix.ai@gmail.com}
+      SITE_PHONE: ${SITE_PHONE:-+91 9552334155}
+      SITE_ADDRESS: ${SITE_ADDRESS:-Pune, Maharashtra, India}
       UPLOAD_DIR: /var/lib/vastrix/uploads
       RUN_MIGRATIONS: ${RUN_MIGRATIONS:-true}
     volumes:

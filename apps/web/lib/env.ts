@@ -14,6 +14,16 @@ const clientSchema = z.object({
   NEXT_PUBLIC_API_URL: z.string().default('/api/backend'),
   NEXT_PUBLIC_MEDIA_URL: z.string().optional(),
   NEXT_PUBLIC_ENV: z.enum(['local', 'development', 'staging', 'production']).default('local'),
+  /**
+   * Master switch for the welcome intro (components/branding/vastrix-intro.tsx).
+   *
+   * Set `NEXT_PUBLIC_SHOW_INTRO=false` to drop it entirely — the overlay is then never rendered,
+   * not merely hidden, so it costs nothing at all.
+   */
+  NEXT_PUBLIC_SHOW_INTRO: z
+    .enum(['true', 'false'])
+    .default('true')
+    .transform((value) => value === 'true'),
 });
 
 const serverSchema = z.object({
@@ -43,6 +53,7 @@ function parseClientEnv() {
     NEXT_PUBLIC_API_URL: process.env.NEXT_PUBLIC_API_URL,
     NEXT_PUBLIC_MEDIA_URL: process.env.NEXT_PUBLIC_MEDIA_URL,
     NEXT_PUBLIC_ENV: process.env.NEXT_PUBLIC_ENV,
+    NEXT_PUBLIC_SHOW_INTRO: process.env.NEXT_PUBLIC_SHOW_INTRO,
   });
 
   if (!parsed.success) {

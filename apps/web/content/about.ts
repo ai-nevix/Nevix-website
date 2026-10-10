@@ -182,15 +182,63 @@ export const about = {
       items: ['Docker', 'Nginx', 'Prometheus', 'Grafana', 'Loki', 'GitLab CI'],
     },
   ],
-
-  /**
-   * DUMMY-DATA: DD-003
-   * No team information or biographies were supplied. Instruction §25 forbids inventing them, so
-   * the About page renders this marked placeholder instead of fabricated profiles.
-   */
-  teamPlaceholder: {
-    title: 'Team',
-    status: 'Details to be announced',
-    body: 'Team profiles will be published here once they have been approved for release. We have deliberately left this section empty rather than filling it with placeholder people — you can read what we build and how we work above, which is more useful than a grid of photographs.',
-  },
 } as const;
+
+/**
+ * The team.
+ *
+ * DUMMY-DATA: DD-003
+ * The two founders below are real and approved. What is still missing is everyone else: no cards
+ * or biographies have been supplied for the wider team, so the page says so rather than padding
+ * the list. The marker stays until those are supplied — a page that shows two people is accurate,
+ * but it is not yet the whole team.
+ *
+ * Every field is taken verbatim from the supplied cards in `brand-assets/` — the name, the role
+ * and the quote each person is credited with. Nothing else was supplied, so nothing else is
+ * stated: no biography, no career history, no qualifications, no tenure, no prior employers.
+ * Instruction §25 forbids inventing any of it, and a profile that says less is not a placeholder
+ * — it is simply the part that has been approved.
+ *
+ * The cards are published whole rather than cropped, so each arrives as it was designed. That
+ * puts the name, role and quote into the picture rather than into the page, so the fields below
+ * carry them for everything that cannot see an image: the alternative text, a visually hidden
+ * caption and the `Person` structured data all come from here.
+ */
+export interface TeamMember {
+  /** URL-safe identifier, used for the anchor on the team page. */
+  slug: string;
+  name: string;
+  role: string;
+  /** Attributed to this person on the supplied card. */
+  quote: string;
+  /** The supplied card, published whole. Square. */
+  card: string;
+}
+
+/**
+ * Describes a card for anyone who cannot see it.
+ *
+ * Derived rather than written out per person, so the alternative text cannot drift from the role
+ * and quote it is describing — an earlier hand-written version already said "Founder and CEO"
+ * where the role said "Founder & CEO".
+ */
+export function teamCardAlt(member: TeamMember): string {
+  return `${member.name}, ${member.role} of VASTRIX, with the quote “${member.quote}”`;
+}
+
+export const team: readonly TeamMember[] = [
+  {
+    slug: 'jyoti-rokade',
+    name: 'Jyoti Rokade',
+    role: 'Founder & CEO',
+    quote: 'Technology creates opportunities. People give them meaning.',
+    card: '/team/jyoti-rokade.webp',
+  },
+  {
+    slug: 'vaidehi-bhagane',
+    name: 'Vaidehi Bhagane',
+    role: 'Co-Founder',
+    quote: 'Ideas grow brighter when we build them together.',
+    card: '/team/vaidehi-bhagane.webp',
+  },
+] as const;

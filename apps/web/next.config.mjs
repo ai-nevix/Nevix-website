@@ -60,6 +60,8 @@ const nextConfig = {
       { source: '/projects/:slug', destination: '/case-studies/:slug', permanent: true },
       { source: '/blog', destination: '/insights', permanent: true },
       { source: '/blog/:slug', destination: '/insights/:slug', permanent: true },
+      // The page was published briefly as /leadership before being widened to the whole team.
+      { source: '/leadership', destination: '/team', permanent: true },
     ];
   },
 };

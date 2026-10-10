@@ -27,8 +27,11 @@
     "audit:dummy-data": "node scripts/audit-dummy-data.mjs",
     "audit:secrets": "node scripts/audit-secrets.mjs",
     "licenses:inventory": "node scripts/generate-license-inventory.mjs",
-    "verify": "npm run format:check && npm run lint && npm run typecheck && npm run test && npm run audit:dummy-data && npm run audit:secrets && npm run build",
+    "brand:assets": "node scripts/derive-brand-assets.mjs",
+    "brand:check": "node scripts/derive-brand-assets.mjs --check",
+    "verify": "npm run format:check && npm run lint && npm run typecheck && npm run test && npm run audit:dummy-data && npm run audit:secrets && npm run brand:check && npm run build",
     "serve:standalone": "node scripts/serve-standalone.mjs",
+    "serve:public": "node scripts/serve-public.mjs",
     "screenshot": "node scripts/screenshot.mjs",
     "audit:pages": "node scripts/audit-pages.mjs"
   },

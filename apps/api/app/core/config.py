@@ -106,7 +106,7 @@ class Settings(BaseSettings):
     # --- Site configuration exposed publicly ---------------------------------------------------
     site_company_name: str = "VASTRIX"
     site_tagline: str = "Explore. Automate. Evolve."
-    site_contact_email: str = "hello@vastrix.ai"
+    site_contact_email: str = "vastrix.ai@gmail.com"
     site_phone: str | None = None
     site_address: str | None = None
     site_url: str = "http://localhost:3000"

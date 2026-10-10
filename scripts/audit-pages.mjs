@@ -28,6 +28,7 @@ const viewports = only ? ALL_VIEWPORTS.filter((v) => only.includes(v.name)) : AL
 const ROUTES = [
   '/',
   '/about',
+  '/team',
   '/services',
   '/services/ai-intelligence',
   '/services/automation',

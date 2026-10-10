@@ -225,21 +225,6 @@ export default function AboutPage() {
         </Reveal>
       </Section>
 
-      {/* --- Team placeholder ------------------------------------------------------------------ */}
-      <Section tone="subtle" size="md" id="team">
-        {/* DUMMY-DATA: DD-003 — replace with approved team profiles, or leave this placeholder. */}
-        <div className="mx-auto max-w-2xl text-center">
-          <p className="text-eyebrow text-brand-700 uppercase">{about.teamPlaceholder.title}</p>
-          <h2 className="mt-4 text-display-sm text-neutral-900">{about.teamPlaceholder.status}</h2>
-          <p className="mt-5 text-base leading-relaxed text-neutral-600">
-            {about.teamPlaceholder.body}
-          </p>
-          <Button asChild variant="secondary" className="mt-8">
-            <Link href={ctas.talk.href}>{ctas.talk.label}</Link>
-          </Button>
-        </div>
-      </Section>
-
       <CtaSection
         eyebrow="Get in touch"
         title="Start with the problem"

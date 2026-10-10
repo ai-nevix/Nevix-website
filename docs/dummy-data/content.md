@@ -78,7 +78,7 @@ No stock photographs, no invented names, no "Founder & CEO" with a silhouette.
 
 ## DD-004 — Contact details
 
-**Published:** `hello@vastrix.ai` only.
+**Published:** `vastrix.ai@gmail.com` only.
 **Not published:** phone number, street address.
 
 `siteConfig.contact.phone` and `.address` are explicitly `null`, and there is a content test

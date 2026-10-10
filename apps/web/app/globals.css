@@ -554,3 +554,45 @@
     transform: translate3d(0, -10px, 0);
   }
 }
+
+/* ==============================================================================================
+   Welcome intro — the pre-paint curtain
+   ==============================================================================================
+
+   This is the only part of the intro that is CSS, and it exists because a client component cannot
+   render before hydration. Without it the homepage would be painted first and then covered, which
+   is a visible flash on every first visit.
+
+   The inline script in app/layout.tsx adds `vastrix-intro-armed` to <html> before the first
+   paint, and this rule fills the screen with the brand midnight from that class alone — no
+   JavaScript frame, no React, no layout shift. components/branding/vastrix-intro.tsx then mounts
+   on top of the same colour, so there is nothing to see in between.
+
+   The class is removed when the intro finishes, and by a failsafe timer in that same script if it
+   never does. The curtain therefore cannot outlive the animation, even if the bundle fails.
+   ============================================================================================== */
+
+:root.vastrix-intro-armed::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+  background-color: var(--color-ink-900);
+}
+
+/* The page behind is deliberately NOT scroll-locked.
+   `overflow: hidden` on the scroll container disables `animation-timeline: view()`, which is what
+   drives every scroll reveal on the site. Locking the scroll therefore froze all of that content
+   part-way through its reveal for the duration of the intro — invisible to a visitor behind the
+   curtain, but real: an accessibility audit reads those elements at their part-faded colour and
+   fails them on contrast. A stray scroll during three seconds is the cheaper problem. */
+
+/* Reduced motion is handled before this point: the script never arms the intro when it is
+   requested. This is the second half of that guarantee, in case the class is ever set another
+   way — the global reduced-motion rule collapses animations to 0.01ms, which would flash a
+   full-screen curtain and snap it away. */
+@media (prefers-reduced-motion: reduce) {
+  :root.vastrix-intro-armed::before {
+    display: none;
+  }
+}
