@@ -23,9 +23,12 @@ specification and service catalogue. Plain-text extractions are committed alongs
 changes are diffable. Both predate the rename to NEVIX on 2026-10-10 and are kept exactly as
 supplied ([ADR-014](docs/architecture/adr/ADR-014-nevix-rebrand.md)).
 
-**Brand:** the identity — mark, wordmark, palette, typefaces and every supplied picture — is on the
-site's [`/brand`](apps/web/app/(marketing)/brand/page.tsx) page. The original artwork is in
-[`brand-assets/nevix/`](brand-assets/nevix/); see [Brand assets](#brand-assets).
+**Brand:** the original artwork is in [`brand-assets/nevix/`](brand-assets/nevix/); see
+[Brand assets](#brand-assets). A Brand page showing the mark, wordmark, palette, typefaces and every
+supplied picture is built at [`/brand`](apps/web/app/(marketing)/brand/page.tsx) but **hidden** for
+now: it answers 404 and nothing links to it. Set `BRAND_PAGE_ENABLED` in
+[`content/brand.ts`](apps/web/content/brand.ts) to `true` to bring it back with its footer link and
+sitemap entry.
 
 ---
 
@@ -111,7 +114,7 @@ nevix-website/
 
 | Section | Routes |
 | --- | --- |
-| Home, About, Team, Brand | 4 |
+| Home, About, Team | 3 (Brand is built but hidden) |
 | Services | 1 index + 6 categories + 35 services |
 | Solutions | 1 index + 10 details |
 | Industries | 1 index + 6 details |
@@ -317,7 +320,7 @@ The supplied logos are flattened onto white or midnight. The script separates th
 wordmark from that background by un-compositing each edge pixel rather than keying out a colour,
 so there is no halo on light or dark; it also crops the homepage hero from the logo-free part of
 the workspace photograph and re-encodes every board whole as WebP for the
-[`/brand`](apps/web/app/(marketing)/brand/page.tsx) page. Shape, proportion and gradient are
+[`/brand`](apps/web/app/(marketing)/brand/page.tsx) page (currently hidden). Shape, proportion and gradient are
 untouched. See [`scripts/derive-brand-assets.mjs`](scripts/derive-brand-assets.mjs) and
 [ADR-014](docs/architecture/adr/ADR-014-nevix-rebrand.md).
 

@@ -1,3 +1,5 @@
+import { BRAND_PAGE_ENABLED } from './brand';
+
 /**
  * Site-wide configuration and navigation.
  *
@@ -272,7 +274,8 @@ export const footerNav: FooterColumn[] = [
       { label: 'How We Work', href: '/about#how-we-work' },
       { label: 'Engineering Principles', href: '/about#principles' },
       { label: 'Engagement Models', href: '/about#engagement' },
-      { label: 'Brand', href: '/brand' },
+      // The Brand page is hidden for now — see BRAND_PAGE_ENABLED in content/brand.ts.
+      ...(BRAND_PAGE_ENABLED ? [{ label: 'Brand', href: '/brand' }] : []),
       { label: 'Contact', href: '/contact' },
     ],
   },
@@ -310,8 +313,6 @@ export const brandAssets = {
   heroHorizon: { src: '/brand/nevix-hero-horizon.webp', width: 912, height: 776 },
   /** The illuminated wall sign. */
   wallSign: { src: '/brand/nevix-wall-sign.webp', width: 1928, height: 815 },
-  /** The brand wallpaper — workspace at sunset with the lockup and the six brand themes. */
-  wallpaper: { src: '/brand/nevix-wallpaper.webp', width: 1672, height: 941 },
   /** The full logo summary board. */
   brandBoard: { src: '/brand/nevix-brand-board.webp', width: 1536, height: 1024 },
   /** Square app icon, for structured data and social profiles. */

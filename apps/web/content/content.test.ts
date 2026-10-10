@@ -4,6 +4,7 @@ import { existsSync } from 'node:fs';
 import { join } from 'node:path';
 
 import { team, teamCardAlt } from './about';
+import { BRAND_PAGE_ENABLED } from './brand';
 import { caseStudies } from './case-studies';
 import { industries } from './industries';
 import { authors, insightCategories, insights } from './insights';
@@ -223,6 +224,14 @@ describe('referential integrity', () => {
         true,
       );
     }
+  });
+
+  it('links to the Brand page only while it is switched on', () => {
+    const links = [
+      ...primaryNav.flatMap((item) => [item.href, ...(item.children ?? []).map((c) => c.href)]),
+      ...footerNav.flatMap((column) => column.links.map((link) => link.href)),
+    ];
+    expect(links.includes('/brand')).toBe(BRAND_PAGE_ENABLED);
   });
 });
 

@@ -10,6 +10,14 @@
  * tokens drawn from the artwork (see app/globals.css), not a separately issued brand standard.
  */
 
+/**
+ * The Brand page is hidden for now, at the company's request (2026-10-10): `/brand` returns a 404,
+ * and it is left out of the footer and the sitemap. Its content, code and images are kept so it can
+ * come back unchanged — set this to `true` and the page, its footer link and its sitemap entry all
+ * return together.
+ */
+export const BRAND_PAGE_ENABLED = false;
+
 export interface BrandPicture {
   src: string;
   width: number;

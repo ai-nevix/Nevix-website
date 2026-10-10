@@ -93,6 +93,11 @@ shape on both. As before, the founders' cards appear only on `/team`. Every othe
 published whole on a new `/brand` page, alongside the palette, the typefaces and download links for
 the transparent logo files.
 
+*Amended 2026-10-10:* at the company's request the Brand page is hidden. `/brand` answers 404 and is
+left out of the footer and sitemap while `BRAND_PAGE_ENABLED` (in `content/brand.ts`) is `false`;
+its code, content and images are kept so it can return unchanged. The wallpaper block that linked to
+it from the About page was removed at the same time.
+
 **The hero uses a logo-free region of the photograph.** `nevix-hero-horizon.webp` is the
 landscape-only region of `nevix-google.png` (x 760–1672, y 165–941). The rest of that picture carries
 its own logo and tag lines, which would put a second, unselectable copy of the message beneath the

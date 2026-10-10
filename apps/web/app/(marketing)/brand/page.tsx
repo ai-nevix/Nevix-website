@@ -1,6 +1,7 @@
 import { Download } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { notFound } from 'next/navigation';
 
 import { CtaSection } from '@/components/sections/cta-section';
 import { PageHero } from '@/components/sections/page-hero';
@@ -8,6 +9,7 @@ import { Button } from '@/components/ui/button';
 import { Section, SectionHeading } from '@/components/ui/section';
 import { Reveal, Stagger, StaggerItem } from '@/components/ui/motion';
 import {
+  BRAND_PAGE_ENABLED,
   brandBoard,
   brandIntro,
   downloads,
@@ -29,6 +31,9 @@ import { cn } from '@/lib/utils';
  * Each picture is the supplied artwork, published whole and presented on the background it was
  * made for. The page states what the artwork shows and how this site applies it; it does not
  * invent usage rules beyond what the supplied logo summary itself sets out.
+ *
+ * Currently hidden: while `BRAND_PAGE_ENABLED` is false (content/brand.ts) this route renders the
+ * 404 page and nothing on the site links to it.
  */
 export const metadata = buildMetadata({
   title: 'Brand',
@@ -76,6 +81,8 @@ function Picture({
 }
 
 export default function BrandPage() {
+  if (!BRAND_PAGE_ENABLED) notFound();
+
   return (
     <>
       <PageHero

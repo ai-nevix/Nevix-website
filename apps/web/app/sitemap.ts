@@ -1,5 +1,6 @@
 import type { MetadataRoute } from 'next';
 
+import { BRAND_PAGE_ENABLED } from '@/content/brand';
 import { siteUrl } from '@/content/site';
 import {
   getCaseStudies,
@@ -51,7 +52,17 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${siteUrl}/`, lastModified: now, changeFrequency: 'weekly', priority: 1 },
     { url: `${siteUrl}/about`, lastModified: now, changeFrequency: 'monthly', priority: 0.8 },
     { url: `${siteUrl}/team`, lastModified: now, changeFrequency: 'monthly', priority: 0.6 },
-    { url: `${siteUrl}/brand`, lastModified: now, changeFrequency: 'yearly', priority: 0.4 },
+    // Hidden for now — see BRAND_PAGE_ENABLED in content/brand.ts.
+    ...(BRAND_PAGE_ENABLED
+      ? [
+          {
+            url: `${siteUrl}/brand`,
+            lastModified: now,
+            changeFrequency: 'yearly' as const,
+            priority: 0.4,
+          },
+        ]
+      : []),
     { url: `${siteUrl}/services`, lastModified: now, changeFrequency: 'monthly', priority: 0.9 },
     { url: `${siteUrl}/solutions`, lastModified: now, changeFrequency: 'monthly', priority: 0.9 },
     { url: `${siteUrl}/industries`, lastModified: now, changeFrequency: 'monthly', priority: 0.8 },

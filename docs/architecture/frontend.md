@@ -10,7 +10,7 @@
 | Route group | Mode | Revalidate | Why |
 | --- | --- | --- | --- |
 | `/` | Static + ISR | 1h | Content changes rarely; the largest page on the site |
-| `/about`, `/team`, `/brand`, `/legal/*` | Static | — | Changes only on deploy |
+| `/about`, `/team`, `/legal/*` (and `/brand`, hidden: renders 404) | Static | — | Changes only on deploy |
 | `/services`, `/services/[category]`, `/services/[category]/[service]` | SSG + ISR | 1h | 41 prerendered routes from `generateStaticParams` |
 | `/solutions`, `/industries`, `/products`, `/case-studies`, `/insights` and details | SSG + ISR | 1h | Same |
 | `/contact` | Static shell | — | The form is a client island inside a static page |
@@ -145,7 +145,8 @@ in `public/team/`, and `app/favicon.ico`, `icon.png` and `apple-icon.png` are de
 
 `npm run brand:assets` regenerates them; `npm run brand:check` fails if any is stale and runs in
 `npm run verify`. Paths and dimensions are referenced through `brandAssets` in `content/site.ts`;
-the `/brand` page (`content/brand.ts`) shows every supplied picture whole.
+the `/brand` page (`content/brand.ts`) shows every supplied picture whole. That page is currently
+hidden — it answers 404 and is unlinked while `BRAND_PAGE_ENABLED` is `false`.
 
 **A trap worth knowing:** `tailwind-merge` does not know about custom scales. Left unconfigured it
 classifies `text-display-md` as a *colour* utility and silently drops it when a later

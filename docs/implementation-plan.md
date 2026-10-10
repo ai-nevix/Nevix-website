@@ -99,7 +99,7 @@ in [architecture-overview.md → Logical architecture](./architecture/architectu
 | `/` | Static (ISR 1h) | CMS + local content |
 | `/about` | Static | Local content |
 | `/team` | Static | Local content (supplied founder cards) |
-| `/brand` | Static | Local content (supplied brand artwork) |
+| `/brand` | Static — hidden (404) while `BRAND_PAGE_ENABLED` is false | Local content (supplied brand artwork) |
 | `/services` | ISR | CMS |
 | `/services/[slug]` (6 categories) | ISR, `generateStaticParams` | CMS |
 | `/services/[slug]/[service]` (35 services) | ISR | CMS |
