@@ -87,6 +87,12 @@ flowchart TB
 
 ## 2. Runtime topology
 
+**Stale.** The diagram below (and the "Development & deployment" / "Monitoring & logging"
+subgraphs above) describe the Docker Compose + Nginx + Prometheus/Grafana/Loki topology that has
+been removed from the project — see [ADR-005](./adr/ADR-005-docker-compose.md). No replacement
+reverse proxy, container runtime or monitoring stack has been chosen yet. The request-proxying and
+network-isolation *requirements* below still apply to whatever replaces it.
+
 ```
                           Internet
                              │

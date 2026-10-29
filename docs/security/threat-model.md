@@ -30,9 +30,10 @@
                                 │ Strapi              │
 ```
 
-Everything crossing left-to-right is validated. The `internal` Docker network is declared
-`internal: true`, so it has **no route to the internet** — an exploited dependency in the data
-tier cannot exfiltrate directly.
+Everything crossing left-to-right is validated. The Docker network isolation that previously gave
+the data tier **no route to the internet** was removed along with Docker (see
+[ADR-005](../architecture/adr/ADR-005-docker-compose.md)); whatever replaces it must re-establish
+that an exploited dependency in the data tier cannot exfiltrate directly.
 
 ## 3. Threats and mitigations
 
@@ -155,9 +156,11 @@ empty, because the website calls through a same-origin proxy and needs no cross-
 
 ### 3.13 Container and host
 
-Non-root users in every application image. Multi-stage builds so no compiler or dev dependency
-reaches the runtime image. Pinned base image tags. Health checks with restart policies. `.dockerignore`
-excludes `.env` and tests.
+Docker has been removed from the project (see
+[ADR-005](../architecture/adr/ADR-005-docker-compose.md)), so the container-hardening controls
+that used to apply here (non-root image users, multi-stage builds, pinned base images, health
+checks with restart policies, `.dockerignore` excluding `.env` and tests) no longer apply.
+Whichever runtime replaces it needs its own equivalent hardening.
 
 ## 4. Accepted risks
 
@@ -189,9 +192,8 @@ Recorded explicitly rather than left implicit:
 
 ## 6. Incident response
 
-1. **Contain** — `docker compose stop <service>`; the reverse proxy can serve a maintenance page.
-2. **Preserve** — snapshot logs and database *before* remediating. `docker compose logs --since` and
-   a `pg_dump`.
+1. **Contain** — stop the affected service; the reverse proxy can serve a maintenance page.
+2. **Preserve** — snapshot logs and database *before* remediating (e.g. `pg_dump`).
 3. **Assess** — request ids in the logs correlate an event across Nginx, Next.js and FastAPI.
 4. **Remediate** — patch, rotate, redeploy. Rotating `SECRET_KEY` invalidates existing `ip_hash`
    correlation; rotating `POSTGRES_PASSWORD` requires a database-side change too.

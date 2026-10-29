@@ -12,7 +12,7 @@ Format: context → decision → alternatives → consequences → revisit when.
 | [002](./ADR-002-fastapi-backend.md) | FastAPI for the backend | Accepted |
 | [003](./ADR-003-postgresql.md) | PostgreSQL as the single database engine | Accepted |
 | [004](./ADR-004-strapi-cms.md) | Self-hosted Strapi Community Edition | Accepted |
-| [005](./ADR-005-docker-compose.md) | Docker Compose, not Kubernetes | Accepted |
+| [005](./ADR-005-docker-compose.md) | Docker Compose, not Kubernetes | Superseded |
 | [006](./ADR-006-content-provider-abstraction.md) | Content provider abstraction with a local default | Accepted |
 | [007](./ADR-007-open-source-stack.md) | Open-source, self-hostable stack | Accepted |
 | [008](./ADR-008-deferred-infrastructure.md) | Redis, Celery, MinIO and pgvector deferred behind profiles | Accepted |

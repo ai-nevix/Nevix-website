@@ -1,705 +1,693 @@
-import type { Solution } from '@nevix/types';
+import type { Solution, SolutionStatus } from '@nevix/types';
 
 /**
- * Solutions — outcome-oriented patterns (specification §8, instruction §20).
+ * Solutions — NEVIX-built projects (specification §8, instruction §20).
  *
- * A service answers "what can NEVIX build?". A solution answers "how can NEVIX solve a
- * business problem?". Every solution here is composed only of services that appear in the
- * catalogue — nothing is presented that the documented capabilities do not support.
+ * Unlike the generic service catalogue, every entry here is a named project NEVIX has actually
+ * designed or built, at whatever stage it has genuinely reached. The `status` badge states that
+ * stage plainly — concept, prototype, beta or live — and `statusNote` carries a specific caveat
+ * wherever a project is not independently verifiable (no source available for review), is a
+ * specification rather than a build, or makes a health- or finance-adjacent claim that needs
+ * qualifying. None of this is invented: where we cannot verify a claim, the status and note say so
+ * instead of rounding up.
  *
- * DUMMY-DATA: DD-012
- * `illustrativeOutcomes` describe the kind of result these patterns are designed to produce.
- * They are rendered under a visible "illustrative, not a guarantee" note because specification
- * §31 forbids guaranteed ROI or performance claims. Replace with measured outcomes from approved
- * engagements once evidence exists.
+ * `illustrativeOutcomes` describes what each project is designed to deliver, not a measured or
+ * guaranteed result — specification §31 forbids guaranteed ROI, accuracy or performance claims.
  */
 export const solutions: Solution[] = [
   {
-    slug: 'ai-document-processing',
-    name: 'AI-Powered Document Processing',
+    slug: 'aquasales',
+    name: 'AquaSales',
+    status: 'prototype',
+    statusNote:
+      'Demonstrated through project documentation, a recorded walkthrough and screenshots — no source code is available for review, so this is presented as a product demonstration rather than a verified technical build.',
     problem:
-      'High volumes of invoices, forms and applications arrive in inconsistent formats and are keyed in by hand, carrying errors into finance, operations and reporting.',
+      'Beverage and water distribution businesses run sales, campaigns and order processing across phone calls, spreadsheets and disconnected messaging, so leads go unvalidated, call activity is invisible to managers, and the product catalogue drifts out of sync with what sales actually quotes.',
     summary:
-      'Classify, extract and validate document data automatically, routing only the uncertain cases to a person.',
-    heroTitle: 'Documents processed automatically, exceptions routed to people',
+      'A sales and operations platform for beverage and water distribution, combining lead capture, WhatsApp campaign automation, live call monitoring, order and payment processing, and a shared product catalogue.',
+    heroTitle: 'One platform for distribution sales, from first call to paid order',
     heroDescription:
-      'An ingestion pipeline that classifies each document, extracts the fields that matter with a confidence score, validates them against your business rules, and sends only the uncertain cases for human review.',
-    workflow: [
-      {
-        title: 'Ingest',
-        description:
-          'Documents arrive by email, upload, shared folder or API and are stored with their original form retained for audit.',
-      },
-      {
-        title: 'Classify',
-        description:
-          'Each document is identified by type so the right extraction template and validation rules apply.',
-      },
-      {
-        title: 'Extract',
-        description:
-          'Fields are extracted with a per-field confidence score, using structured parsing, OCR or a language model depending on the document.',
-      },
-      {
-        title: 'Validate',
-        description:
-          'Extracted values are checked against business rules and reference data — totals, supplier records, date ranges, mandatory fields.',
-      },
-      {
-        title: 'Route',
-        description:
-          'Documents passing validation continue automatically. Those below the confidence threshold or failing a rule go to a reviewer with the specific problem highlighted.',
-      },
-      {
-        title: 'Deliver',
-        description:
-          'Validated, structured data is written to your finance, ERP or operational system, linked back to the source document.',
-      },
-    ],
-    technicalApproach: [
-      'Layered extraction: structured parsing where the format allows, OCR where it does not, language models for genuinely variable documents',
-      'Per-field confidence scores driving an explicit, configurable review threshold',
-      'Validation against business rules before anything is written downstream',
-      'Original documents retained in object storage and linked to every extracted record',
-      'Structured audit log from source document to written record',
-    ],
-    illustrativeOutcomes: [
-      'Manual keying reduced to the documents that genuinely need a human decision',
-      'Errors caught by validation before they reach downstream systems',
-      'A traceable link from every figure back to its source document',
-      'Processing capacity that does not scale linearly with headcount',
-    ],
-    relatedServiceSlugs: [
-      'document-intelligence',
-      'intelligent-automation',
-      'business-process-automation',
-      'api-integration-orchestration',
-    ],
-    relatedIndustrySlugs: ['government-public-sector', 'finance', 'healthcare'],
-    icon: 'file-text',
-    order: 1,
-    seo: {
-      description:
-        'Classify, extract and validate document data automatically with confidence scoring, business-rule validation and human review for uncertain cases.',
-    },
-  },
-  {
-    slug: 'intelligent-ticket-triage',
-    name: 'Intelligent Ticket Triage',
-    problem:
-      'Support and service-desk queues are triaged manually. Tickets sit unclassified, urgent items are missed among routine ones, and routing depends on whoever is reading the queue.',
-    summary:
-      'Classify, prioritise and route incoming tickets automatically, with the routing decision kept in auditable rules.',
-    heroTitle: 'Every ticket classified, prioritised and routed on arrival',
-    heroDescription:
-      'AI reads the unstructured request and produces structured fields; deterministic rules decide priority and destination. Consistent triage without an unexplainable decision.',
+      'AquaSales brings lead capture, WhatsApp-driven campaigns, live call monitoring, order and payment processing, and catalogue management into one system, with role-based access and system health monitoring underneath it.',
     workflow: [
       {
         title: 'Capture',
-        description:
-          'Tickets arrive from email, a portal, chat or an API and enter a single queue.',
+        description: 'Leads are captured and validated as they arrive, rather than keyed in later from a notepad or a spreadsheet.',
       },
       {
-        title: 'Understand',
-        description:
-          'The request text is classified by category, intent and urgency signals, and key entities — system, location, account, reference — are extracted.',
-      },
-      {
-        title: 'Decide',
-        description:
-          'Deterministic rules combine the extracted fields with your service-level policy to set priority and destination. The same input always produces the same decision.',
-      },
-      {
-        title: 'Route',
-        description:
-          'The ticket is assigned to the right queue or team, with the classification and the reasoning attached.',
-      },
-      {
-        title: 'Escalate',
-        description:
-          'Low-confidence classifications and items matching sensitive categories go to a human triager rather than being routed automatically.',
-      },
-      {
-        title: 'Learn',
-        description:
-          'Reviewer corrections are captured as labelled data, so classification quality is measured over time rather than assumed.',
-      },
-    ],
-    technicalApproach: [
-      'NLP classification and entity extraction producing structured fields with confidence scores',
-      'Routing decisions in deterministic, auditable rules — never inside the model',
-      'Confidence thresholds routing uncertain tickets to human triage',
-      'Reviewer corrections captured as labelled evaluation data',
-      'Separate monitoring for classification quality and ticket volume',
-    ],
-    illustrativeOutcomes: [
-      'Consistent triage regardless of who is on the queue',
-      'Urgent items identified on arrival rather than on review',
-      'An explainable reason recorded for every routing decision',
-      'A measured view of classification quality that improves with corrections',
-    ],
-    relatedServiceSlugs: [
-      'intelligent-automation',
-      'nlp',
-      'ai-agents-agentic-automation',
-      'workflow-automation',
-    ],
-    relatedIndustrySlugs: ['enterprise-it', 'government-public-sector'],
-    icon: 'inbox',
-    order: 2,
-    seo: {
-      description:
-        'Classify, prioritise and route incoming support tickets automatically with NLP classification, deterministic routing rules and human escalation for uncertain cases.',
-    },
-  },
-  {
-    slug: 'business-workflow-automation',
-    name: 'Business Workflow Automation',
-    problem:
-      'Requests move between email, spreadsheets and separate systems. Nobody can say where an item is without asking, approvals live in inboxes, and work stalls in the gaps.',
-    summary:
-      'One workflow with explicit states, role-based approvals, notifications and a queryable status for every item.',
-    heroTitle: 'One workflow, one status, one audit trail',
-    heroDescription:
-      'Model the process as explicit states and transitions, enforce who may do what, and make "where is this?" a query rather than a conversation.',
-    workflow: [
-      {
-        title: 'Map',
-        description:
-          'Discovery captures the process as actually performed, including the exceptions and workarounds that are not in the documentation.',
-      },
-      {
-        title: 'Model',
-        description:
-          'The process becomes explicit states and transitions, with rules for who may perform each one and what happens on timeout.',
-      },
-      {
-        title: 'Automate',
-        description:
-          'Mechanical steps — data movement, document generation, system updates, notifications — run without a person.',
-      },
-      {
-        title: 'Approve',
-        description:
-          'Approvals happen inside the workflow, recorded with actor, timestamp and comment, rather than in email.',
-      },
-      {
-        title: 'Track',
-        description:
-          'Every item has one unambiguous status and a full history, visible to anyone with the right role.',
-      },
-      {
-        title: 'Escalate',
-        description:
-          'Items that stall past their threshold escalate automatically to a named owner rather than waiting to be noticed.',
-      },
-    ],
-    technicalApproach: [
-      'Persisted state machine rather than scripts on a schedule, so runs are inspectable and resumable',
-      'Role-based permissions enforced server-side on every transition',
-      'Timeouts and escalation defined per state',
-      'Every transition recorded with actor, timestamp and reason',
-      'Structured logging with a correlation identifier per item',
-    ],
-    illustrativeOutcomes: [
-      'Status answerable without asking anyone',
-      'Approvals recorded with a defensible audit trail',
-      'Stalled work escalated automatically',
-      'Handoffs between teams that no longer depend on email',
-    ],
-    relatedServiceSlugs: [
-      'workflow-automation',
-      'business-process-automation',
-      'api-integration-orchestration',
-      'web-application-development',
-    ],
-    relatedIndustrySlugs: ['government-public-sector', 'manufacturing', 'enterprise-it'],
-    icon: 'workflow',
-    order: 3,
-    seo: {
-      description:
-        'Turn fragmented processes into one workflow with explicit states, role-based approvals, notifications, escalation and a queryable status for every item.',
-    },
-  },
-  {
-    slug: 'ai-knowledge-assistant',
-    name: 'AI Knowledge Assistant',
-    problem:
-      'Institutional knowledge is spread across documents, wikis, tickets and people. Answering a routine question means knowing who to ask, and the same questions are answered repeatedly.',
-    summary:
-      'A retrieval-grounded assistant that answers from your approved content and cites its sources.',
-    heroTitle: 'Answers grounded in your own documents, with citations',
-    heroDescription:
-      'A knowledge assistant that retrieves from approved internal content, answers with citations, and declines when the answer is not in the source material — rather than inventing one.',
-    workflow: [
-      {
-        title: 'Define scope',
-        description:
-          'Agree which content is in scope, who may access what, and which question types the assistant should decline.',
-      },
-      {
-        title: 'Index',
-        description:
-          'Approved documents are chunked and embedded into a vector index alongside their access-control metadata.',
-      },
-      {
-        title: 'Retrieve',
-        description:
-          'A question retrieves the most relevant passages the asker is permitted to see. Permissions are applied at retrieval, not after.',
-      },
-      {
-        title: 'Answer',
-        description:
-          'The model answers from the retrieved passages only, with citations back to the source documents.',
-      },
-      {
-        title: 'Decline',
-        description:
-          'When retrieval returns nothing sufficiently relevant, the assistant says so and offers a route to a person rather than generating a plausible answer.',
-      },
-      {
-        title: 'Improve',
-        description:
-          'Unanswered questions are logged as a content gap list, which is usually more valuable than the assistant itself.',
-      },
-    ],
-    technicalApproach: [
-      'Retrieval-augmented generation grounded strictly in approved content',
-      'Access control applied at retrieval time, so answers cannot leak restricted material',
-      'Citations on every answer, linking back to the source passage',
-      'An explicit decline path when retrieval confidence is insufficient',
-      'pgvector alongside the existing PostgreSQL database rather than a separate vector store',
-    ],
-    illustrativeOutcomes: [
-      'Routine questions answered without interrupting a subject-matter expert',
-      'Answers traceable to a source document',
-      'Restricted content that stays restricted, enforced at retrieval',
-      'A measured list of questions your documentation does not answer',
-    ],
-    relatedServiceSlugs: [
-      'generative-ai-solutions',
-      'nlp',
-      'ai-consulting-integration',
-      'backend-api-development',
-    ],
-    relatedIndustrySlugs: ['enterprise-it', 'education', 'government-public-sector'],
-    icon: 'book-open',
-    order: 4,
-    seo: {
-      description:
-        'A retrieval-grounded AI knowledge assistant that answers from your approved content with citations, applies access control at retrieval and declines when uncertain.',
-    },
-  },
-  {
-    slug: 'operational-dashboards',
-    name: 'Operational Dashboards',
-    problem:
-      'Reporting is assembled by hand from several systems. Figures disagree between teams, numbers are days old by the time they are read, and nobody is sure which version is authoritative.',
-    summary:
-      'Validated pipelines feeding dashboards with agreed metric definitions and visible data freshness.',
-    heroTitle: 'One agreed set of numbers, refreshed automatically',
-    heroDescription:
-      'Validated data pipelines feeding dashboards built around specific decisions, with each metric defined once and data freshness shown on the view itself.',
-    workflow: [
-      {
-        title: 'Agree the decisions',
-        description:
-          'Identify which decisions the dashboard supports and who makes them. Metrics that support no decision are left out.',
-      },
-      {
-        title: 'Define metrics',
-        description:
-          'Each KPI gets one documented definition — calculation, source, grain and refresh cadence — so the same name cannot mean two things.',
-      },
-      {
-        title: 'Build pipelines',
-        description:
-          'Ingestion and transformation run on a schedule with validation at each boundary, halting rather than writing partial data.',
-      },
-      {
-        title: 'Model',
-        description:
-          'Metrics are calculated once in a modelled layer and reused, rather than reimplemented per dashboard.',
-      },
-      {
-        title: 'Visualise',
-        description:
-          'Each view is designed for one audience, showing data freshness alongside the figures.',
+        title: 'Campaign',
+        description: 'Outreach campaigns run through WhatsApp automation directly from the platform, not as a separate manual channel.',
       },
       {
         title: 'Monitor',
-        description:
-          'Pipeline freshness and row counts are exported as metrics, so a silent upstream change is detected rather than discovered in a meeting.',
-      },
-    ],
-    technicalApproach: [
-      'Validation at every pipeline boundary, halting on failure rather than writing partial data',
-      'Idempotent, re-runnable pipelines',
-      'One modelled metric definition reused across every view',
-      'Data freshness displayed on the dashboard itself',
-      'Pipeline health exported to monitoring',
-    ],
-    illustrativeOutcomes: [
-      'One authoritative figure per metric across teams',
-      'Reporting that refreshes without manual assembly',
-      'Stale or incomplete data visible rather than silently presented as current',
-      'Upstream data problems detected by monitoring',
-    ],
-    relatedServiceSlugs: [
-      'business-intelligence-dashboards',
-      'data-engineering-etl',
-      'reporting-automation',
-      'data-analytics',
-    ],
-    relatedIndustrySlugs: ['manufacturing', 'government-public-sector', 'healthcare', 'finance'],
-    icon: 'gauge',
-    order: 5,
-    seo: {
-      description:
-        'Validated data pipelines feeding operational dashboards with one agreed definition per metric, visible data freshness and monitored pipeline health.',
-    },
-  },
-  {
-    slug: 'custom-digital-portals',
-    name: 'Custom Digital Portals',
-    problem:
-      'Citizens, customers or partners interact through forms, email and phone. Submissions are re-keyed internally, applicants cannot see progress, and staff spend their time answering status questions.',
-    summary:
-      'An accessible portal where users submit, track and complete work, connected to the internal workflow behind it.',
-    heroTitle: 'A portal that removes the status phone call',
-    heroDescription:
-      'An accessible, responsive portal for submission and self-service tracking, connected directly to the internal workflow so applicants see real progress rather than an acknowledgement.',
-    workflow: [
-      {
-        title: 'Design the journey',
-        description:
-          'Map the user journey including error and edge cases, and design against WCAG 2.2 AA principles from the start.',
+        description: 'A live call-monitoring dashboard shows call activity as it happens, built for the pace of an active sales floor.',
       },
       {
-        title: 'Build submission',
-        description:
-          'Structured forms with client and server validation, progressive saving, and file upload with type and size restrictions.',
+        title: 'Order',
+        description: 'Orders and payments are processed against the same product catalogue sales is quoting from.',
       },
       {
-        title: 'Connect the workflow',
-        description:
-          'Submissions enter the internal workflow directly, eliminating the re-keying step entirely.',
-      },
-      {
-        title: 'Expose status',
-        description:
-          'Applicants see where their submission is and what happens next, drawn from the same workflow state staff see.',
-      },
-      {
-        title: 'Notify',
-        description:
-          'State changes trigger notifications, so users are informed rather than having to check.',
+        title: 'Manage the catalogue',
+        description: 'Product and pricing data is maintained in one place and shared across sales, orders and reporting.',
       },
       {
         title: 'Report',
-        description:
-          'Volume, processing time and bottleneck data feed operational reporting without a separate collection exercise.',
+        description: 'Real-time analytics give managers a current view of sales and operations rather than a weekly roll-up.',
       },
     ],
     technicalApproach: [
-      'Server-rendered pages with minimal client-side JavaScript for fast, reliable loading',
-      'WCAG 2.2 AA principles applied during design and build',
-      'Client and server validation, with accessible inline error messages',
-      'Upload restrictions on type and size, with files stored under access control',
-      'The same workflow state powering both the applicant view and the staff view',
+      'Role-based access so sales, operations and management each see what their role needs, not the whole system',
+      'WhatsApp automation integrated directly into campaign workflows rather than run as a separate manual channel',
+      'A live call-monitoring view designed for an active sales floor',
+      'Order and payment processing kept against the same catalogue sales quotes from, so stock and pricing stay consistent',
+      'System health monitoring built into the platform rather than added afterward',
     ],
     illustrativeOutcomes: [
-      'Submissions entering the workflow without re-keying',
-      'Status questions answered by the portal rather than by staff',
-      'Accessible submission for users on any device or assistive technology',
-      'Processing-time data available without a separate collection exercise',
+      'Leads validated and routed without manual spreadsheet work',
+      'Campaign outreach and order follow-up handled from one platform instead of several disconnected tools',
+      'Call activity and order status visible to managers as they happen',
+      'One shared catalogue of products and pricing across sales, orders and reporting',
     ],
     relatedServiceSlugs: [
       'web-application-development',
-      'website-development',
-      'ui-ux-design',
       'workflow-automation',
+      'business-intelligence-dashboards',
+      'api-integration-orchestration',
     ],
-    relatedIndustrySlugs: ['government-public-sector', 'education', 'healthcare'],
-    icon: 'layout-panel-left',
-    order: 6,
+    icon: 'droplet',
+    order: 1,
     seo: {
       description:
-        'Accessible digital portals for submission and self-service tracking, connected directly to the internal workflow so status is visible without staff intervention.',
+        'AquaSales: a sales and operations platform for beverage and water distribution businesses, covering lead capture, WhatsApp campaign automation, live call monitoring, order processing and analytics. Presented as a product demonstration — no source code is available for review.',
+      noIndex: true,
     },
   },
   {
-    slug: 'ai-enabled-internal-tools',
-    name: 'AI-Enabled Internal Tools',
+    slug: 'meditech-buddy',
+    name: 'Meditech Buddy',
+    status: 'beta',
+    statusNote:
+      'Meditech Buddy is a self-developed health-information and triage-aid project. It does not provide a medical diagnosis, is not a registered or regulatory-cleared medical device, and is not a substitute for professional care — emergency red flags are surfaced so a person can reach real emergency help faster, not instead of it.',
     problem:
-      'Operational teams work across several systems, assembling context by hand before every decision. The information exists; gathering it is the job.',
+      'People describing a health concern often cannot tell quickly whether it needs emergency care, cannot easily reach services in their own language, and arrive at a clinician without a structured account of their symptoms.',
     summary:
-      'Role-based internal tools that assemble the context a decision needs, with AI handling the unstructured parts.',
-    heroTitle: 'Bring the context to the decision',
+      'A multilingual AI health companion (English, Hindi, Marathi) that screens symptoms described by voice, text or photo for emergency red flags, rates urgency, generates a doctor-ready summary and helps locate nearby care.',
+    heroTitle: 'A faster, clearer first step when something feels wrong',
     heroDescription:
-      'Internal tools that gather the records, documents and history relevant to a case, summarise the unstructured parts, and leave the decision — and the audit trail — with the person.',
+      'Meditech Buddy lets a person describe symptoms by voice, text or photo in English, Hindi or Marathi, screens for emergency red flags with one-tap access to emergency numbers, rates urgency, produces a doctor-ready summary and helps find nearby hospitals, clinics and pharmacies — with anonymous sessions and automatic data deletion.',
     workflow: [
       {
-        title: 'Identify the decision',
-        description:
-          'Determine which recurring decision the tool supports and what information the person currently assembles by hand.',
+        title: 'Describe',
+        description: 'A person describes what they are feeling by voice, text or photo, in English, Hindi or Marathi.',
       },
       {
-        title: 'Integrate sources',
-        description:
-          'Connect the systems holding that information, respecting each one’s access model.',
+        title: 'Screen',
+        description: 'The input is screened immediately for emergency red flags — symptoms that call for urgent care rather than a wait-and-see approach.',
       },
       {
-        title: 'Assemble context',
-        description:
-          'The tool gathers the relevant records, documents and history for a case into one view.',
+        title: 'Alert',
+        description: 'When a red flag is detected, one tap connects to an emergency number, with no menu to navigate under stress.',
+      },
+      {
+        title: 'Rate',
+        description: 'Non-emergency symptoms are rated for urgency, giving a sense of how soon to seek care.',
       },
       {
         title: 'Summarise',
-        description:
-          'AI summarises the unstructured portion — correspondence, notes, documents — with citations back to the source.',
+        description: 'A doctor-ready PDF summary is generated, giving a clinician a structured starting point instead of a verbal recap.',
       },
       {
-        title: 'Decide',
-        description:
-          'The person makes the decision with full context. The tool records it, with its reasoning, as an audit entry.',
-      },
-      {
-        title: 'Act',
-        description:
-          'Approved actions are executed against the connected systems through the tool, rather than re-entered manually.',
+        title: 'Locate',
+        description: 'Nearby hospitals, clinics and pharmacies are surfaced, so the next step is a place to go rather than another search.',
       },
     ],
     technicalApproach: [
-      'Role-based access enforced server-side, respecting each source system’s permissions',
-      'AI used for summarisation and extraction, never for the decision itself',
-      'Citations linking every summarised statement to its source',
-      'Append-only audit log of decisions and actions',
-      'Actions executed through integrations rather than manual re-entry',
+      'Multilingual input handling across English, Hindi and Marathi, rather than an English-first product with translations added on top',
+      'Red-flag screening treated as a deterministic safety check, run before anything else',
+      'Anonymous sessions by default, with no account required to get a screening',
+      'Session data deleted automatically rather than retained indefinitely',
+      'Voice, photo and text input normalised into one structured symptom record before screening',
     ],
     illustrativeOutcomes: [
-      'Context assembled automatically instead of by hand',
-      'Decisions recorded with their supporting evidence',
-      'Reduced switching between systems during a single case',
-      'An audit trail that falls out of normal use',
+      'A faster route to an emergency number when red-flag symptoms are detected',
+      'A structured summary a clinician can read in seconds instead of a verbal recap',
+      'Symptom description available in a person’s own language instead of English only',
+      'No account or persistent profile required to get a screening',
+    ],
+    relatedServiceSlugs: ['nlp', 'computer-vision', 'generative-ai-solutions', 'application-development'],
+    relatedIndustrySlugs: ['healthcare'],
+    icon: 'stethoscope',
+    order: 2,
+    seo: {
+      description:
+        'Meditech Buddy: a multilingual AI health companion (English, Hindi, Marathi) that screens symptoms for emergency red flags, rates urgency, generates a doctor-ready summary and helps locate nearby care. Not a medical diagnosis or a substitute for professional care.',
+      noIndex: true,
+    },
+  },
+  {
+    slug: 'vastrix-shopping-agent',
+    name: 'Vastrix Shopping Agent (NEVIX.AI)',
+    status: 'prototype',
+    statusNote:
+      'Try-on and styling currently run on mock adapters, and nothing is deployed publicly. This is a prototype demonstrating the concept, not a live shopping product.',
+    problem:
+      'Online shoppers choose fit and style against generic models and generic size charts, so sizing guesses are frequent and style recommendations ignore what actually fits the individual shopper.',
+    summary:
+      'A privacy-first AI shopping concept combining virtual try-on, an AI style assistant and fit guidance based on a shopper’s own measurements and profile.',
+    heroTitle: 'Try-on and styling built around the shopper’s own measurements',
+    heroDescription:
+      'Vastrix Shopping Agent combines virtual try-on, an AI style assistant and fit guidance based on a shopper’s own profile and measurements, designed privacy-first from the start.',
+    workflow: [
+      {
+        title: 'Build a profile',
+        description: 'A shopper enters their own measurements and preferences once.',
+      },
+      {
+        title: 'Try on virtually',
+        description: 'Garments are rendered against the shopper’s profile rather than a generic model.',
+      },
+      {
+        title: 'Ask the style assistant',
+        description: 'An AI assistant suggests options based on the shopper’s stated preferences and profile.',
+      },
+      {
+        title: 'Get fit guidance',
+        description: 'Sizing guidance is based on the shopper’s own measurements rather than a generic size chart.',
+      },
+    ],
+    technicalApproach: [
+      'Try-on and styling currently run against mock adapters while the real integrations are designed, so the concept can be evaluated before committing to a specific try-on or catalogue provider',
+      'Fit guidance derived from the shopper’s own measurements rather than a generic size chart',
+      'Privacy-first data handling: measurement and profile data scoped to the shopper, not shared with unrelated systems',
+      'An adapter-based architecture so a mock integration can be swapped for a real try-on or inventory provider without a rebuild',
+    ],
+    illustrativeOutcomes: [
+      'A way to evaluate fit before committing to a purchase, based on the shopper’s own measurements',
+      'Style suggestions grounded in a shopper’s stated profile rather than a generic bestseller list',
+      'An architecture that can swap in a real try-on provider without a rebuild, once one is selected',
     ],
     relatedServiceSlugs: [
-      'internal-tools-portals',
+      'computer-vision',
+      'generative-ai-solutions',
       'ai-agents-agentic-automation',
       'web-application-development',
-      'api-integration-orchestration',
     ],
-    relatedIndustrySlugs: ['enterprise-it', 'finance', 'healthcare'],
-    icon: 'panels-top-left',
+    icon: 'shopping-bag',
+    order: 3,
+    seo: {
+      description:
+        'Vastrix Shopping Agent (NEVIX.AI): a privacy-first AI shopping concept combining virtual try-on, an AI style assistant and fit guidance based on a shopper’s own measurements. Currently a prototype — try-on and styling run on mock adapters and nothing is deployed live.',
+      noIndex: true,
+    },
+  },
+  {
+    slug: 'nevix-cloud-matrix',
+    name: 'Nevix Cloud Matrix',
+    status: 'beta',
+    problem:
+      'Teams comparing cloud spend across AWS, Azure and GCP rebuild the same spreadsheet repeatedly, budgets are tracked after the fact rather than against a threshold, and cost-optimisation ideas depend on whoever last had time to look.',
+    summary:
+      'An enterprise multi-cloud cost intelligence platform comparing compute, storage, reserved-instance, Kubernetes and network pricing across AWS, Azure and GCP, with budget alerts, AI-assisted cost-optimisation recommendations and exportable reports.',
+    heroTitle: 'One view of cloud cost across three providers',
+    heroDescription:
+      'Nevix Cloud Matrix compares compute, storage, reserved-instance, Kubernetes and network pricing across AWS, Azure and GCP side by side, tracks budgets with alerts, generates AI-assisted cost-optimisation recommendations, keeps a full calculation history and exports reports to PDF or Excel — with role-based access and a complete audit trail.',
+    workflow: [
+      {
+        title: 'Compare',
+        description: 'Compute, storage, reserved-instance, Kubernetes and network pricing across AWS, Azure and GCP are compared side by side.',
+      },
+      {
+        title: 'Track budgets',
+        description: 'Budgets are tracked against actual and modelled spend, with alerts when a threshold is crossed.',
+      },
+      {
+        title: 'Get recommendations',
+        description: 'AI-assisted cost-optimisation recommendations, generated via Claude, surface where spend can be reduced.',
+      },
+      {
+        title: 'Keep history',
+        description: 'Every calculation is retained, so a cost comparison can be revisited rather than re-run from scratch.',
+      },
+      {
+        title: 'Export',
+        description: 'Findings export to PDF or Excel for a budget review or a vendor conversation.',
+      },
+      {
+        title: 'Govern access',
+        description: 'Role-based access and a full audit trail cover who viewed and changed what.',
+      },
+    ],
+    technicalApproach: [
+      'Pricing compared per service category — compute, storage, reserved instances, Kubernetes, network — rather than a single blended estimate',
+      'Cost-optimisation suggestions generated by an LLM (Claude) and presented as recommendations for a person to evaluate, not as automatic changes',
+      'Calculation history retained so a comparison can be reproduced and reviewed later',
+      'Role-based access control with an audit trail on every privileged action',
+      'React and TypeScript frontend, FastAPI and PostgreSQL backend',
+    ],
+    illustrativeOutcomes: [
+      'Compute, storage and network pricing compared across three providers without rebuilding a spreadsheet each time',
+      'Budget alerts raised before a threshold is crossed rather than discovered on the next invoice',
+      'Cost-optimisation options surfaced for a person to evaluate and approve',
+      'A reviewable history of past cost calculations, with an audit trail of who accessed what',
+    ],
+    relatedServiceSlugs: [
+      'cloud-devops-engineering',
+      'business-intelligence-dashboards',
+      'decision-intelligence',
+      'reporting-automation',
+    ],
+    relatedIndustrySlugs: ['enterprise-it'],
+    icon: 'cloud',
+    order: 4,
+    seo: {
+      description:
+        'Nevix Cloud Matrix: an enterprise multi-cloud cost intelligence platform comparing AWS, Azure and GCP pricing, tracking budgets with alerts, generating AI-assisted cost-optimisation recommendations, and exporting reports — with role-based access and a full audit trail.',
+    },
+  },
+  {
+    slug: 'digital-portfolio-website',
+    name: 'Digital Portfolio Website',
+    status: 'beta',
+    problem:
+      'Professionals maintain their projects, work history and skills across several documents and profiles, so the record is scattered and producing a clean, shareable summary means assembling it by hand each time.',
+    summary:
+      'A platform for professionals to build and manage a digital portfolio — projects, education, work history, skills and social links — with secure authentication, image uploads, visibility controls and one-click PDF export.',
+    heroTitle: 'One portfolio, maintained once, shareable instantly',
+    heroDescription:
+      'A digital portfolio platform where a professional maintains projects, education, work history, skills and social links in one place, with section-level visibility controls, image uploads and a one-click PDF export of the finished portfolio.',
+    workflow: [
+      {
+        title: 'Sign up securely',
+        description: 'A professional creates an account with secure authentication.',
+      },
+      {
+        title: 'Add content',
+        description: 'Projects, education, work history, skills and social links are entered once.',
+      },
+      {
+        title: 'Upload media',
+        description: 'Images attach directly to projects and profile sections.',
+      },
+      {
+        title: 'Control visibility',
+        description: 'Each section or entry can be shown or hidden from visitors.',
+      },
+      {
+        title: 'Export to PDF',
+        description: 'The finished portfolio exports to PDF in one click, formatted for sharing.',
+      },
+    ],
+    technicalApproach: [
+      'ASP.NET Core 9 backend with MySQL, serving a React and Tailwind CSS frontend',
+      'Section-level visibility controls rather than a single public/private toggle for the whole profile',
+      'Image uploads validated and stored separately from portfolio content',
+      'PDF export generated from the same structured content that renders the live page, so the two cannot drift apart',
+    ],
+    illustrativeOutcomes: [
+      'One place to maintain projects, education, work history, skills and links instead of several documents',
+      'A shareable PDF generated from the same content as the live portfolio page',
+      'Visibility controlled per section rather than all-or-nothing',
+    ],
+    relatedServiceSlugs: [
+      'web-application-development',
+      'backend-api-development',
+      'ui-ux-design',
+      'custom-software-development',
+    ],
+    icon: 'user-round',
+    order: 5,
+    seo: {
+      description:
+        'A digital portfolio platform for professionals to manage projects, education, work history, skills and social links, with secure authentication, image uploads, section-level visibility controls and one-click PDF export. Built on ASP.NET Core 9, MySQL and React.',
+    },
+  },
+  {
+    slug: 'infra-ansible',
+    name: 'Infra Ansible',
+    status: 'beta',
+    problem:
+      'IT teams patch and configure servers one at a time through separate manual sessions, so there is no single view of what is patched, no live record of what a long-running job is doing, and no audit trail of who ran what.',
+    summary:
+      'A web console that lets IT teams register servers and run Ansible playbooks across them from one place — OS patching with interactive patch selection, configuration management, compliance reporting, live job output and a full audit trail.',
+    heroTitle: 'Ansible, with a console IT teams actually want to use',
+    heroDescription:
+      'Infra Ansible lets a team register servers and run Ansible playbooks across them from one console, with interactive patch selection, configuration management, compliance reporting, live job output, role-based access and a full audit trail — plus a safe “Demo Data” mode for presales walkthroughs that touches no real servers.',
+    workflow: [
+      {
+        title: 'Register servers',
+        description: 'IT teams register the servers they manage from one console.',
+      },
+      {
+        title: 'Select patches',
+        description: 'OS patching runs through interactive patch selection rather than an all-or-nothing update.',
+      },
+      {
+        title: 'Manage configuration',
+        description: 'Configuration changes run as Ansible playbooks against the registered servers.',
+      },
+      {
+        title: 'Watch it run',
+        description: 'Job output streams live, so a long-running playbook is not a black box.',
+      },
+      {
+        title: 'Report compliance',
+        description: 'Compliance reporting shows which servers are patched and which are not.',
+      },
+      {
+        title: 'Review the trail',
+        description: 'Every job and every access is recorded in a full audit trail.',
+      },
+    ],
+    technicalApproach: [
+      'A web console in front of Ansible rather than a replacement for it — playbooks remain the source of truth',
+      'Interactive patch selection instead of an automatic apply-everything job',
+      'Role-based access control gating which servers and playbooks a user can act on',
+      'Live job output streamed to the console as the playbook runs',
+      'A “Demo Data” mode that exercises the full console against synthetic servers, so a presales walkthrough touches nothing real',
+    ],
+    illustrativeOutcomes: [
+      'Server patching run from one console instead of per-server manual sessions',
+      'A visible compliance picture of which servers are patched and which are not',
+      'A full audit trail of who ran what, against which servers',
+      'A safe way to demonstrate the console in a sales conversation without touching real infrastructure',
+    ],
+    relatedServiceSlugs: ['infrastructure-it-automation', 'cloud-devops-engineering', 'python-automation'],
+    relatedIndustrySlugs: ['enterprise-it'],
+    icon: 'server-cog',
+    order: 6,
+    seo: {
+      description:
+        'Infra Ansible: a web console for IT teams to register servers and run Ansible playbooks, with interactive OS patch selection, configuration management, compliance reporting, live job output, a full audit trail and a safe Demo Data mode for presales walkthroughs.',
+    },
+  },
+  {
+    slug: 'nevix-forge',
+    name: 'Nevix Forge — AI Client Demo Generator',
+    status: 'coming-soon',
+    statusNote:
+      'This is a detailed project specification, not a built product yet. There is nothing to try — this page describes a planned internal tool.',
+    problem:
+      'Turning a prospective client’s requirements into a clickable demo for a sales call currently means a manual build or a slide deck, so by the time a demo exists the sales conversation has often moved on.',
+    summary:
+      'A concept for an internal tool that turns a project brief into a branded, clickable frontend demo in minutes, using an AI pipeline and consistent synthetic data.',
+    heroTitle: 'From client brief to clickable demo, planned in minutes',
+    heroDescription:
+      'Nevix Forge is planned as an internal tool: fill a form describing a prospective client’s requirements, and an AI pipeline would generate a navigable single-page or multi-page prototype with consistent synthetic data, ready to present live in a sales call.',
+    workflow: [
+      {
+        title: 'Describe the brief',
+        description: 'A salesperson fills a form describing a prospective client’s requirements.',
+      },
+      {
+        title: 'Generate the demo',
+        description: 'An AI pipeline would produce a navigable frontend prototype from that brief.',
+      },
+      {
+        title: 'Populate with data',
+        description: 'The prototype would be filled with consistent synthetic data rather than empty placeholders.',
+      },
+      {
+        title: 'Present live',
+        description: 'The generated demo would be ready to click through in a live sales call, not just describe in slides.',
+      },
+    ],
+    technicalApproach: [
+      'Planned: a form-to-brief pipeline that structures a client’s stated requirements before generation starts',
+      'Planned: single-page or multi-page prototype generation depending on the brief’s scope',
+      'Planned: synthetic data generated to stay internally consistent across the prototype’s pages',
+      'No client data would be used to generate a demo — only the brief entered for that specific pitch',
+    ],
+    illustrativeOutcomes: [
+      'A clickable prototype in minutes instead of a slide deck, for a specific client brief',
+      'Synthetic data that stays consistent across every page of the generated demo',
+      'No reuse of real client data when generating a pitch demo',
+    ],
+    relatedServiceSlugs: ['ai-agents-agentic-automation', 'generative-ai-solutions', 'web-application-development'],
+    icon: 'sparkles',
     order: 7,
     seo: {
       description:
-        'Role-based internal tools that assemble decision context across systems, with AI summarising unstructured content and the decision remaining with the person.',
+        'Nevix Forge: a concept for an internal tool that turns a project brief into a branded, clickable frontend demo in minutes, using an AI pipeline and consistent synthetic data. Currently a specification only — not yet built.',
+      noIndex: true,
     },
   },
   {
-    slug: 'infrastructure-automation',
-    name: 'Infrastructure & Operations Automation',
+    slug: 'talk-to-database',
+    name: 'Talk to Database',
+    status: 'beta',
     problem:
-      'Servers are configured by hand and drift apart. Routine operational jobs run from someone’s crontab, and rebuilding a host is an archaeology exercise.',
+      'Non-technical staff need answers from company data that lives across several departments, but getting one means writing SQL or waiting on whoever can, so routine questions queue behind a scarce skill.',
     summary:
-      'Configuration as reviewable code, scheduled operational jobs with visible history, and rebuildable hosts.',
-    heroTitle: 'Infrastructure you can rebuild from source control',
+      'A natural-language data platform that lets non-technical users query company data by typing a question in plain English — AI converts it to a safe, read-only SQL query and returns interactive charts and downloadable reports, with isolated access per business unit.',
+    heroTitle: 'Ask company data a question, in plain English',
     heroDescription:
-      'Configuration expressed as idempotent, reviewable code, with routine operational jobs running on a schedule and alerting when they fail.',
+      'Talk to Database lets a non-technical user type a question in plain English; AI converts it to SQL, runs it read-only, and returns interactive charts and downloadable reports, with isolated access per business unit and a full admin analytics dashboard.',
     workflow: [
       {
-        title: 'Inventory',
-        description:
-          'Catalogue the existing hosts, their configuration and the operational jobs currently running informally.',
+        title: 'Ask a question',
+        description: 'A user types a question in plain English instead of writing SQL.',
       },
       {
-        title: 'Codify',
-        description:
-          'Express configuration as idempotent playbooks so re-running is safe and changes are reviewable.',
+        title: 'Convert to SQL',
+        description: 'AI converts the question into a SQL query scoped to that user’s business unit.',
       },
       {
-        title: 'Externalise secrets',
-        description:
-          'Move credentials into a secret store, out of scripts, shell history and the repository.',
+        title: 'Run safely',
+        description: 'The query runs read-only, so a question can never modify data.',
       },
       {
-        title: 'Schedule',
-        description:
-          'Move routine jobs onto a scheduler with visible run history and alerting on failure.',
+        title: 'Visualise',
+        description: 'Results return as interactive charts rather than a raw table.',
       },
       {
-        title: 'Verify',
-        description: 'Prove a host can be rebuilt from source control, rather than assuming it.',
+        title: 'Export',
+        description: 'Reports download for sharing outside the platform.',
       },
       {
-        title: 'Monitor',
-        description:
-          'Export host and job metrics so drift, failure and capacity problems are visible before they cause an outage.',
+        title: 'Monitor usage',
+        description: 'Admins see query activity and usage across business units from one analytics dashboard.',
       },
     ],
     technicalApproach: [
-      'Idempotent Ansible playbooks, safe to re-run',
-      'Secrets held in a vault, never in the repository',
-      'Changes reviewed before they reach production',
-      'Scheduled jobs with retained run history and failure alerting',
-      'Host and job metrics exported to Prometheus',
+      'Natural-language-to-SQL translation constrained to read-only queries, so a question cannot modify data',
+      'Per-business-unit data isolation enforced at the query layer, not just in the interface',
+      'Flask and MySQL backend, with a React and Material UI frontend',
+      'An admin analytics dashboard kept separate from the query interface non-technical users see',
     ],
     illustrativeOutcomes: [
-      'Hosts rebuildable from source control rather than from memory',
-      'Configuration changes reviewable before they are applied',
-      'Job failures that alert instead of passing unnoticed',
-      'Operational knowledge in the repository rather than with one person',
+      'Company data queried in plain English, without writing SQL',
+      'Read-only execution, so a question cannot accidentally change data',
+      'Each business unit sees only its own data',
+      'Results as interactive charts and downloadable reports instead of a raw export',
     ],
-    relatedServiceSlugs: [
-      'infrastructure-it-automation',
-      'cloud-devops-engineering',
-      'python-automation',
-    ],
-    relatedIndustrySlugs: ['enterprise-it', 'government-public-sector'],
-    icon: 'server-cog',
+    relatedServiceSlugs: ['nlp', 'data-analytics', 'business-intelligence-dashboards', 'reporting-automation'],
+    relatedIndustrySlugs: ['enterprise-it'],
+    icon: 'database',
     order: 8,
     seo: {
       description:
-        'Infrastructure and operations automation: configuration as reviewable idempotent code, secrets in a vault, scheduled jobs with alerting, and rebuildable hosts.',
+        'Talk to Database: a natural-language data platform letting non-technical users query company data in plain English. AI converts the question to a safe, read-only SQL query and returns interactive charts and reports, with isolated access per business unit.',
     },
   },
   {
-    slug: 'document-to-workflow',
-    name: 'Document-to-Workflow Systems',
+    slug: 'tradeagent',
+    name: 'TradeAgent',
+    status: 'concept',
+    statusNote:
+      'TradeAgent is a planning and architecture document only — no code has been written and nothing trades real money. It is a research and concept project, not a financial product: nothing here is financial advice, no trading performance is implied or promised, and automated trading of real funds carries a material risk of loss and may require regulatory licensing in your jurisdiction before it could ever run live.',
     problem:
-      'A document arrives and triggers a process — an application to assess, an invoice to approve, a form to action. Today someone reads it, decides what it is, and starts the process by hand.',
+      'An automated trading system that lets a model’s output place orders directly has no boundary between a market view and a real financial action, which is exactly where uncontrolled risk enters.',
     summary:
-      'Documents that start the right workflow automatically, with the extracted data already populated.',
-    heroTitle: 'The document starts the process, already populated',
+      'A planned autonomous trading-system architecture for gold (XAUUSD) on MetaTrader 5, combining AI-assisted market analysis with strictly deterministic risk controls and a single, auditable order-execution gateway.',
+    heroTitle: 'A design for keeping AI analysis and order execution strictly separate',
     heroDescription:
-      'Combining document intelligence with workflow automation: an arriving document is classified, extracted, validated, and starts the correct workflow with its data already in place.',
+      'TradeAgent is an architecture and risk-control design for an autonomous XAUUSD trading system on MetaTrader 5: AI-assisted analysis informs a view, deterministic risk controls constrain it, and one auditable gateway is the only path by which any order would reach the market. No code exists yet.',
     workflow: [
       {
-        title: 'Receive',
-        description: 'Documents arrive by email, upload or API into a single intake point.',
+        title: 'Analyse (planned)',
+        description: 'AI-assisted analysis would read market data for XAUUSD and produce a market view.',
       },
       {
-        title: 'Understand',
-        description:
-          'Classification determines the document type and therefore which process it belongs to.',
+        title: 'Constrain (planned)',
+        description: 'That view would pass through strictly deterministic risk controls — position sizing, exposure limits, stop conditions — that the AI component cannot override.',
       },
       {
-        title: 'Extract and validate',
-        description:
-          'Relevant fields are extracted with confidence scores and validated against business rules and reference data.',
+        title: 'Execute (planned)',
+        description: 'Only a single, auditable gateway would be permitted to place an order, regardless of which component requested it.',
       },
       {
-        title: 'Initiate',
-        description:
-          'The correct workflow starts automatically, pre-populated with the validated data and linked to the source document.',
-      },
-      {
-        title: 'Review where needed',
-        description:
-          'Low-confidence extractions and rule failures are reviewed by a person before the workflow proceeds.',
-      },
-      {
-        title: 'Complete',
-        description:
-          'The workflow runs to completion with approvals, notifications and a full audit trail from document to outcome.',
+        title: 'Audit (planned)',
+        description: 'Every analysis, risk decision and order would be logged for after-the-fact review.',
       },
     ],
     technicalApproach: [
-      'Document classification determining workflow routing',
-      'Field extraction with confidence scores and business-rule validation',
-      'Deterministic rules deciding the workflow, never the model',
-      'Source document linked to the workflow instance throughout',
-      'End-to-end audit trail from arrival to outcome',
+      'Planned: AI-assisted analysis strictly separated from order execution, so a model’s output can inform a decision but never place a trade directly',
+      'Planned: deterministic, rule-based risk controls — position size, exposure, stop conditions — sitting between analysis and execution',
+      'Planned: a single order-execution gateway, so there is one auditable path by which any order reaches the market',
+      'No code exists yet — this is an architecture and risk-control design, not a running system',
     ],
     illustrativeOutcomes: [
-      'Processes starting on document arrival rather than on someone noticing',
-      'Workflow data populated from the document instead of re-keyed',
-      'Human attention focused on exceptions',
-      'A complete audit trail from document to outcome',
+      'A clear separation between AI-assisted analysis and the decision to place an order',
+      'Risk limits enforced by deterministic rules rather than by the AI component’s judgement',
+      'One auditable path for every order, intended to make the system reviewable after the fact',
     ],
-    relatedServiceSlugs: [
-      'document-intelligence',
-      'intelligent-automation',
-      'workflow-automation',
-      'business-process-automation',
-    ],
-    relatedIndustrySlugs: ['government-public-sector', 'finance', 'healthcare'],
-    icon: 'file-cog',
+    relatedServiceSlugs: ['machine-learning', 'ai-agents-agentic-automation', 'solution-architecture', 'python-automation'],
+    relatedIndustrySlugs: ['finance'],
+    icon: 'line-chart',
     order: 9,
     seo: {
       description:
-        'Document-to-workflow systems: arriving documents are classified, extracted and validated, then start the correct workflow already populated with their data.',
+        'TradeAgent: a planning and architecture document for an autonomous trading-system concept for gold (XAUUSD) on MetaTrader 5, combining AI-assisted analysis with deterministic risk controls and a single auditable execution gateway. No code exists yet; not a financial product or trading advice.',
+      noIndex: true,
     },
   },
   {
-    slug: 'data-driven-decision-platform',
-    name: 'Data-Driven Decision Platform',
+    slug: 'resq-agent',
+    name: 'RESQ Agent',
+    status: 'beta',
     problem:
-      'Prioritisation and allocation decisions are made on experience and whatever report is to hand. Outcomes are inconsistent between people, and there is no record of why a given decision was made.',
+      'Service desks spend time on the same recurring issues — account lockouts, VPN access, slow laptops — and every ticket, however routine, starts from a blank slate with no automatic check against documented procedure.',
     summary:
-      'Transparent scoring that combines data, rules and prediction to support a decision the person still makes.',
-    heroTitle: 'Support the decision, and record why it was made',
+      'An AI-powered IT service desk that works alongside an existing ITSM tool. Employees chat with an assistant that answers from SOPs or walks them through common fixes; when a ticket is needed, it is auto-triaged, resolved, held for approval or escalated to L2 with full context.',
+    heroTitle: 'An IT assistant that resolves what it can and escalates with context',
     heroDescription:
-      'Scoring and prioritisation that shows its working — which factors contributed, in which direction — with policy weights owned by the people accountable for the policy.',
+      'RESQ Agent sits alongside your existing ITSM tool (e.g. Freshservice). Employees chat with an assistant that answers from your SOPs or walks them through fixes for issues like account lockouts, VPN access and slow laptops; when a ticket is genuinely needed, RESQ raises it, auto-triages it against your SOP library, and resolves it, holds it for approval, or escalates it to L2 with full context — all logged in a complete audit trail, with a manager dashboard for SLA and volume forecasting and a safe “dry run” demo mode.',
     workflow: [
       {
-        title: 'Define the decision',
-        description:
-          'Establish precisely what is being decided, by whom, and what a good outcome looks like.',
+        title: 'Ask',
+        description: 'An employee describes an issue to the assistant in chat — an account lockout, VPN access, a slow laptop.',
       },
       {
-        title: 'Assemble the data',
-        description: 'Build validated pipelines for the factors the decision depends on.',
+        title: 'Answer or guide',
+        description: 'The assistant answers from the SOP library or walks the employee through the fix directly.',
       },
       {
-        title: 'Model factors',
-        description:
-          'Calculate each contributing factor separately, including predicted values where prediction genuinely helps.',
+        title: 'Raise when needed',
+        description: 'When a ticket is genuinely required, RESQ raises it in the existing ITSM tool rather than asking the employee to do it separately.',
       },
       {
-        title: 'Apply policy',
-        description:
-          'Weighting and thresholds are held as configurable policy, adjustable by the accountable owner without an engineering change.',
+        title: 'Triage',
+        description: 'The ticket is auto-triaged against the SOP library to determine the right response.',
       },
       {
-        title: 'Present',
-        description:
-          'The recommendation is shown with its contributing factors and their direction, so the person can agree or override with reasons.',
+        title: 'Resolve, hold or escalate',
+        description: 'Routine issues are resolved automatically, uncertain ones are held for human approval, and anything beyond scope escalates to L2 with full context attached.',
       },
       {
         title: 'Record',
-        description:
-          'Every score is stored with the factor values that produced it, so past decisions remain explainable.',
+        description: 'Every step — chat, triage decision, resolution or escalation — is logged in a complete audit trail.',
       },
     ],
     technicalApproach: [
-      'Factor calculation separated from weighting policy',
-      'Predictions reported with intervals rather than as point facts',
-      'Policy weights versioned with effective dates',
-      'Scores stored with their contributing factor values',
-      'Overrides captured with a recorded reason',
+      'Works alongside an existing ITSM tool (e.g. Freshservice) rather than replacing it',
+      'Auto-triage checked against an SOP library before any action is taken, so responses stay grounded in documented procedure',
+      'Three explicit outcomes per ticket — auto-resolve, hold for human approval, or escalate to L2 — rather than one automatic action',
+      'Escalations carry full context, so an L2 engineer does not start from zero',
+      'A “dry run” demo mode that exercises the full flow without touching real systems or tickets',
     ],
     illustrativeOutcomes: [
-      'Consistent prioritisation across people and shifts',
-      'Recommendations that can be explained to the person affected',
-      'Policy changes made by the policy owner, not by engineering',
-      'Past decisions still explainable months later',
+      'Common issues like account lockouts, VPN access and slow laptops resolved without opening a ticket at all',
+      'Tickets that are raised arrive pre-triaged against the SOP library instead of starting blank',
+      'Escalations reach L2 with context attached rather than a bare ticket number',
+      'A manager view of SLA performance and ticket volume, including a forecast rather than only a historical count',
     ],
-    relatedServiceSlugs: [
-      'decision-intelligence',
-      'predictive-analytics',
-      'machine-learning',
-      'business-intelligence-dashboards',
-    ],
-    relatedIndustrySlugs: ['government-public-sector', 'finance', 'manufacturing'],
-    icon: 'scale',
+    relatedServiceSlugs: ['ai-agents-agentic-automation', 'intelligent-automation', 'nlp', 'internal-tools-portals'],
+    relatedIndustrySlugs: ['enterprise-it'],
+    icon: 'life-buoy',
     order: 10,
     seo: {
       description:
-        'A decision-support platform combining validated data, configurable policy rules and prediction, with transparent scoring and an explainable decision record.',
+        'RESQ Agent: an AI-powered IT service desk that works alongside your existing ITSM tool. Employees chat with an assistant that answers from your SOPs, raises and auto-triages tickets when needed, resolves or escalates with full context, and reports SLA and volume forecasts to managers — with a safe dry-run demo mode.',
+    },
+  },
+  {
+    slug: 'thyroidai',
+    name: 'ThyroidAI — Thyroid Cancer Detection System',
+    status: 'beta',
+    statusNote:
+      'ThyroidAI is a research and decision-support prototype. It is not a certified or regulatory-cleared diagnostic device, its classification is not a diagnosis, and it is not a substitute for a qualified radiologist, pathologist or oncologist — every output is intended for a clinician’s review, not for a patient to act on directly.',
+    problem:
+      'Reviewing thyroid ultrasound and pathology images for signs of malignancy is time-consuming and the basis for a given reading is not always visible to someone checking the work afterward.',
+    summary:
+      'An AI-assisted medical imaging tool that classifies thyroid ultrasound and pathology images as benign or malignant using a custom CNN (FibonacciNet), with Grad-CAM heatmaps showing the influential regions, analysis history and downloadable DOCX reports.',
+    heroTitle: 'A second set of eyes on thyroid imaging, with its reasoning shown',
+    heroDescription:
+      'ThyroidAI analyses thyroid ultrasound or pathology images with a custom CNN (FibonacciNet), classifying them as benign or malignant and pairing every classification with a Grad-CAM heatmap that highlights which regions influenced it, alongside analysis history, analytics and downloadable DOCX reports.',
+    workflow: [
+      {
+        title: 'Upload',
+        description: 'An ultrasound or pathology image of the thyroid is uploaded for analysis.',
+      },
+      {
+        title: 'Classify',
+        description: 'A custom CNN (FibonacciNet) classifies the image as benign or malignant.',
+      },
+      {
+        title: 'Visualise',
+        description: 'A Grad-CAM heatmap highlights the image regions that most influenced the classification.',
+      },
+      {
+        title: 'Review history',
+        description: 'Past analyses are kept, so a case can be revisited rather than re-run from scratch.',
+      },
+      {
+        title: 'Report',
+        description: 'Findings export as a downloadable DOCX report for the clinician’s record.',
+      },
+    ],
+    technicalApproach: [
+      'A custom convolutional neural network (FibonacciNet) trained for thyroid ultrasound and pathology image classification',
+      'Grad-CAM visualisation on every classification, so the influential region is visible rather than only a label',
+      'Analysis history retained per case for later review',
+      'Findings exported as a structured DOCX report rather than a screenshot',
+      'Positioned as a second opinion for a clinician’s review, not an automated diagnosis delivered to a patient',
+    ],
+    illustrativeOutcomes: [
+      'A visual explanation (Grad-CAM) alongside every classification, rather than a label with no shown basis',
+      'A reviewable history of past analyses instead of one-off results',
+      'A structured report a clinician can file directly, without a manual write-up',
+    ],
+    relatedServiceSlugs: ['computer-vision', 'machine-learning', 'data-analytics'],
+    relatedIndustrySlugs: ['healthcare'],
+    icon: 'microscope',
+    order: 11,
+    seo: {
+      description:
+        'ThyroidAI: an AI-assisted medical imaging tool that classifies thyroid ultrasound and pathology images as benign or malignant using a custom CNN (FibonacciNet), with Grad-CAM heatmaps, analysis history and downloadable DOCX reports. A research and decision-support prototype, not a diagnostic device.',
+      noIndex: true,
     },
   },
 ];
 
 export const solutionBySlug = new Map(solutions.map((s) => [s.slug, s]));
+
+/** Human-readable labels and styling intent for each build status, mirroring `productStatusMeta`. */
+export const solutionStatusMeta: Record<
+  SolutionStatus,
+  { label: string; description: string; tone: 'neutral' | 'info' | 'warning' | 'success' }
+> = {
+  concept: {
+    label: 'Concept',
+    description: 'A planning or architecture document. Not built and not available.',
+    tone: 'neutral',
+  },
+  prototype: {
+    label: 'Prototype',
+    description: 'A working demonstration used to validate the concept. Not a verified or live build.',
+    tone: 'warning',
+  },
+  beta: {
+    label: 'Beta',
+    description: 'Built and functioning, with active development ongoing.',
+    tone: 'info',
+  },
+  live: {
+    label: 'Live',
+    description: 'Generally available and supported.',
+    tone: 'success',
+  },
+  'coming-soon': {
+    label: 'Coming Soon',
+    description: 'A planned project. Not yet built.',
+    tone: 'neutral',
+  },
+};

@@ -114,6 +114,9 @@ export interface SolutionStep {
   description: string;
 }
 
+/** Build status of a NEVIX-developed project (mirrors `ProductStatus`). */
+export type SolutionStatus = 'concept' | 'prototype' | 'beta' | 'live' | 'coming-soon';
+
 export interface Solution {
   slug: string;
   name: string;
@@ -122,6 +125,14 @@ export interface Solution {
   summary: string;
   heroTitle: string;
   heroDescription: string;
+  /** Current build status — rendered as a badge, matching the Products convention. */
+  status: SolutionStatus;
+  /**
+   * A short, specific caveat about verifiability, deployment state or regulatory scope, rendered
+   * in a compliance notice. Required whenever the project is not independently verifiable (no
+   * source available) or carries a health/financial claim that needs qualifying.
+   */
+  statusNote?: string;
   /** The end-to-end workflow this solution implements. */
   workflow: SolutionStep[];
   technicalApproach: string[];

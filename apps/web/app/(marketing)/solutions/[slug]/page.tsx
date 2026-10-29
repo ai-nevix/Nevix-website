@@ -6,10 +6,11 @@ import { CtaSection } from '@/components/sections/cta-section';
 import { Notice } from '@/components/sections/notice';
 import { PageHero } from '@/components/sections/page-hero';
 import { WorkflowSteps } from '@/components/sections/process-timeline';
+import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Section, SectionHeading } from '@/components/ui/section';
 import { Reveal, Stagger, StaggerItem } from '@/components/ui/motion';
-import { solutions as allSolutions } from '@/content/solutions';
+import { solutions as allSolutions, solutionStatusMeta } from '@/content/solutions';
 import { ctas } from '@/content/site';
 import { getIndustries, getServices, getSolutionBySlug } from '@/lib/cms';
 import { buildMetadata } from '@/lib/seo/metadata';
@@ -50,6 +51,7 @@ export default async function SolutionDetailPage({
   const relatedIndustries = allIndustries.filter((i) =>
     (solution.relatedIndustrySlugs ?? []).includes(i.slug),
   );
+  const status = solutionStatusMeta[solution.status];
 
   return (
     <>
@@ -73,11 +75,23 @@ export default async function SolutionDetailPage({
         }
         aside={
           <div className="rounded-(--radius-panel) border border-white/12 bg-white/5 p-6 backdrop-blur-sm">
-            <p className="text-eyebrow text-cyan-brand-400 uppercase">The problem</p>
+            <div className="flex items-center justify-between gap-3">
+              <p className="text-eyebrow text-cyan-brand-400 uppercase">The problem</p>
+              <Badge tone={status.tone}>{status.label}</Badge>
+            </div>
             <p className="mt-4 text-base leading-relaxed text-neutral-200">{solution.problem}</p>
+            <p className="mt-4 text-xs text-neutral-400">{status.description}</p>
           </div>
         }
       />
+
+      {solution.statusNote ? (
+        <Section tone="light" size="sm">
+          <Notice variant="compliance" title="What this status means">
+            {solution.statusNote}
+          </Notice>
+        </Section>
+      ) : null}
 
       {/* --- Workflow -------------------------------------------------------------------------- */}
       <Section tone="light" size="lg">
@@ -113,12 +127,9 @@ export default async function SolutionDetailPage({
         </Stagger>
       </Section>
 
-      {/* --- Illustrative outcomes ------------------------------------------------------------- */}
+      {/* --- Capabilities ------------------------------------------------------------------------ */}
       <Section tone="light" size="lg">
-        <SectionHeading
-          eyebrow="Expected outcomes"
-          title="What this pattern is designed to produce"
-        />
+        <SectionHeading eyebrow="Capabilities" title="What it delivers" />
 
         <Stagger className="mt-12">
           <ul className="grid gap-4 sm:grid-cols-2">
@@ -132,12 +143,12 @@ export default async function SolutionDetailPage({
           </ul>
         </Stagger>
 
-        {/* DUMMY-DATA: DD-012 — illustrative, not measured. Required by specification §31. */}
         <Reveal className="mt-10">
           <Notice variant="illustrative" title="Illustrative — not a guarantee">
-            These describe what the pattern is designed to achieve, not a promised result. NEVIX
-            does not publish guaranteed ROI, accuracy or automation figures. Measurable objectives
-            are agreed at the start of an engagement and reported against afterwards.
+            These describe what the project is designed to achieve, at the build status shown above
+            — not a promised result. NEVIX does not publish guaranteed ROI, accuracy or automation
+            figures. Measurable objectives are agreed at the start of an engagement and reported
+            against afterwards.
           </Notice>
         </Reveal>
       </Section>

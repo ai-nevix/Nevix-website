@@ -137,10 +137,15 @@ written to disk. Tested.
 
 ## 9. Network
 
-- PostgreSQL has **no port mapping at all**
-- The `internal` Docker network is `internal: true` — no route to the internet
-- Only Nginx publishes ports (80, 443)
-- Every monitoring service binds to `127.0.0.1`
+**Stale — describes the removed Docker topology.** Docker, the Nginx reverse proxy and the
+monitoring stack have been removed from the project and not yet replaced (see
+[ADR-005](./adr/ADR-005-docker-compose.md)). The requirements below still hold and must be
+re-established by whatever replaces them:
+
+- PostgreSQL must have **no public port mapping**
+- The database must have no route to the internet
+- Only the reverse proxy should publish ports (80, 443)
+- Any monitoring service must bind to `127.0.0.1` only
 
 ## 10. Verification
 

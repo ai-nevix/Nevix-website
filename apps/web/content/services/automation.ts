@@ -49,7 +49,6 @@ export const automationServices: Service[] = [
           'That is your decision, not ours, and we will not pretend otherwise. What we deliver removes the mechanical portion of the work. In most engagements the people involved move onto the parts of the process that need judgement.',
       },
     ],
-    solutionSlugs: ['business-workflow-automation', 'document-to-workflow'],
     caseStudySlugs: ['invoice-to-workflow-automation'],
     order: 1,
     seo: {
@@ -91,7 +90,7 @@ export const automationServices: Service[] = [
       'Visible run history for scheduled work',
       'No secrets or environment assumptions baked into source',
     ],
-    solutionSlugs: ['infrastructure-automation'],
+    solutionSlugs: ['infra-ansible', 'tradeagent'],
     order: 2,
     seo: {
       description:
@@ -127,7 +126,7 @@ export const automationServices: Service[] = [
       'Defined escalation when a step stalls',
       'An audit trail that falls out of the design rather than being bolted on',
     ],
-    solutionSlugs: ['business-workflow-automation', 'custom-digital-portals'],
+    solutionSlugs: ['aquasales'],
     order: 3,
     seo: {
       description:
@@ -210,7 +209,7 @@ export const automationServices: Service[] = [
       'Failed messages retained and replayable',
       'Integration health visible in monitoring rather than discovered at month end',
     ],
-    solutionSlugs: ['business-workflow-automation'],
+    solutionSlugs: ['aquasales'],
     order: 5,
     seo: {
       description:
@@ -251,7 +250,7 @@ export const automationServices: Service[] = [
       'Scheduled operational jobs with alerting on failure',
       'Infrastructure knowledge in the repository rather than in one person’s head',
     ],
-    solutionSlugs: ['infrastructure-automation'],
+    solutionSlugs: ['infra-ansible'],
     order: 6,
     seo: {
       description:
@@ -299,7 +298,7 @@ export const automationServices: Service[] = [
           'Because you need to be able to explain the decision, reproduce it, and change it without retraining anything. Keeping the decision in auditable rules means a policy change is a configuration change, and the same input always produces the same outcome.',
       },
     ],
-    solutionSlugs: ['intelligent-ticket-triage', 'document-to-workflow', 'ai-document-processing'],
+    solutionSlugs: ['resq-agent'],
     caseStudySlugs: ['intelligent-ticket-triage-demo'],
     order: 7,
     seo: {

@@ -71,8 +71,8 @@ The site ships with `CONTENT_PROVIDER=local`, serving the typed content in `apps
 Switching to Strapi:
 
 ```bash
-# 1. Start the CMS
-docker compose up -d cms
+# 1. Start the CMS (cd apps/cms && npm run start — production deployment is undocumented,
+#    see docs/architecture/adr/ADR-005-docker-compose.md)
 
 # 2. Create the first admin user at https://cms.nevix.ai/admin
 
@@ -90,7 +90,7 @@ STRAPI_URL=https://cms.nevix.ai STRAPI_ADMIN_TOKEN=<write-token> npm run seed
 #    CONTENT_PROVIDER=strapi
 #    CMS_URL=https://cms.nevix.ai
 #    CMS_API_TOKEN=<read-only-token>
-docker compose up -d --build web
+npm run build && npm run start   # or your deployment process
 
 # 8. REVOKE the write token from step 3
 ```

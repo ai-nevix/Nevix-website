@@ -1,5 +1,9 @@
 # NEVIX Website — Implementation Plan
 
+> Docker has since been removed from the project (see
+> [ADR-005](architecture/adr/ADR-005-docker-compose.md)). References below to Docker, Docker
+> Compose or Nginx describe the state of the project before that removal, not the current state.
+
 **Status:** Active
 **Owner:** Engineering
 **Source of truth:** `docs/source-material/VASTRIX_Website_Development_Master_Specification.docx` and

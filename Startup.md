@@ -160,5 +160,7 @@ when the machine sleeps. Two things to expect on ngrok's free tier — visitors 
 interstitial page before the site, and `robots.txt` returns `Disallow: /`, so nothing is indexed
 while placeholder content remains (see [`docs/dummy-data/`](docs/dummy-data/)).
 
-Production is Docker Compose behind Nginx — see
+Production deployment is undocumented: Docker has been removed from the project and no
+replacement method has been chosen yet — see
+[ADR-005](docs/architecture/adr/ADR-005-docker-compose.md) and
 [`docs/architecture/deployment.md`](docs/architecture/deployment.md).

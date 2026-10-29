@@ -186,7 +186,7 @@ export const productSaasServices: Service[] = [
       'Role-scoped access to personal data',
       'A tool your team can operate and extend',
     ],
-    solutionSlugs: ['ai-enabled-internal-tools', 'custom-digital-portals'],
+    solutionSlugs: ['resq-agent'],
     order: 4,
     seo: {
       description:
@@ -351,6 +351,7 @@ export const consultingServices: Service[] = [
       'Decision records capturing alternatives and reasoning',
       'Defined triggers for when to scale the architecture up',
     ],
+    solutionSlugs: ['tradeagent'],
     order: 4,
     seo: {
       description:

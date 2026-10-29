@@ -16,17 +16,14 @@ The MVP has no cache pressure, no background jobs, no media volume and no vector
 
 ## Decision
 
-Each is provisioned in `docker-compose.yml` behind a profile, and inactive by default:
+Each was provisioned in `docker-compose.yml` behind a profile, and inactive by default. Docker has
+since been removed from the project (see [ADR-005](./ADR-005-docker-compose.md)) and no
+replacement deployment method has been chosen, so these services currently have no provisioning at
+all — the triggers below still apply to whenever each is actually added.
 
-```
-docker compose up -d                        # web + api + cms + postgres + nginx
-docker compose --profile cache up -d        # + Redis
-docker compose --profile storage up -d      # + MinIO
-docker compose --profile workers up -d      # + Redis, Celery worker
-```
-
-pgvector needs no profile at all: the PostgreSQL image is `pgvector/pgvector:pg16`, so the
-extension ships with the database and enabling it is a one-line migration.
+pgvector needs no profile at all: the PostgreSQL image used, `pgvector/pgvector:pg16`, ships the
+extension with the database, so enabling it is a one-line migration regardless of deployment
+method.
 
 ## Why provisioned rather than omitted
 

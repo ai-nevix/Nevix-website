@@ -1,10 +1,10 @@
 # NEVIX — GitLab CI/CD (specification §21, instruction §46).
 #
-#   install -> lint -> type-check -> test -> build -> security -> package -> staging -> production
+#   install -> lint -> type-check -> test -> build -> security
 #
-# Production deployment is manual and restricted to the default branch (specification §21:
-# "Approval / release" before production; instruction §46: "Never deploy blindly from every
-# branch").
+# Packaging and deployment are not defined here. The project no longer builds Docker images;
+# a replacement deployment method (e.g. bare-metal + systemd) has not been chosen yet — see
+# docs/architecture/adr/ADR-005-docker-compose.md.
 
 stages:
   - install
@@ -12,8 +12,6 @@ stages:
   - test
   - build
   - security
-  - package
-  - deploy
 
 variables:
   NODE_VERSION: '24'
@@ -21,7 +19,6 @@ variables:
   # Cache inside the project directory so GitLab Runner can cache it between jobs.
   npm_config_cache: '$CI_PROJECT_DIR/.npm'
   PIP_CACHE_DIR: '$CI_PROJECT_DIR/.pip'
-  DOCKER_BUILDKIT: '1'
   GIT_DEPTH: '20'
 
 default:
@@ -283,168 +280,6 @@ security:secrets:
   allow_failure: false
 
 # =================================================================================================
-# Package — container images
+# Packaging and deployment were removed along with Docker. Define a replacement here once a
+# deployment method is chosen (see docs/architecture/adr/ADR-005-docker-compose.md).
 # =================================================================================================
-
-.docker:
-  image: docker:28-cli
-  services:
-    - docker:28-dind
-  before_script:
-    - echo "$CI_REGISTRY_PASSWORD" | docker login -u "$CI_REGISTRY_USER" --password-stdin "$CI_REGISTRY"
-
-package:web:
-  stage: package
-  extends: .docker
-  needs: ['test:web', 'build:web', 'security:dependencies']
-  rules:
-    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
-    - if: $CI_COMMIT_TAG
-  script:
-    - >
-      docker build
-      --file apps/web/Dockerfile
-      --build-arg NEXT_PUBLIC_SITE_URL="${NEXT_PUBLIC_SITE_URL:-https://nevix.ai}"
-      --build-arg NEXT_PUBLIC_ENV=production
-      --tag "$CI_REGISTRY_IMAGE/web:$CI_COMMIT_SHORT_SHA"
-      --tag "$CI_REGISTRY_IMAGE/web:latest"
-      .
-    - docker push "$CI_REGISTRY_IMAGE/web:$CI_COMMIT_SHORT_SHA"
-    - docker push "$CI_REGISTRY_IMAGE/web:latest"
-
-package:api:
-  stage: package
-  extends: .docker
-  needs: ['test:api', 'test:migrations', 'security:python-dependencies']
-  rules:
-    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
-    - if: $CI_COMMIT_TAG
-  script:
-    - >
-      docker build
-      --file apps/api/Dockerfile
-      --tag "$CI_REGISTRY_IMAGE/api:$CI_COMMIT_SHORT_SHA"
-      --tag "$CI_REGISTRY_IMAGE/api:latest"
-      apps/api
-    - docker push "$CI_REGISTRY_IMAGE/api:$CI_COMMIT_SHORT_SHA"
-    - docker push "$CI_REGISTRY_IMAGE/api:latest"
-
-package:cms:
-  stage: package
-  extends: .docker
-  needs: []
-  rules:
-    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
-      changes:
-        - apps/cms/**/*
-    - if: $CI_COMMIT_TAG
-  script:
-    - >
-      docker build
-      --file apps/cms/Dockerfile
-      --tag "$CI_REGISTRY_IMAGE/cms:$CI_COMMIT_SHORT_SHA"
-      --tag "$CI_REGISTRY_IMAGE/cms:latest"
-      apps/cms
-    - docker push "$CI_REGISTRY_IMAGE/cms:$CI_COMMIT_SHORT_SHA"
-    - docker push "$CI_REGISTRY_IMAGE/cms:latest"
-
-# =================================================================================================
-# Deploy
-#
-# Staging deploys automatically from the default branch. Production is manual — specification §21
-# places an approval gate before production, and instruction §46 forbids deploying blindly.
-# =================================================================================================
-
-.deploy:
-  image: alpine:3.21
-  before_script:
-    - apk add --no-cache openssh-client curl
-    - mkdir -p ~/.ssh && chmod 700 ~/.ssh
-    - echo "$DEPLOY_SSH_KEY" | tr -d '\r' > ~/.ssh/id_ed25519
-    - chmod 600 ~/.ssh/id_ed25519
-    # Pinned host key. Disabling host-key checking would make the deploy vulnerable to a
-    # man-in-the-middle on the runner network.
-    - echo "$DEPLOY_KNOWN_HOSTS" > ~/.ssh/known_hosts
-    - chmod 644 ~/.ssh/known_hosts
-
-deploy:staging:
-  stage: deploy
-  extends: .deploy
-  needs: ['package:web', 'package:api']
-  rules:
-    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
-  environment:
-    name: staging
-    url: https://staging.nevix.ai
-  script:
-    - |
-      ssh -o StrictHostKeyChecking=yes "$STAGING_SSH_USER@$STAGING_SSH_HOST" bash -s <<EOF
-        set -euo pipefail
-        cd /opt/nevix
-        export IMAGE_TAG="$CI_COMMIT_SHORT_SHA"
-        docker compose -f docker-compose.yml -f docker-compose.staging.yml pull
-        docker compose -f docker-compose.yml -f docker-compose.staging.yml up -d --remove-orphans
-        docker image prune -f --filter "until=168h"
-      EOF
-    # Smoke test. A deploy that starts but does not serve is a failed deploy.
-    - sleep 20
-    - curl --fail --silent --show-error --max-time 30 https://staging.nevix.ai/api/v1/health
-    - curl --fail --silent --show-error --max-time 30 -o /dev/null https://staging.nevix.ai/
-
-deploy:production:
-  stage: deploy
-  extends: .deploy
-  needs: ['deploy:staging']
-  rules:
-    # Manual, on the default branch only, and never automatic.
-    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
-      when: manual
-      allow_failure: false
-  environment:
-    name: production
-    url: https://nevix.ai
-    on_stop: rollback:production
-  script:
-    - |
-      ssh -o StrictHostKeyChecking=yes "$PRODUCTION_SSH_USER@$PRODUCTION_SSH_HOST" bash -s <<EOF
-        set -euo pipefail
-        cd /opt/nevix
-
-        # Record the tag currently running, so the rollback job knows where to return to.
-        docker compose config --images | head -1 > .previous-image-tag || true
-
-        # Back up before the migration runs. A failed migration with no recent backup is the
-        # scenario this protects against.
-        ./scripts/backup-database.sh --label "pre-deploy-$CI_COMMIT_SHORT_SHA"
-
-        export IMAGE_TAG="$CI_COMMIT_SHORT_SHA"
-        docker compose pull
-        docker compose up -d --remove-orphans
-        docker image prune -f --filter "until=168h"
-      EOF
-    - sleep 25
-    - curl --fail --silent --show-error --max-time 30 https://nevix.ai/api/v1/health
-    - curl --fail --silent --show-error --max-time 30 -o /dev/null https://nevix.ai/
-    - curl --fail --silent --show-error --max-time 30 -o /dev/null https://nevix.ai/services
-    - curl --fail --silent --show-error --max-time 30 -o /dev/null https://nevix.ai/sitemap.xml
-
-rollback:production:
-  stage: deploy
-  extends: .deploy
-  needs: ['deploy:production']
-  rules:
-    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
-      when: manual
-      allow_failure: true
-  environment:
-    name: production
-    action: stop
-  script:
-    - |
-      ssh -o StrictHostKeyChecking=yes "$PRODUCTION_SSH_USER@$PRODUCTION_SSH_HOST" bash -s <<'EOF'
-        set -euo pipefail
-        cd /opt/nevix
-        ./scripts/rollback.sh
-      EOF
-    - sleep 20
-    - curl --fail --silent --show-error --max-time 30 https://nevix.ai/api/v1/health

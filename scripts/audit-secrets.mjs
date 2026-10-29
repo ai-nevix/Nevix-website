@@ -51,14 +51,12 @@ const SCAN_EXTENSIONS = new Set([
 
 /**
  * Files that legitimately contain secret-shaped strings.
- * `.env.example` holds empty placeholders; the compose files reference variables, not values;
- * test fixtures use obviously fake credentials that the application refuses in production.
+ * `.env.example` holds empty placeholders; test fixtures use obviously fake credentials that the
+ * application refuses in production.
  */
 const ALLOWED_PATHS = [
   '.env.example',
-  'docker-compose.dev.yml',
   'apps/api/tests/',
-  'apps/cms/Dockerfile',
   'scripts/audit-secrets.mjs',
   'scripts/generate-secrets.sh',
   'docs/',

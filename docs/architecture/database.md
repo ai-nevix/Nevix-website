@@ -11,7 +11,9 @@ PostgreSQL 16 (`pgvector/pgvector:pg16`). One instance, two databases.
 | `nevix` | FastAPI | leads, contact_events, newsletter_subscribers, site_settings |
 | `nevix_cms` | Strapi | CMS content and Strapi's own tables |
 
-Created by `infra/docker/postgres/init/01-create-cms-database.sh` on first start.
+`nevix_cms` must be created manually (`CREATE DATABASE nevix_cms;`) — the init script that used to
+do this ran as part of the Docker Compose Postgres container and was removed with Docker (see
+[ADR-005](./adr/ADR-005-docker-compose.md)).
 
 **Content entities are not duplicated into `nevix`.** Specification §16 and instruction §28 both
 require this: the CMS is the single source of truth for services, solutions, industries, products,
@@ -132,8 +134,10 @@ construct or an irreversible migration.
 
 ## 6. Security
 
-- **Not published to the host.** No `ports:` mapping; attached only to the `internal` Docker
-  network, which is declared `internal: true` and therefore has no route to the internet either.
+- **Must not be reachable from outside the host.** The Docker network isolation that previously
+  enforced this was removed along with Docker (see [ADR-005](./adr/ADR-005-docker-compose.md));
+  whatever replaces it must bind PostgreSQL to loopback or an isolated network, not a public
+  interface.
 - `scram-sha-256` authentication, set at `initdb` time.
 - Credentials from the environment only.
 - Every query is parameterised through SQLAlchemy. The admin search escapes `%` and `_` explicitly

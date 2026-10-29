@@ -48,7 +48,6 @@ export const digitalEngineeringServices: Service[] = [
           'No. Our default stack is entirely open source and self-hostable — you can run it on your own infrastructure. This website is built on exactly that stack.',
       },
     ],
-    solutionSlugs: ['custom-digital-portals'],
     order: 1,
     seo: {
       description:
@@ -85,7 +84,7 @@ export const digitalEngineeringServices: Service[] = [
       'Schema changes managed through reviewed migrations',
       'Test coverage on the paths where failure is expensive',
     ],
-    solutionSlugs: ['custom-digital-portals', 'ai-enabled-internal-tools'],
+    solutionSlugs: ['aquasales', 'vastrix-shopping-agent', 'nevix-forge', 'digital-portfolio-website'],
     order: 2,
     seo: {
       description:
@@ -115,6 +114,7 @@ export const digitalEngineeringServices: Service[] = [
       'A reproducible deployment path',
       'Documentation and handover that let your team take ownership',
     ],
+    solutionSlugs: ['meditech-buddy'],
     order: 3,
     seo: {
       description:
@@ -152,6 +152,7 @@ export const digitalEngineeringServices: Service[] = [
       'Thin route handlers with testable business logic behind them',
       'Rate limiting and health checks on public surfaces',
     ],
+    solutionSlugs: ['digital-portfolio-website'],
     order: 4,
     seo: {
       description:
@@ -199,6 +200,7 @@ export const digitalEngineeringServices: Service[] = [
           'Yes. We target WCAG 2.2 AA principles as a design constraint — contrast, focus order, target sizes, keyboard operability and no information conveyed by colour alone. It is substantially cheaper than remediating after launch, and for public-sector work it is usually mandatory.',
       },
     ],
+    solutionSlugs: ['digital-portfolio-website'],
     order: 5,
     seo: {
       description:
@@ -229,6 +231,7 @@ export const digitalEngineeringServices: Service[] = [
       'Runbooks covering deployment, rollback and routine operations',
       'Handover verified by your team, not asserted by ours',
     ],
+    solutionSlugs: ['digital-portfolio-website'],
     order: 6,
     seo: {
       description:
@@ -285,7 +288,7 @@ export const digitalEngineeringServices: Service[] = [
           'Most likely not, at least not initially. A single Linux host running Docker Compose handles a great deal of traffic and is far cheaper to operate. We move to orchestration when scale, isolation or operational requirements justify it — introducing it for appearance is a cost you pay every day afterwards.',
       },
     ],
-    solutionSlugs: ['infrastructure-automation'],
+    solutionSlugs: ['nevix-cloud-matrix', 'infra-ansible'],
     order: 7,
     seo: {
       description:

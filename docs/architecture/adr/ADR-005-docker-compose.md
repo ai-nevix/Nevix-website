@@ -1,6 +1,9 @@
 # ADR-005 — Docker Compose, not Kubernetes
 
-**Status:** Accepted
+**Status:** Superseded 2026-10-29 — Docker was removed from the project entirely (it was
+consuming enough host memory to starve other processes on the development machine). No
+replacement deployment method has been chosen yet; until one is, the project has no documented
+way to build images or deploy. This record is kept for the reasoning behind the original choice.
 **Date:** 2026-09-17
 **Specification reference:** §20.1, instruction §6
 

@@ -68,7 +68,7 @@ export const aiIntelligenceServices: Service[] = [
           'That is a design question we answer up front. Depending on the task the system routes low-confidence outputs to a person, asks a clarifying question, or declines and escalates. Human-in-the-loop where oversight is required is one of our stated engineering principles.',
       },
     ],
-    solutionSlugs: ['ai-knowledge-assistant', 'ai-document-processing'],
+    solutionSlugs: ['meditech-buddy', 'vastrix-shopping-agent', 'nevix-forge'],
     caseStudySlugs: ['knowledge-assistant-support-operations'],
     order: 1,
     seo: {
@@ -122,7 +122,7 @@ export const aiIntelligenceServices: Service[] = [
           'Every tool call, its inputs and its result are written to a structured log tied to a request identifier. You can reconstruct the full chain of reasoning and actions for any task after the fact.',
       },
     ],
-    solutionSlugs: ['intelligent-ticket-triage', 'ai-enabled-internal-tools'],
+    solutionSlugs: ['vastrix-shopping-agent', 'nevix-forge', 'tradeagent', 'resq-agent'],
     caseStudySlugs: ['intelligent-ticket-triage-demo'],
     order: 2,
     seo: {
@@ -171,7 +171,7 @@ export const aiIntelligenceServices: Service[] = [
           'No. We will establish a baseline, report measured performance against a held-out set, and be explicit about where the model is unreliable. Guaranteed accuracy claims are something we deliberately do not make.',
       },
     ],
-    solutionSlugs: ['data-driven-decision-platform'],
+    solutionSlugs: ['tradeagent', 'thyroidai'],
     order: 3,
     seo: {
       description:
@@ -219,7 +219,7 @@ export const aiIntelligenceServices: Service[] = [
           'Yes, subject to the available models and the quality of training or evaluation data in that language. We confirm feasibility for your specific languages during discovery rather than assuming it.',
       },
     ],
-    solutionSlugs: ['intelligent-ticket-triage', 'ai-knowledge-assistant'],
+    solutionSlugs: ['meditech-buddy', 'talk-to-database', 'resq-agent'],
     order: 4,
     seo: {
       description:
@@ -267,6 +267,7 @@ export const aiIntelligenceServices: Service[] = [
           'Often, yes — it depends on resolution, frame rate, placement and network capacity. We assess the existing infrastructure during discovery and will say clearly if a camera change is required to reach usable accuracy.',
       },
     ],
+    solutionSlugs: ['meditech-buddy', 'vastrix-shopping-agent', 'thyroidai'],
     order: 5,
     seo: {
       description:
@@ -315,7 +316,6 @@ export const aiIntelligenceServices: Service[] = [
           'On infrastructure you control. Our default deployment uses self-hosted object storage with access controls, and the original document is retained and linked to the extracted record so any figure can be traced back to its source.',
       },
     ],
-    solutionSlugs: ['ai-document-processing', 'document-to-workflow'],
     caseStudySlugs: ['invoice-to-workflow-automation'],
     order: 6,
     seo: {
@@ -360,7 +360,6 @@ export const aiIntelligenceServices: Service[] = [
           'Then that is the finding, and we will say so. Problem-first engineering is one of our stated principles: a well-designed rule-based workflow or a fixed reporting pipeline is frequently the better answer, and it is cheaper to discover that in an assessment than after a build.',
       },
     ],
-    solutionSlugs: ['ai-knowledge-assistant'],
     order: 7,
     seo: {
       description:

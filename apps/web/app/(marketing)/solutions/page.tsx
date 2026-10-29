@@ -14,15 +14,16 @@ import { buildMetadata } from '@/lib/seo/metadata';
 /**
  * Solutions index — specification §8, instruction §20.
  *
- * Solutions are outcome-oriented and must not simply restate the services page. Each entry leads
- * with the business problem rather than the capability.
+ * Unlike the service catalogue, every entry here is a named project NEVIX has actually designed
+ * or built. Each carries a build-status badge (Concept, Prototype, Beta, Live) stating plainly how
+ * far it has actually got, rather than presenting every entry as equally finished.
  */
 export const revalidate = 3600;
 
 export const metadata = buildMetadata({
   title: 'Solutions',
   description:
-    'Outcome-oriented solution patterns from NEVIX: document processing, intelligent ticket triage, workflow automation, knowledge assistants, operational dashboards, digital portals and more.',
+    'Projects NEVIX has built: AquaSales, Meditech Buddy, Nevix Cloud Matrix, RESQ Agent, ThyroidAI and more, spanning AI, automation, data platforms and digital engineering — each labelled with its actual build status.',
   path: '/solutions',
 });
 
@@ -34,8 +35,8 @@ export default async function SolutionsPage() {
       <PageHero
         breadcrumbs={[{ name: 'Solutions', href: '/solutions' }]}
         eyebrow="Solutions"
-        title="Start from the problem, not the technology"
-        description="A service answers what NEVIX can build. A solution answers how a specific business problem gets solved — the workflow, the technical approach and the kind of outcome it is designed to produce."
+        title="Projects we have actually built"
+        description="A service answers what NEVIX can build. A solution shows a specific project — the problem it addresses, how it works and the technology behind it — labelled with its real build status rather than presented as finished."
         actions={
           <>
             <Button asChild size="lg" variant="onDark">
@@ -56,7 +57,7 @@ export default async function SolutionsPage() {
               </div>
               <div>
                 <dt className="font-bold text-white">Solutions</dt>
-                <dd className="mt-1 text-neutral-400">How does it solve a business problem?</dd>
+                <dd className="mt-1 text-neutral-400">What has NEVIX actually built?</dd>
               </div>
               <div>
                 <dt className="font-bold text-white">Industries</dt>
@@ -69,9 +70,9 @@ export default async function SolutionsPage() {
 
       <Section tone="light" size="lg">
         <SectionHeading
-          eyebrow={`${solutions.length} solution patterns`}
-          title="Where we see the same problem repeatedly"
-          description="Each of these combines several services into an end-to-end approach. Every one is composed only of capabilities documented in our service catalogue."
+          eyebrow={`${solutions.length} projects`}
+          title="Each one labelled with where it actually stands"
+          description="Concept means a planning document with no code. Prototype means a working demonstration that has not been independently verified or deployed. Beta means built and functioning, with active development ongoing. Live means generally available and supported."
         />
 
         <Stagger className="mt-14">
@@ -85,17 +86,17 @@ export default async function SolutionsPage() {
         </Stagger>
 
         <Reveal className="mt-14">
-          {/* DUMMY-DATA: DD-012 — replace illustrative outcomes with measured ones when available. */}
-          <Notice variant="illustrative" title="About the outcomes described on these pages">
-            Solution pages describe the kind of result each pattern is designed to produce. They are
-            illustrative, not guarantees. NEVIX does not publish guaranteed ROI, accuracy or
-            automation figures — measurable objectives are agreed and evidenced per engagement.
+          <Notice variant="illustrative" title="About the capabilities described on these pages">
+            Solution pages describe what each project is designed to do. They are illustrative, not
+            guarantees. NEVIX does not publish guaranteed ROI, accuracy or automation figures — where
+            a project has not been independently verified or is a specification rather than a build,
+            the status badge and the note on that page say so.
           </Notice>
         </Reveal>
       </Section>
 
       <CtaSection
-        eyebrow="No pattern quite fits?"
+        eyebrow="Looking for something specific?"
         title="Most problems do not arrive pre-categorised"
         description="If none of these match what you are dealing with, describe the problem in your own terms. Working out which capabilities apply is our job, not yours."
         primary={ctas.primary}

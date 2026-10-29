@@ -4,6 +4,11 @@
 > lockfile, so this is reviewed when an image tag changes.
 >
 > Last reviewed: 2026-09-17.
+>
+> **Stale.** Docker has been removed from the project (see
+> [ADR-005](../architecture/adr/ADR-005-docker-compose.md)), so none of the container images below
+> are currently in use. Kept for reference until a replacement runtime is chosen and this
+> inventory is rewritten around it.
 
 ## Container images
 

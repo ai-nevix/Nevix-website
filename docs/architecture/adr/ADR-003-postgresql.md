@@ -15,8 +15,10 @@ One PostgreSQL 16 instance, with separate databases for the application and for 
 is `pgvector/pgvector:pg16`, so the vector extension is present but not enabled: turning it on is a
 migration, not a rebuild.
 
-The container publishes no port. It is attached only to the `internal` Docker network, which is
-declared `internal: true` and therefore has no route to the internet either.
+The database must publish no port and have no route to the internet. This was previously enforced
+by an `internal: true` Docker network; Docker has since been removed from the project (see
+[ADR-005](./ADR-005-docker-compose.md)) and the isolation needs to be re-established by whatever
+replaces it.
 
 ## Alternatives considered
 

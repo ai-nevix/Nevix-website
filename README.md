@@ -15,8 +15,9 @@ AI • Automation • Digital Engineering • Data & Analytics
 ---
 
 The NEVIX website and platform foundation: a Next.js marketing site, a FastAPI lead-capture
-backend, and a self-hosted Strapi CMS — all open source, all self-hostable, deployed with Docker
-Compose behind Nginx.
+backend, and a self-hosted Strapi CMS — all open source, all self-hostable. Docker has been
+removed from the project; a replacement deployment method has not been chosen yet (see
+[ADR-005](docs/architecture/adr/ADR-005-docker-compose.md)).
 
 **Source of truth:** [`docs/source-material/`](docs/source-material/) holds the supplied
 specification and service catalogue. Plain-text extractions are committed alongside them so
@@ -49,31 +50,13 @@ sitemap entry.
 
 ## Quick start
 
-### With Docker (recommended)
-
 ```bash
+# Prerequisites: Node 22.12+ (see .nvmrc), Python 3.12+, PostgreSQL 16
+
 git clone <repository> nevix-website && cd nevix-website
 
 cp .env.example .env
 ./scripts/generate-secrets.sh --write      # generates every secret, chmod 600
-
-docker compose -f docker-compose.yml -f docker-compose.dev.yml up -d
-```
-
-| Service | URL |
-| --- | --- |
-| Website | http://localhost:3000 |
-| API | http://localhost:8000 |
-| API docs | http://localhost:8000/docs |
-| CMS admin | http://localhost:1337/admin |
-| Mail capture | http://localhost:8025 |
-
-Nothing leaves your machine: Mailpit captures all outbound email.
-
-### Without Docker
-
-```bash
-# Prerequisites: Node 22.12+ (see .nvmrc), Python 3.12+, PostgreSQL 16
 
 npm install
 npm run dev                       # http://localhost:3000
@@ -81,7 +64,7 @@ npm run dev                       # http://localhost:3000
 cd apps/api
 python -m venv .venv && .venv/bin/pip install -e ".[dev]"
 .venv/bin/alembic upgrade head
-.venv/bin/uvicorn app.main:app --reload
+.venv/bin/uvicorn app.main:app --reload   # http://localhost:8000, docs at /docs
 ```
 
 The site serves its committed content by default, so **no CMS is required to run or build it**
@@ -100,13 +83,9 @@ nevix-website/
 ├── packages/
 │   ├── types/        Shared domain and API contract types
 │   └── config/       Shared TypeScript and ESLint config
-├── infra/
-│   ├── nginx/        Reverse proxy, TLS, security headers, rate limits
-│   ├── docker/       Container init scripts
-│   └── monitoring/   Prometheus, Grafana, Loki, alert rules
 ├── brand-assets/     Supplied NEVIX artwork — the originals, never edited
 ├── docs/             Architecture, ADRs, deployment, security, licences
-├── scripts/          Backup, restore, rollback, secrets, audits, brand-asset derivation
+├── scripts/          Secrets, audits, brand-asset derivation
 └── tests/e2e/        Playwright — critical flows from specification §27.1
 ```
 
@@ -128,20 +107,20 @@ nevix-website/
 ## Architecture
 
 ```
-Internet → Nginx (TLS, headers, rate limits)
-             ├── nevix.ai      → Next.js ──proxy──┐
-             ├── api.nevix.ai  → FastAPI ◄────────┘
-             └── cms.nevix.ai  → Strapi
-                                     │
-                          internal network (no egress)
-                                     └── PostgreSQL
+Internet → nevix.ai      → Next.js ──proxy──┐
+         → api.nevix.ai  → FastAPI ◄────────┘
+         → cms.nevix.ai  → Strapi
+                               │
+                          PostgreSQL
 ```
 
 The browser only ever talks to one origin. The website proxies API calls through
 `/api/backend/*`, which keeps `connect-src 'self'` intact in the Content Security Policy and means
 no CORS is needed on public endpoints.
 
-PostgreSQL publishes **no port at all** and sits on a Docker network declared `internal: true`.
+The reverse proxy, TLS termination and network isolation that previously ran through Docker
+Compose and Nginx have been removed along with Docker and are not yet replaced — see
+[ADR-005](docs/architecture/adr/ADR-005-docker-compose.md).
 
 Full detail: [`docs/architecture/architecture-overview.md`](docs/architecture/architecture-overview.md).
 
@@ -153,9 +132,7 @@ Full detail: [`docs/architecture/architecture-overview.md`](docs/architecture/ar
 | Backend | Python 3.12, FastAPI, Pydantic v2, SQLAlchemy 2 (async), Alembic |
 | Database | PostgreSQL 16 (pgvector image) |
 | CMS | Strapi Community Edition 5 |
-| Infrastructure | Docker Compose, Nginx |
 | CI/CD | GitLab CE |
-| Observability | Prometheus, Grafana, Loki, GlitchTip |
 
 Every component is open source and self-hostable. No third-party SaaS is required to run the
 system, and there is no analytics vendor, CDN dependency or font CDN. Licence inventory:
@@ -246,21 +223,16 @@ fails.
 ## Build and deploy
 
 ```bash
-docker compose build
-docker compose up -d
+npm run build                                   # web
+cd apps/api && .venv/bin/alembic upgrade head   # api
 ```
 
 CI (`.gitlab-ci.yml`): lint → type-check → tests → migration test on real PostgreSQL → build →
-security scans → image build → **staging** → *manual approval* → **production**.
-
-Production deployment takes a backup before running migrations, then smoke-tests afterwards.
-
-```bash
-./scripts/rollback.sh                  # code rollback, ~1 minute
-./scripts/backup-database.sh           # manual backup
-./scripts/restore-database.sh --verify # prove a backup actually restores
-./scripts/issue-certificates.sh nevix.ai
-```
+security scans. Packaging and deployment are not currently defined — Docker has been removed and
+no replacement deployment method has been chosen yet (see
+[ADR-005](docs/architecture/adr/ADR-005-docker-compose.md)). The backup/restore/rollback scripts
+and the reverse-proxy and TLS setup that used to live under `infra/` were built around the Docker
+Compose topology and were removed with it.
 
 - [Deployment](docs/architecture/deployment.md)
 - [Rollback](docs/deployment/rollback.md)
@@ -349,7 +321,8 @@ way until the placeholders in [`docs/dummy-data/`](docs/dummy-data/) are replace
 [content governance](#content-governance).
 
 **This is a preview, not a deployment.** It serves from a workstation, has no TLS of its own, no
-monitoring and no backups. Production is Docker Compose behind Nginx, as above.
+monitoring and no backups. Production deployment is undocumented — see
+[Build and deploy](#build-and-deploy).
 
 ---
 
@@ -398,7 +371,7 @@ A standalone server is holding the directory. Stop it, or use
 `scripts/serve-standalone.mjs`, which stages to a port-specific copy outside `.next`.
 
 **Contact form returns 502**
-The API is unreachable. `docker compose ps api` and check `API_INTERNAL_URL`.
+The API is unreachable. Check that the `uvicorn` process is running and verify `API_INTERNAL_URL`.
 
 **Site shows no content after switching to Strapi**
 Strapi has no published entries. Run the seed
@@ -414,9 +387,8 @@ in `lib/utils.ts` — see [frontend.md §5](docs/architecture/frontend.md).
 **Playwright fails every test with `ENOENT ... .playwright-artifacts`**
 Set `PLAYWRIGHT_OUTPUT_DIR` outside your synced folder.
 
-**Migrations fail on container start**
-Check `docker compose logs api`. The entrypoint retries ten times; set `RUN_MIGRATIONS=false` when
-a separate job owns migrations.
+**Migrations fail on API startup**
+Check the API process logs. Set `RUN_MIGRATIONS=false` when a separate job owns migrations.
 
 ---
 

@@ -17,6 +17,7 @@ import { Badge } from '@/components/ui/badge';
 import { Card, CardBody, CardDescription, CardTitle } from '@/components/ui/card';
 import { IconTile } from '@/components/ui/icon';
 import { productStatusMeta } from '@/content/products';
+import { solutionStatusMeta } from '@/content/solutions';
 import { formatDate, readingMinutes, toDateTimeAttribute } from '@/lib/utils';
 
 /**
@@ -129,11 +130,23 @@ export function ServiceCard({ service }: { service: Service }) {
 /* Solution                                                                                        */
 /* ---------------------------------------------------------------------------------------------- */
 
+const statusTone = {
+  neutral: 'neutral',
+  info: 'info',
+  warning: 'warning',
+  success: 'success',
+} as const;
+
 export function SolutionCard({ solution }: { solution: Solution }) {
+  const status = solutionStatusMeta[solution.status];
+
   return (
     <Card interactive className="group h-full">
       <CardBody className="gap-4">
-        <IconTile name={solution.icon} />
+        <div className="flex items-start justify-between gap-3">
+          <IconTile name={solution.icon} />
+          <Badge tone={statusTone[status.tone]}>{status.label}</Badge>
+        </div>
 
         <CardTitle>
           <Link href={`/solutions/${solution.slug}`} className={stretchedLink}>
@@ -187,13 +200,6 @@ export function IndustryCard({ industry }: { industry: Industry }) {
 /* ---------------------------------------------------------------------------------------------- */
 /* Product                                                                                         */
 /* ---------------------------------------------------------------------------------------------- */
-
-const statusTone = {
-  neutral: 'neutral',
-  info: 'info',
-  warning: 'warning',
-  success: 'success',
-} as const;
 
 export function ProductCard({ product }: { product: Product }) {
   const status = productStatusMeta[product.status];

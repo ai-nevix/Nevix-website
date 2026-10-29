@@ -41,7 +41,6 @@ apps/cms/public/uploads/*
 !.env.example
 *.pem
 *.key
-!infra/nginx/certs/.gitkeep
 
 # Testing / reports
 coverage/

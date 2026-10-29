@@ -2,6 +2,11 @@
 
 Specification §30, tracked verbatim with current status and the evidence behind each.
 
+> Docker has since been removed from the project (see
+> [ADR-005](architecture/adr/ADR-005-docker-compose.md)). Criterion #8 below and any other
+> Docker-specific evidence reflect the state of the project before that removal, not the current
+> state.
+
 **Legend:** ✅ met and verified · ⚠️ met in code, not verifiable in this environment ·
 ⬜ blocked on information or a production environment
 

@@ -1,9 +1,9 @@
 /**
- * Assembles and runs the Next.js standalone output — the same artifact the production container
- * runs, so local verification exercises the real thing rather than `next start`.
+ * Assembles and runs the Next.js standalone output — the production deployment artifact, so local
+ * verification exercises the real thing rather than `next start`.
  *
  * `output: 'standalone'` emits a minimal server but does not copy `.next/static` or `public` into
- * it; the Dockerfile does that, and so does this script.
+ * it; this script does.
  *
  * The assembled server is staged into `.serve/` rather than run in place. Running it from inside
  * `.next` keeps a file handle open on the build directory, which makes the next `next build` fail

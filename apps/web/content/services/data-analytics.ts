@@ -31,7 +31,7 @@ export const dataAnalyticsServices: Service[] = [
       'Documented data-quality issues rather than silent corrections',
       'Explicit limitations attached to each finding',
     ],
-    solutionSlugs: ['operational-dashboards'],
+    solutionSlugs: ['talk-to-database', 'thyroidai'],
     order: 1,
     seo: {
       description:
@@ -62,7 +62,7 @@ export const dataAnalyticsServices: Service[] = [
       'Data freshness visible on the dashboard',
       'Metrics nobody acts on removed rather than hidden',
     ],
-    solutionSlugs: ['operational-dashboards', 'data-driven-decision-platform'],
+    solutionSlugs: ['aquasales', 'nevix-cloud-matrix', 'talk-to-database'],
     caseStudySlugs: ['operations-reporting-platform'],
     order: 2,
     seo: {
@@ -99,7 +99,6 @@ export const dataAnalyticsServices: Service[] = [
       'Freshness and volume exported as monitored metrics',
       'Transformation logic reviewable in version control',
     ],
-    solutionSlugs: ['operational-dashboards', 'data-driven-decision-platform'],
     order: 3,
     seo: {
       description:
@@ -142,7 +141,6 @@ export const dataAnalyticsServices: Service[] = [
           'We cannot tell you before assessing your data, and we will not guess. What we will do is backtest against historical periods so you see measured accuracy over comparable conditions, with prediction intervals, before you commit to acting on it.',
       },
     ],
-    solutionSlugs: ['data-driven-decision-platform'],
     order: 4,
     seo: {
       description:
@@ -172,7 +170,7 @@ export const dataAnalyticsServices: Service[] = [
       'Report definitions reviewable in version control',
       'Alerting on delivery failure',
     ],
-    solutionSlugs: ['operational-dashboards'],
+    solutionSlugs: ['nevix-cloud-matrix', 'talk-to-database'],
     caseStudySlugs: ['operations-reporting-platform'],
     order: 5,
     seo: {
@@ -203,7 +201,7 @@ export const dataAnalyticsServices: Service[] = [
       'Historical scores explainable after the fact',
       'Versioned rule changes with effective dates',
     ],
-    solutionSlugs: ['data-driven-decision-platform', 'operational-dashboards'],
+    solutionSlugs: ['nevix-cloud-matrix'],
     order: 6,
     seo: {
       description:
