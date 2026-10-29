@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 
-import { IndustryCard, ServiceCard } from '@/components/cards';
+import { IndustryCard, ServiceCard, SolutionMark } from '@/components/cards';
 import { CtaSection } from '@/components/sections/cta-section';
 import { Notice } from '@/components/sections/notice';
 import { PageHero } from '@/components/sections/page-hero';
@@ -10,6 +10,7 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Section, SectionHeading } from '@/components/ui/section';
 import { Reveal, Stagger, StaggerItem } from '@/components/ui/motion';
+import { SolutionGallery } from '@/components/sections/solution-gallery';
 import { solutions as allSolutions, solutionStatusMeta } from '@/content/solutions';
 import { ctas } from '@/content/site';
 import { getIndustries, getServices, getSolutionBySlug } from '@/lib/cms';
@@ -76,7 +77,10 @@ export default async function SolutionDetailPage({
         aside={
           <div className="rounded-(--radius-panel) border border-white/12 bg-white/5 p-6 backdrop-blur-sm">
             <div className="flex items-center justify-between gap-3">
-              <p className="text-eyebrow text-cyan-brand-400 uppercase">The problem</p>
+              <div className="flex items-center gap-3">
+                <SolutionMark solution={solution} tone="onDark" />
+                <p className="text-eyebrow text-cyan-brand-400 uppercase">The problem</p>
+              </div>
               <Badge tone={status.tone}>{status.label}</Badge>
             </div>
             <p className="mt-4 text-base leading-relaxed text-neutral-200">{solution.problem}</p>
@@ -90,6 +94,16 @@ export default async function SolutionDetailPage({
           <Notice variant="compliance" title="What this status means">
             {solution.statusNote}
           </Notice>
+        </Section>
+      ) : null}
+
+      {/* --- Gallery --------------------------------------------------------------------------- */}
+      {solution.gallery && solution.gallery.length > 0 ? (
+        <Section tone="light" size="lg">
+          <SectionHeading eyebrow="Screenshots" title="What it looks like" />
+          <div className="mt-12">
+            <SolutionGallery images={solution.gallery} solutionName={solution.name} />
+          </div>
         </Section>
       ) : null}
 

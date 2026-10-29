@@ -1,6 +1,6 @@
 import Link from 'next/link';
 
-import { SolutionCard } from '@/components/cards';
+import { SolutionFlipTile } from '@/components/cards';
 import { CtaSection } from '@/components/sections/cta-section';
 import { Notice } from '@/components/sections/notice';
 import { PageHero } from '@/components/sections/page-hero';
@@ -72,14 +72,14 @@ export default async function SolutionsPage() {
         <SectionHeading
           eyebrow={`${solutions.length} projects`}
           title="Each one labelled with where it actually stands"
-          description="Concept means a planning document with no code. Prototype means a working demonstration that has not been independently verified or deployed. Beta means built and functioning, with active development ongoing. Live means generally available and supported."
+          description="Hover, focus or tap a tile to flip it and see what it does — Concept means a planning document with no code; Prototype means a working demonstration that has not been independently verified or deployed; Beta means built and functioning, with active development ongoing; Live means generally available and supported."
         />
 
         <Stagger className="mt-14">
           <ul className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {solutions.map((solution) => (
               <StaggerItem as="li" key={solution.slug}>
-                <SolutionCard solution={solution} />
+                <SolutionFlipTile solution={solution} />
               </StaggerItem>
             ))}
           </ul>

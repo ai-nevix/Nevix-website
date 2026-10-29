@@ -1,6 +1,8 @@
 export { TeamCard } from './team-card';
+export { SolutionFlipTile } from './solution-flip-tile';
 
 import { ArrowRight } from 'lucide-react';
+import Image from 'next/image';
 import Link from 'next/link';
 
 import type {
@@ -137,6 +139,33 @@ const statusTone = {
   success: 'success',
 } as const;
 
+/**
+ * A project's own logo where one has been supplied (`apps/web/public/solutions/<slug>.<ext>`),
+ * falling back to the standard icon tile otherwise — so a solution works before its logo exists
+ * and is not re-plumbed once it does.
+ */
+export function SolutionMark({
+  solution,
+  tone = 'brand',
+}: {
+  solution: Solution;
+  tone?: 'brand' | 'onDark';
+}) {
+  if (!solution.logo) return <IconTile name={solution.icon} tone={tone} />;
+
+  return (
+    <span className="inline-flex size-11 shrink-0 items-center justify-center overflow-hidden rounded-xl border border-brand-100 bg-white">
+      <Image
+        src={solution.logo.src}
+        alt={solution.logo.alt}
+        width={solution.logo.width ?? 44}
+        height={solution.logo.height ?? 44}
+        className="size-full object-contain p-1"
+      />
+    </span>
+  );
+}
+
 export function SolutionCard({ solution }: { solution: Solution }) {
   const status = solutionStatusMeta[solution.status];
 
@@ -144,7 +173,7 @@ export function SolutionCard({ solution }: { solution: Solution }) {
     <Card interactive className="group h-full">
       <CardBody className="gap-4">
         <div className="flex items-start justify-between gap-3">
-          <IconTile name={solution.icon} />
+          <SolutionMark solution={solution} />
           <Badge tone={statusTone[status.tone]}>{status.label}</Badge>
         </div>
 

@@ -117,6 +117,11 @@ export interface SolutionStep {
 /** Build status of a NEVIX-developed project (mirrors `ProductStatus`). */
 export type SolutionStatus = 'concept' | 'prototype' | 'beta' | 'live' | 'coming-soon';
 
+/** A screenshot shown in a solution's gallery, with an optional visible caption. */
+export interface GalleryImage extends ImageRef {
+  caption?: string;
+}
+
 export interface Solution {
   slug: string;
   name: string;
@@ -128,11 +133,22 @@ export interface Solution {
   /** Current build status — rendered as a badge, matching the Products convention. */
   status: SolutionStatus;
   /**
+   * The project's own logo, stored under `apps/web/public/solutions/<slug>.<ext>`. Falls back to
+   * the icon tile when absent, so this can be added per project as logos become available.
+   */
+  logo?: ImageRef;
+  /**
    * A short, specific caveat about verifiability, deployment state or regulatory scope, rendered
    * in a compliance notice. Required whenever the project is not independently verifiable (no
    * source available) or carries a health/financial claim that needs qualifying.
    */
   statusNote?: string;
+  /**
+   * Screenshots shown in a lightbox gallery on the detail page, stored under
+   * `apps/web/public/solutions/screenshots/<slug>/`. Omitted or empty hides the gallery section
+   * entirely, so this can be added per project as screenshots become available.
+   */
+  gallery?: GalleryImage[];
   /** The end-to-end workflow this solution implements. */
   workflow: SolutionStep[];
   technicalApproach: string[];

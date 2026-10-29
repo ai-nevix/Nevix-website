@@ -134,6 +134,23 @@ describe('referential integrity', () => {
     }
   });
 
+  it('has a logo on disk for every solution that declares one', () => {
+    for (const solution of solutions) {
+      if (!solution.logo) continue;
+      const file = join(__dirname, '..', 'public', solution.logo.src.replace(/^\//, ''));
+      expect(existsSync(file), `${solution.slug}: ${solution.logo.src} is missing`).toBe(true);
+    }
+  });
+
+  it('has every declared gallery screenshot on disk', () => {
+    for (const solution of solutions) {
+      for (const image of solution.gallery ?? []) {
+        const file = join(__dirname, '..', 'public', image.src.replace(/^\//, ''));
+        expect(existsSync(file), `${solution.slug}: ${image.src} is missing`).toBe(true);
+      }
+    }
+  });
+
   it('resolves every solution -> industry reference', () => {
     for (const solution of solutions) {
       for (const slug of solution.relatedIndustrySlugs ?? []) {

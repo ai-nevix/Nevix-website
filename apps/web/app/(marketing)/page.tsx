@@ -8,7 +8,7 @@ import {
   InsightCard,
   PillarCard,
   ProductCard,
-  SolutionCard,
+  SolutionFlipTile,
 } from '@/components/cards';
 import { NevixIntro } from '@/components/branding/nevix-intro';
 import { HomeHero } from '@/components/hero/home-hero';
@@ -184,8 +184,8 @@ export default async function HomePage() {
       <Section tone="subtle" size="lg">
         <SectionHeading
           eyebrow="Solutions"
-          title="Outcome-oriented solution patterns"
-          description="A service answers what we can build. A solution answers how a specific business problem gets solved — and which capabilities combine to do it."
+          title="Projects we have actually built"
+          description="Hover or tap a tile to see what it does and its real build status — Concept, Prototype, Beta or Coming Soon."
           action={
             <Button asChild variant="secondary">
               <Link href="/solutions">All solutions</Link>
@@ -197,7 +197,7 @@ export default async function HomePage() {
           <ul className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {solutions.slice(0, 6).map((solution) => (
               <StaggerItem as="li" key={solution.slug}>
-                <SolutionCard solution={solution} />
+                <SolutionFlipTile solution={solution} />
               </StaggerItem>
             ))}
           </ul>

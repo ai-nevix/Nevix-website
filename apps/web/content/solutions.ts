@@ -19,6 +19,29 @@ export const solutions: Solution[] = [
     slug: 'aquasales',
     name: 'AquaSales',
     status: 'prototype',
+    logo: { src: '/solutions/aquasales.png', alt: 'AquaSales logo', width: 1536, height: 1024 },
+    gallery: [
+      { src: '/solutions/screenshots/aquasales/01-login.png', alt: 'Login screenshot', caption: 'Login', width: 1672, height: 940 },
+      { src: '/solutions/screenshots/aquasales/02-features.png', alt: 'Features screenshot', caption: 'Features', width: 1671, height: 941 },
+      { src: '/solutions/screenshots/aquasales/03-dashboard.png', alt: 'Dashboard screenshot', caption: 'Dashboard', width: 1672, height: 941 },
+      { src: '/solutions/screenshots/aquasales/04-leads-customer-management.png', alt: 'Leads Customer Management screenshot', caption: 'Leads Customer Management', width: 1672, height: 941 },
+      { src: '/solutions/screenshots/aquasales/05-lead-impot.png', alt: 'Lead Import screenshot', caption: 'Lead Import', width: 1672, height: 940 },
+      { src: '/solutions/screenshots/aquasales/06-lead-validation.png', alt: 'Lead Validation screenshot', caption: 'Lead Validation', width: 1672, height: 941 },
+      { src: '/solutions/screenshots/aquasales/07-campaign-managment.png', alt: 'Campaign Management screenshot', caption: 'Campaign Management', width: 1672, height: 940 },
+      { src: '/solutions/screenshots/aquasales/08-create-campaign.png', alt: 'Create Campaign screenshot', caption: 'Create Campaign', width: 1671, height: 941 },
+      { src: '/solutions/screenshots/aquasales/09-campaign-templates.png', alt: 'Campaign Templates screenshot', caption: 'Campaign Templates', width: 1672, height: 940 },
+      { src: '/solutions/screenshots/aquasales/10-live-calling-monitor.png', alt: 'Live Calling Monitor screenshot', caption: 'Live Calling Monitor', width: 1672, height: 940 },
+      { src: '/solutions/screenshots/aquasales/11-whatsapp-automation.png', alt: 'Whatsapp Automation screenshot', caption: 'Whatsapp Automation', width: 1671, height: 941 },
+      { src: '/solutions/screenshots/aquasales/12-orders-and-payments.png', alt: 'Orders And Payments screenshot', caption: 'Orders And Payments', width: 1670, height: 941 },
+      { src: '/solutions/screenshots/aquasales/13-product-and-catalog.png', alt: 'Product And Catalog screenshot', caption: 'Product And Catalog', width: 1670, height: 942 },
+      { src: '/solutions/screenshots/aquasales/14-order-fulfillment.png', alt: 'Order Fulfillment screenshot', caption: 'Order Fulfillment', width: 1670, height: 942 },
+      { src: '/solutions/screenshots/aquasales/15-reports-and-analytics.png', alt: 'Reports And Analytics screenshot', caption: 'Reports And Analytics', width: 1670, height: 942 },
+      { src: '/solutions/screenshots/aquasales/16-exception-managment.png', alt: 'Exception Management screenshot', caption: 'Exception Management', width: 1670, height: 942 },
+      { src: '/solutions/screenshots/aquasales/17-system-health.png', alt: 'System Health screenshot', caption: 'System Health', width: 1670, height: 942 },
+      { src: '/solutions/screenshots/aquasales/18-users-and-roles.png', alt: 'Users And Roles screenshot', caption: 'Users And Roles', width: 1670, height: 942 },
+      { src: '/solutions/screenshots/aquasales/19-settings.png', alt: 'Settings screenshot', caption: 'Settings', width: 1670, height: 942 },
+      { src: '/solutions/screenshots/aquasales/20-closing.png', alt: 'Closing screenshot', caption: 'Closing', width: 1672, height: 941 },
+    ],
     statusNote:
       'Demonstrated through project documentation, a recorded walkthrough and screenshots — no source code is available for review, so this is presented as a product demonstration rather than a verified technical build.',
     problem:
@@ -85,6 +108,7 @@ export const solutions: Solution[] = [
     slug: 'meditech-buddy',
     name: 'Meditech Buddy',
     status: 'beta',
+    logo: { src: '/solutions/meditech-buddy.png', alt: 'Meditech Buddy logo', width: 1536, height: 1024 },
     statusNote:
       'Meditech Buddy is a self-developed health-information and triage-aid project. It does not provide a medical diagnosis, is not a registered or regulatory-cleared medical device, and is not a substitute for professional care — emergency red flags are surfaced so a person can reach real emergency help faster, not instead of it.',
     problem:
@@ -147,6 +171,36 @@ export const solutions: Solution[] = [
     slug: 'vastrix-shopping-agent',
     name: 'Vastrix Shopping Agent (NEVIX.AI)',
     status: 'prototype',
+    logo: {
+      src: '/solutions/vastrix-shopping-agent.png',
+      alt: 'Vastrix Shopping Agent logo',
+      width: 1672,
+      height: 941,
+    },
+    gallery: [
+      { src: '/solutions/screenshots/vastrix-shopping-agent/01-login.png', alt: 'Login screenshot', caption: 'Login', width: 1671, height: 941 },
+      { src: '/solutions/screenshots/vastrix-shopping-agent/02-home-page.png', alt: 'Home Page screenshot', caption: 'Home Page', width: 1671, height: 941 },
+      { src: '/solutions/screenshots/vastrix-shopping-agent/03-onboarding.png', alt: 'Onboarding screenshot', caption: 'Onboarding', width: 1671, height: 941 },
+      { src: '/solutions/screenshots/vastrix-shopping-agent/04-profile.png', alt: 'Profile screenshot', caption: 'Profile', width: 1671, height: 941 },
+      { src: '/solutions/screenshots/vastrix-shopping-agent/05-profile-capture-guide.png', alt: 'Profile Capture Guide screenshot', caption: 'Profile Capture Guide', width: 1671, height: 941 },
+      { src: '/solutions/screenshots/vastrix-shopping-agent/06-profile-measurement.png', alt: 'Profile Measurement screenshot', caption: 'Profile Measurement', width: 1670, height: 941 },
+      { src: '/solutions/screenshots/vastrix-shopping-agent/07-catalog.png', alt: 'Catalog screenshot', caption: 'Catalog', width: 1670, height: 941 },
+      { src: '/solutions/screenshots/vastrix-shopping-agent/08-catalog-products.png', alt: 'Catalog Products screenshot', caption: 'Catalog Products', width: 1670, height: 941 },
+      { src: '/solutions/screenshots/vastrix-shopping-agent/09-catalog-produc-details.png', alt: 'Catalog Product Details screenshot', caption: 'Catalog Product Details', width: 1670, height: 941 },
+      { src: '/solutions/screenshots/vastrix-shopping-agent/10-try-on.png', alt: 'Try On screenshot', caption: 'Try On', width: 1670, height: 942 },
+      { src: '/solutions/screenshots/vastrix-shopping-agent/11-try-on-job-status.png', alt: 'Try On Job Status screenshot', caption: 'Try On Job Status', width: 1670, height: 942 },
+      { src: '/solutions/screenshots/vastrix-shopping-agent/12-try-on-results.png', alt: 'Try On Results screenshot', caption: 'Try On Results', width: 1670, height: 942 },
+      { src: '/solutions/screenshots/vastrix-shopping-agent/13-try-on-fit-report.png', alt: 'Try On Fit Report screenshot', caption: 'Try On Fit Report', width: 1670, height: 942 },
+      { src: '/solutions/screenshots/vastrix-shopping-agent/14-style-compare.png', alt: 'Style Compare screenshot', caption: 'Style Compare', width: 1670, height: 942 },
+      { src: '/solutions/screenshots/vastrix-shopping-agent/15-ai-stylist.png', alt: 'AI Stylist screenshot', caption: 'AI Stylist', width: 1670, height: 942 },
+      { src: '/solutions/screenshots/vastrix-shopping-agent/16-wadrob.png', alt: 'Wardrobe screenshot', caption: 'Wardrobe', width: 1670, height: 942 },
+      { src: '/solutions/screenshots/vastrix-shopping-agent/17-feedback-and-purchase.png', alt: 'Feedback And Purchase screenshot', caption: 'Feedback And Purchase', width: 1670, height: 942 },
+      { src: '/solutions/screenshots/vastrix-shopping-agent/18-settings.png', alt: 'Settings screenshot', caption: 'Settings', width: 1670, height: 942 },
+      { src: '/solutions/screenshots/vastrix-shopping-agent/19-privacy.png', alt: 'Privacy screenshot', caption: 'Privacy', width: 1670, height: 942 },
+      { src: '/solutions/screenshots/vastrix-shopping-agent/20-privacy.png', alt: 'Privacy screenshot', caption: 'Privacy', width: 1672, height: 941 },
+      { src: '/solutions/screenshots/vastrix-shopping-agent/21-session-security.png', alt: 'Session Security screenshot', caption: 'Session Security', width: 1669, height: 942 },
+      { src: '/solutions/screenshots/vastrix-shopping-agent/22-avatar.png', alt: 'Avatar screenshot', caption: 'Avatar', width: 1670, height: 942 },
+    ],
     statusNote:
       'Try-on and styling currently run on mock adapters, and nothing is deployed publicly. This is a prototype demonstrating the concept, not a live shopping product.',
     problem:
@@ -203,6 +257,25 @@ export const solutions: Solution[] = [
     slug: 'nevix-cloud-matrix',
     name: 'Nevix Cloud Matrix',
     status: 'beta',
+    logo: {
+      src: '/solutions/nevix-cloud-matrix.png',
+      alt: 'Nevix Cloud Matrix logo',
+      width: 1672,
+      height: 941,
+    },
+    gallery: [
+      { src: '/solutions/screenshots/nevix-cloud-matrix/01-login-dashboard.png', alt: 'Login Dashboard screenshot', caption: 'Login Dashboard', width: 1536, height: 1024 },
+      { src: '/solutions/screenshots/nevix-cloud-matrix/02-analytics-dashboard.png', alt: 'Analytics Dashboard screenshot', caption: 'Analytics Dashboard', width: 1536, height: 1024 },
+      { src: '/solutions/screenshots/nevix-cloud-matrix/03-nlp-chat.png', alt: 'NLP Chat screenshot', caption: 'NLP Chat', width: 1536, height: 1024 },
+      { src: '/solutions/screenshots/nevix-cloud-matrix/04-visualization.png', alt: 'Visualization screenshot', caption: 'Visualization', width: 1536, height: 1024 },
+      { src: '/solutions/screenshots/nevix-cloud-matrix/05-report.png', alt: 'Report screenshot', caption: 'Report', width: 1536, height: 1024 },
+      { src: '/solutions/screenshots/nevix-cloud-matrix/06-cost-analytics.png', alt: 'Cost Analytics screenshot', caption: 'Cost Analytics', width: 1536, height: 1024 },
+      { src: '/solutions/screenshots/nevix-cloud-matrix/07-resource-explorer.png', alt: 'Resource Explorer screenshot', caption: 'Resource Explorer', width: 1536, height: 1024 },
+      { src: '/solutions/screenshots/nevix-cloud-matrix/08-resource-explorer.png', alt: 'Resource Explorer screenshot', caption: 'Resource Explorer', width: 1536, height: 1024 },
+      { src: '/solutions/screenshots/nevix-cloud-matrix/09-business-units.png', alt: 'Business Units screenshot', caption: 'Business Units', width: 1536, height: 1024 },
+      { src: '/solutions/screenshots/nevix-cloud-matrix/10-query-history.png', alt: 'Query History screenshot', caption: 'Query History', width: 1536, height: 1024 },
+      { src: '/solutions/screenshots/nevix-cloud-matrix/11-admin-dashboard.png', alt: 'Admin Dashboard screenshot', caption: 'Admin Dashboard', width: 1536, height: 1024 },
+    ],
     problem:
       'Teams comparing cloud spend across AWS, Azure and GCP rebuild the same spreadsheet repeatedly, budgets are tracked after the fact rather than against a threshold, and cost-optimisation ideas depend on whoever last had time to look.',
     summary:
@@ -267,6 +340,12 @@ export const solutions: Solution[] = [
     slug: 'digital-portfolio-website',
     name: 'Digital Portfolio Website',
     status: 'beta',
+    logo: {
+      src: '/solutions/digital-portfolio-website.png',
+      alt: 'Digital Portfolio Website logo',
+      width: 1672,
+      height: 941,
+    },
     problem:
       'Professionals maintain their projects, work history and skills across several documents and profiles, so the record is scattered and producing a clean, shareable summary means assembling it by hand each time.',
     summary:
@@ -324,6 +403,23 @@ export const solutions: Solution[] = [
     slug: 'infra-ansible',
     name: 'Infra Ansible',
     status: 'beta',
+    logo: { src: '/solutions/infra-ansible.png', alt: 'Infra Ansible logo', width: 1672, height: 941 },
+    gallery: [
+      { src: '/solutions/screenshots/infra-ansible/01-login-dashboard.png', alt: 'Login Dashboard screenshot', caption: 'Login Dashboard', width: 1536, height: 1024 },
+      { src: '/solutions/screenshots/infra-ansible/02-dashboard.png', alt: 'Dashboard screenshot', caption: 'Dashboard', width: 1536, height: 1024 },
+      { src: '/solutions/screenshots/infra-ansible/03-server-dashboard.png', alt: 'Server Dashboard screenshot', caption: 'Server Dashboard', width: 1536, height: 1024 },
+      { src: '/solutions/screenshots/infra-ansible/04-playbooks-dashboard.png', alt: 'Playbooks Dashboard screenshot', caption: 'Playbooks Dashboard', width: 1536, height: 1024 },
+      { src: '/solutions/screenshots/infra-ansible/05-jobs-dashboard.png', alt: 'Jobs Dashboard screenshot', caption: 'Jobs Dashboard', width: 1536, height: 1024 },
+      { src: '/solutions/screenshots/infra-ansible/06-ticket-management.png', alt: 'Ticket Management screenshot', caption: 'Ticket Management', width: 1536, height: 1024 },
+      { src: '/solutions/screenshots/infra-ansible/07-users-dashboard.png', alt: 'Users Dashboard screenshot', caption: 'Users Dashboard', width: 1536, height: 1024 },
+      { src: '/solutions/screenshots/infra-ansible/08-resource-explorer.png', alt: 'Resource Explorer screenshot', caption: 'Resource Explorer', width: 1536, height: 1024 },
+      { src: '/solutions/screenshots/infra-ansible/09-business-units.png', alt: 'Business Units screenshot', caption: 'Business Units', width: 1536, height: 1024 },
+      { src: '/solutions/screenshots/infra-ansible/10-cost-analysis.png', alt: 'Cost Analysis screenshot', caption: 'Cost Analysis', width: 1536, height: 1024 },
+      { src: '/solutions/screenshots/infra-ansible/11-query-history.png', alt: 'Query History screenshot', caption: 'Query History', width: 1536, height: 1024 },
+      { src: '/solutions/screenshots/infra-ansible/12-admin-dashboard.png', alt: 'Admin Dashboard screenshot', caption: 'Admin Dashboard', width: 1536, height: 1024 },
+      { src: '/solutions/screenshots/infra-ansible/13-audit-logs.png', alt: 'Audit Logs screenshot', caption: 'Audit Logs', width: 1536, height: 1024 },
+      { src: '/solutions/screenshots/infra-ansible/14-automation-dashboard-mockup.png', alt: 'Automation Dashboard Mockup screenshot', caption: 'Automation Dashboard Mockup', width: 1536, height: 1024 },
+    ],
     problem:
       'IT teams patch and configure servers one at a time through separate manual sessions, so there is no single view of what is patched, no live record of what a long-running job is doing, and no audit trail of who ran what.',
     summary:
@@ -383,6 +479,16 @@ export const solutions: Solution[] = [
     slug: 'nevix-forge',
     name: 'Nevix Forge — AI Client Demo Generator',
     status: 'coming-soon',
+    logo: { src: '/solutions/nevix-forge.png', alt: 'Nevix Forge logo', width: 1672, height: 941 },
+    gallery: [
+      { src: '/solutions/screenshots/nevix-forge/01-login-dashboard.png', alt: 'Login Dashboard screenshot', caption: 'Login Dashboard', width: 1536, height: 1024 },
+      { src: '/solutions/screenshots/nevix-forge/02-dashboard.png', alt: 'Dashboard screenshot', caption: 'Dashboard', width: 1672, height: 941 },
+      { src: '/solutions/screenshots/nevix-forge/03-new-project.png', alt: 'New Project screenshot', caption: 'New Project', width: 1536, height: 1024 },
+      { src: '/solutions/screenshots/nevix-forge/04-templates.png', alt: 'Templates screenshot', caption: 'Templates', width: 1536, height: 1024 },
+      { src: '/solutions/screenshots/nevix-forge/05-my-project.png', alt: 'My Project screenshot', caption: 'My Project', width: 1672, height: 941 },
+      { src: '/solutions/screenshots/nevix-forge/06-export.png', alt: 'Export screenshot', caption: 'Export', width: 1672, height: 941 },
+      { src: '/solutions/screenshots/nevix-forge/07-analysis-history.png', alt: 'Analysis History screenshot', caption: 'Analysis History', width: 1672, height: 941 },
+    ],
     statusNote:
       'This is a detailed project specification, not a built product yet. There is nothing to try — this page describes a planned internal tool.',
     problem:
@@ -434,6 +540,27 @@ export const solutions: Solution[] = [
     slug: 'talk-to-database',
     name: 'Talk to Database',
     status: 'beta',
+    logo: {
+      src: '/solutions/talk-to-database.png',
+      alt: 'Talk to Database logo',
+      width: 1671,
+      height: 941,
+    },
+    gallery: [
+      { src: '/solutions/screenshots/talk-to-database/01-login-dashboard.png', alt: 'Login Dashboard screenshot', caption: 'Login Dashboard', width: 1536, height: 1024 },
+      { src: '/solutions/screenshots/talk-to-database/02-analytics-dashboard.png', alt: 'Analytics Dashboard screenshot', caption: 'Analytics Dashboard', width: 1536, height: 1024 },
+      { src: '/solutions/screenshots/talk-to-database/03-chat-with-data.png', alt: 'Chat With Data screenshot', caption: 'Chat With Data', width: 1536, height: 1024 },
+      { src: '/solutions/screenshots/talk-to-database/04-visualization.png', alt: 'Visualization screenshot', caption: 'Visualization', width: 1536, height: 1024 },
+      { src: '/solutions/screenshots/talk-to-database/05-eda-dashboard.png', alt: 'EDA Dashboard screenshot', caption: 'EDA Dashboard', width: 1536, height: 1024 },
+      { src: '/solutions/screenshots/talk-to-database/06-query-history-dashboard.png', alt: 'Query History Dashboard screenshot', caption: 'Query History Dashboard', width: 1536, height: 1024 },
+      { src: '/solutions/screenshots/talk-to-database/07-business-units-analytics-dashboard.png', alt: 'Business Units Analytics Dashboard screenshot', caption: 'Business Units Analytics Dashboard', width: 1536, height: 1024 },
+      { src: '/solutions/screenshots/talk-to-database/08-user-profile-dashboard.png', alt: 'User Profile Dashboard screenshot', caption: 'User Profile Dashboard', width: 1536, height: 1024 },
+      { src: '/solutions/screenshots/talk-to-database/09-user-management-dashboard.png', alt: 'User Management Dashboard screenshot', caption: 'User Management Dashboard', width: 1536, height: 1024 },
+      { src: '/solutions/screenshots/talk-to-database/10-access-requests-dashboard.png', alt: 'Access Requests Dashboard screenshot', caption: 'Access Requests Dashboard', width: 1536, height: 1024 },
+      { src: '/solutions/screenshots/talk-to-database/11-query-logs-dashboard.png', alt: 'Query Logs Dashboard screenshot', caption: 'Query Logs Dashboard', width: 1536, height: 1024 },
+      { src: '/solutions/screenshots/talk-to-database/12-analytics-dashboard.png', alt: 'Analytics Dashboard screenshot', caption: 'Analytics Dashboard', width: 1536, height: 1024 },
+      { src: '/solutions/screenshots/talk-to-database/13-talk-to-database-analytics-dashboard.png', alt: 'Talk To Database Analytics Dashboard screenshot', caption: 'Talk To Database Analytics Dashboard', width: 1536, height: 1024 },
+    ],
     problem:
       'Non-technical staff need answers from company data that lives across several departments, but getting one means writing SQL or waiting on whoever can, so routine questions queue behind a scarce skill.',
     summary:
@@ -492,6 +619,7 @@ export const solutions: Solution[] = [
     slug: 'tradeagent',
     name: 'TradeAgent',
     status: 'concept',
+    logo: { src: '/solutions/tradeagent.png', alt: 'TradeAgent logo', width: 1671, height: 941 },
     statusNote:
       'TradeAgent is a planning and architecture document only — no code has been written and nothing trades real money. It is a research and concept project, not a financial product: nothing here is financial advice, no trading performance is implied or promised, and automated trading of real funds carries a material risk of loss and may require regulatory licensing in your jurisdiction before it could ever run live.',
     problem:
@@ -544,6 +672,7 @@ export const solutions: Solution[] = [
     slug: 'resq-agent',
     name: 'RESQ Agent',
     status: 'beta',
+    logo: { src: '/solutions/resq-agent.png', alt: 'RESQ Agent logo', width: 1671, height: 941 },
     problem:
       'Service desks spend time on the same recurring issues — account lockouts, VPN access, slow laptops — and every ticket, however routine, starts from a blank slate with no automatic check against documented procedure.',
     summary:
@@ -603,6 +732,16 @@ export const solutions: Solution[] = [
     slug: 'thyroidai',
     name: 'ThyroidAI — Thyroid Cancer Detection System',
     status: 'beta',
+    logo: { src: '/solutions/thyroidai.png', alt: 'ThyroidAI logo', width: 1536, height: 1024 },
+    gallery: [
+      { src: '/solutions/screenshots/thyroidai/01-login-interface.png', alt: 'Login Interface screenshot', caption: 'Login Interface', width: 1536, height: 1024 },
+      { src: '/solutions/screenshots/thyroidai/02-analytics-dashboard.png', alt: 'Analytics Dashboard screenshot', caption: 'Analytics Dashboard', width: 1536, height: 1024 },
+      { src: '/solutions/screenshots/thyroidai/03-new-analysis-dashboard.png', alt: 'New Analysis Dashboard screenshot', caption: 'New Analysis Dashboard', width: 1536, height: 1024 },
+      { src: '/solutions/screenshots/thyroidai/04-analysis-history-dashboard.png', alt: 'Analysis History Dashboard screenshot', caption: 'Analysis History Dashboard', width: 1536, height: 1024 },
+      { src: '/solutions/screenshots/thyroidai/05-reports-dashboard.png', alt: 'Reports Dashboard screenshot', caption: 'Reports Dashboard', width: 1536, height: 1024 },
+      { src: '/solutions/screenshots/thyroidai/06-model-information-dashboard.png', alt: 'Model Information Dashboard screenshot', caption: 'Model Information Dashboard', width: 1536, height: 1024 },
+      { src: '/solutions/screenshots/thyroidai/07-medical-chat-dashboard.png', alt: 'Medical Chat Dashboard screenshot', caption: 'Medical Chat Dashboard', width: 1536, height: 1024 },
+    ],
     statusNote:
       'ThyroidAI is a research and decision-support prototype. It is not a certified or regulatory-cleared diagnostic device, its classification is not a diagnosis, and it is not a substitute for a qualified radiologist, pathologist or oncologist — every output is intended for a clinician’s review, not for a patient to act on directly.',
     problem:
